@@ -13,4 +13,9 @@ FactoryGirl.define do
     name 'Test Organization'
     subdomain { generate(:subdomain) }
   end
+  
+  factory :role do
+    name 'member'
+    association :resource, factory: :organization
+  end
 end

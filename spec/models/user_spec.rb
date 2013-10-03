@@ -1,3 +1,26 @@
+# == Schema Information
+#
+# Table name: users
+#
+#  id                     :integer          not null, primary key
+#  email                  :string(255)      default(""), not null
+#  encrypted_password     :string(255)      default(""), not null
+#  reset_password_token   :string(255)
+#  reset_password_sent_at :datetime
+#  remember_created_at    :datetime
+#  sign_in_count          :integer          default(0), not null
+#  current_sign_in_at     :datetime
+#  last_sign_in_at        :datetime
+#  current_sign_in_ip     :string(255)
+#  last_sign_in_ip        :string(255)
+#  confirmation_token     :string(255)
+#  confirmed_at           :datetime
+#  confirmation_sent_at   :datetime
+#  unconfirmed_email      :string(255)
+#  created_at             :datetime
+#  updated_at             :datetime
+#
+
 require 'spec_helper'
 
 describe User do
@@ -30,8 +53,18 @@ describe User do
   end
   
   describe '#roles' do
-    subject(:god) { create(:god) }
+    subject(:user) { create(:user) }
+    let(:organization) { create(:organization) }
     
-    specify
+    specify 'users can be admins' do
+      user.add_role :admin, organization
+      expect(user.has_role? :admin, organization).to be_true
+    end
+    
+    specify 'users can be members' do
+      user.add_role :member, organization
+      expect(user.has_role? :member, organization).to be_true
+      expect(user.has_role? :admin, organization).not_to be_true
+    end
   end
 end

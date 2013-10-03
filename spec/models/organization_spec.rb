@@ -1,3 +1,14 @@
+# == Schema Information
+#
+# Table name: organizations
+#
+#  id         :integer          not null, primary key
+#  name       :string(255)
+#  subdomain  :string(255)
+#  created_at :datetime
+#  updated_at :datetime
+#
+
 require 'spec_helper'
 
 describe Organization do
@@ -5,6 +16,10 @@ describe Organization do
   describe '#validate' do
     after :all do
       it { should_not be_valid }
+    end
+    
+    describe 'name' do
+      subject { build(:organization, name: '') }
     end
     
     describe 'subdomain' do
@@ -34,6 +49,6 @@ describe Organization do
         let(:subdomain) { '' }
       end
     end
-        
   end
+  
 end
