@@ -6,20 +6,14 @@ describe Role do
     subject { build(:role, name: name) }
     
     describe 'valid name' do
-      after :each do
-        it { should be_valid }
-      end
-      
-      context 'god' do
-        let(:name) { 'god' }
-      end
-      
       context 'admin' do
         let(:name) { 'admin' }
+        it { should be_valid }
       end
       
       context 'member' do
         let(:name) { 'member' }
+        it { should be_valid }
       end
     end
     

@@ -5,6 +5,26 @@ FactoryGirl.define do
     email { generate(:email) }
     password 'verysecret'
     password_confirmation { password }
+    
+    trait :organized do
+      ignore do
+         organization { association(:organization) }
+      end
+    end
+
+    factory :member do
+      organized
+      after(:create) { |user, evaluator| user.add_role(:member, organization) }
+    end
+    
+    factory :admin do
+      organized
+      after(:create) { |user, evaluator| user.add_role(:admin, evaluator.organization) }
+    end
+    
+    factory :god do
+      after(:create) { |user| user.add_role(:admin) }
+    end
   end
   
   sequence(:subdomain) { |n| "domain#{n}" }

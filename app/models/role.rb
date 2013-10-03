@@ -16,8 +16,5 @@ class Role < ActiveRecord::Base
   
   scopify
   
-  validates :name, inclusion: { in: %w(god admin member) }
-  
-  # available roles
-  # :god, :admin, :member
+  validates :name, inclusion: { in: %w(admin member) }
 end

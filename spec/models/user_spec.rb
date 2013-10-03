@@ -53,18 +53,16 @@ describe User do
   end
   
   describe '#roles' do
-    subject(:user) { create(:user) }
-    let(:organization) { create(:organization) }
+    let!(:organization) { create(:organization) }
     
-    specify 'users can be admins' do
-      user.add_role :admin, organization
-      expect(user.has_role? :admin, organization).to be_true
+    describe 'god' do
+      subject { create(:god) }
+      it { should have_role(:admin, organization) }
     end
     
-    specify 'users can be members' do
-      user.add_role :member, organization
-      expect(user.has_role? :member, organization).to be_true
-      expect(user.has_role? :admin, organization).not_to be_true
+    describe 'admin' do
+      subject { create(:admin, organization: organization) }
+      it { should have_role(:admin, organization) }
     end
   end
 end
