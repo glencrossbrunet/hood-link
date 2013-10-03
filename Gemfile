@@ -13,8 +13,10 @@ gem 'jquery-rails'
 
 # gem 'rabl'
 
-group :development do
+group :development, :test do
   gem 'rspec-rails'
+  gem 'factory_girl_rails', '~> 4.0'
+  gem 'fuubar'
 end
 
 group :doc do
