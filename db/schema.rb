@@ -11,7 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131003003535) do
+ActiveRecord::Schema.define(version: 20131003020025) do
+
+  create_table "organizations", force: true do |t|
+    t.string   "name"
+    t.string   "subdomain"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "organizations", ["subdomain"], name: "index_organizations_on_subdomain", unique: true
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
