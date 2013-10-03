@@ -28,4 +28,10 @@ describe User do
     #  end
     # end
   end
+  
+  describe '#roles' do
+    subject(:god) { create(:god) }
+    
+    specify
+  end
 end

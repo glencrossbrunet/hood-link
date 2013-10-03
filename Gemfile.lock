@@ -80,6 +80,7 @@ GEM
     rake (10.1.0)
     rdoc (3.12.2)
       json (~> 1.4)
+    rolify (3.2.0)
     rspec (2.14.1)
       rspec-core (~> 2.14.0)
       rspec-expectations (~> 2.14.0)
@@ -138,6 +139,7 @@ DEPENDENCIES
   fuubar
   jquery-rails
   rails (= 4.0.0)
+  rolify (~> 3.2.0)
   rspec-rails
   sass-rails (~> 4.0.0)
   sdoc

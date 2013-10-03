@@ -4,7 +4,9 @@ ruby '1.9.3'
 gem 'rails', '4.0.0'
 gem 'sqlite3'
 
+# auth
 gem 'devise'
+gem 'rolify', '~> 3.2.0'
 
 # assets
 gem 'sass-rails', '~> 4.0.0'
