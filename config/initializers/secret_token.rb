@@ -9,4 +9,5 @@
 
 # Make sure your secret_key_base is kept private
 # if you're sharing your code publicly.
-FumeHoods::Application.config.secret_key_base = '622f86f73ae9d113484ae199bb170aa2e9718c906ccf46a3a0427f76c073388f830d44dadac3ae6d7fad8f49b342abf88f46e089aa802351e1e319ba0843ba77'
+
+FumeHoods::Application.config.secret_key_base = ENV['RAILS_SECRET_TOKEN']
