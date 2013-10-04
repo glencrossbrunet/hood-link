@@ -1,19 +1,4 @@
 <!DOCTYPE html>
-<<<<<<< HEAD
-<html>
-<head>
-  <title>HoodLink</title>
-  <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
-  <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
-  <%= csrf_meta_tags %>
-</head>
-<body>
-
-<%= yield %>
-
-</body>
-=======
-<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
 <!--[if lt IE 7 ]> <html class="ie6" lang="en"> <![endif]-->
 <!--[if IE 7 ]>    <html class="ie7" lang="en"> <![endif]-->
 <!--[if IE 8 ]>    <html class="ie8" lang="en"> <![endif]-->
@@ -22,27 +7,18 @@
   <head>
   	<meta charset="utf-8" />
 
-  	<!-- Uncomment to make IE8 render like IE7 -->
-  	<!-- <meta http-equiv="X-UA-Compatible" content="IE=7" /> -->
-
   	<!-- Set the viewport width to device width for mobile -->
   	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   	<title><%= content_for?(:title) ? yield(:title) : "Fume Hood Monitoring" %></title>
 
   	<%= stylesheet_link_tag 'application', media: :all %>
-  	<%= javascript_include_tag 'vendor/custom.modernizr' %>
     <%= csrf_meta_tags %>
+		<%= yield :head %>
   </head>
   <body>
-		<%= render 'layouts/header' %>
-		<%= render_flashes %>
-		<%= current_user.roles.inspect if user_signed_in? %>
-		
-    <%= yield %>    
+		<%= content_for?(:application) ? yield(:application) : yield %>
     <%= javascript_include_tag 'application' %>
-		<%= debug params if Rails.env.development? %>
-		<%= debug flash if Rails.env.development? %>
+		<%= yield :scripts %>
   </body>
->>>>>>> previous
 </html>
