@@ -48,7 +48,7 @@ describe User do
     #   it { should be_persisted }
     #   it 'has the correct email' do
     #     expect(user.email).to == email
-    #  end
+    #   end
     # end
   end
   

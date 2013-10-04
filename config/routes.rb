@@ -3,9 +3,7 @@ FumeHoods::Application.routes.draw do
     get '/' => 'organizations#dashboard'
   end
   
-  devise_for :users, skip: [:registrations] 
+  root 'static#welcome'
   
-  devise_scope :user do
-    root 'devise/sessions#new'
-  end
+  devise_for :users, skip: [:registrations, :confirmations]
 end

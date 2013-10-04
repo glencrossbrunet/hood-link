@@ -6,7 +6,7 @@ describe 'subdomains' do
   
   context 'www' do
     let(:subdomain) { 'www' }
-    it { should route_to(controller: 'devise/sessions', action: 'new') }
+    it { should route_to(controller: 'static', action: 'welcome') }
   end
   
   context 'organization' do
