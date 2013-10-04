@@ -7,5 +7,6 @@ task :admins => :environment do
   admins = emails.map{ |email| User.parse(email).reload }
   admins.each do |admin|
     admin.grant(:admin) unless admin.has_role? :admin
+    admin.skip_confirmation!
   end
 end
