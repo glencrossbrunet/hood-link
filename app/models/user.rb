@@ -26,8 +26,8 @@ require 'securerandom'
 class User < ActiveRecord::Base
   rolify
 
-  devise :database_authenticatable, :registerable, :confirmable,
-         :recoverable, :rememberable, :trackable, :validatable
+  devise :database_authenticatable, :registerable, :recoverable, 
+      :rememberable, :trackable, :validatable
          
    def self.parse(raw)
      where(email: raw.strip.downcase).first_or_initialize.tap do |user|
