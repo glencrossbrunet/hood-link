@@ -8,5 +8,6 @@
 
 ---
 
-> Alexander Ostrow, Fall 2013
-> (c) Glencross Brunet
+> Alexander Ostrow, Fall 2013  
+
+(c) Glencross Brunet. All rights reserved.
