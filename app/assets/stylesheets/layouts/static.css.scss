@@ -1,0 +1,14 @@
+.flash {
+  padding: 15px 20px;
+  font-size: 1.1em;
+  @include row();
+  text-align: center;
+}
+
+.success {
+  background-color: $success;
+}
+
+.error, .alert {
+  background-color: $error;
+}

@@ -10,9 +10,7 @@ module LayoutHelper
   end
   
   def render_flash(key)
-    content_tag(:div, class: "alert-box #{key}") do
-      (flash[key] + '<a href="#" class="close">×</a>').html_safe
-    end
+    content_tag(:div, flash[key], class: "flash #{key}")
   end
 
 end

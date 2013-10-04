@@ -1,2 +1,9 @@
+// framework
+
 @import "bourbon";
 @import "neat";
+@import "colors";
+
+// styles
+@import "normalize";
+@import "layouts/*";
