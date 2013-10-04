@@ -1,4 +1,12 @@
-hood-link
-=========
+# hood-link
 
-Fume Hood Monitoring Engine
+> fume hood monitoring engine for organizations
+
+## Installation
+
+## API
+
+---
+
+> Alexander Ostrow, Fall 2013
+> (c) Glencross Brunet

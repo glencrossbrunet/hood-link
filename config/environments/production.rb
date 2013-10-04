@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 HoodLink::Application.configure do
+=======
+FumeHoods::Application.configure do
+>>>>>>> previous
   # Settings specified here will take precedence over those in config/application.rb.
 
   # Code is not reloaded between requests.
