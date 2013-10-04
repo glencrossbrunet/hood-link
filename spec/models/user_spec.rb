@@ -55,14 +55,15 @@ describe User do
     # end
   end
   
-  describe '#roles' do    
+  describe '#roles' do
+    subject { user }
     describe 'god' do
-      subject { create(:god) }
+      before { user.add_role(:admin) }
       it { should have_role(:admin, organization) }
     end
     
     describe 'admin' do
-      subject { create(:admin, organization: organization) }
+      before { user.add_role(:admin, organization) }
       it { should have_role(:admin, organization) }
       it { should_not have_role(:admin) }
     end

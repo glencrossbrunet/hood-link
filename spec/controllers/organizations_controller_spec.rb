@@ -45,4 +45,34 @@ describe OrganizationsController do
     end
   end
   
+  
+  describe '#index' do
+    let(:user) { create(:user) }
+    subject { get :index; response }
+    
+    context 'visitor' do
+      it { should redirect_to(new_user_session_path) }
+    end
+    
+    context 'user' do
+      before { sign_in user }
+      it { should redirect_to(root_path) }
+      
+      context 'member' do
+        let(:organization) { create(:organization) }
+        before do
+          request.host = 'www.example.com'
+          user.add_role(:member, organization)
+        end
+        it { should redirect_to("http://#{organization.subdomain}.example.com/")  }
+      end
+      
+      context 'super admin' do
+        before { user.add_role(:admin) }
+        before { create(:organization); create(:organization) }
+        it { should be_successful }
+      end
+    end
+  end
+  
 end
