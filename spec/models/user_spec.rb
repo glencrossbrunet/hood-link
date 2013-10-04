@@ -24,8 +24,12 @@
 require 'spec_helper'
 
 describe User do
+  let(:organization) { create(:organization) }
+  let(:user) { create(:user) }
+  
+  
   describe '::create' do
-    subject { create(:user) }
+    subject { user }
     it { should be_valid }
   end
   
@@ -36,7 +40,6 @@ describe User do
     end
     
     context 'user already exists' do
-      let(:user) { create(:user) }
       it 'finds the user' do
         expect(User.parse(user.email)).to eq(user)
       end
@@ -52,9 +55,7 @@ describe User do
     # end
   end
   
-  describe '#roles' do
-    let!(:organization) { create(:organization) }
-    
+  describe '#roles' do    
     describe 'god' do
       subject { create(:god) }
       it { should have_role(:admin, organization) }
@@ -63,6 +64,20 @@ describe User do
     describe 'admin' do
       subject { create(:admin, organization: organization) }
       it { should have_role(:admin, organization) }
+      it { should_not have_role(:admin) }
+    end
+  end
+  
+  describe '#organizations' do
+    subject { user.organizations.to_a }
+    
+    context 'no membership' do
+      it { should be_empty }
+    end
+    
+    context 'membership' do
+      before { user.add_role(:member, organization) }
+      it { should eq([organization]) }
     end
   end
 end
