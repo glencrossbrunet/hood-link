@@ -1,0 +1,7 @@
+#devise {
+  text-align: center;
+  padding-top: 20px;
+  > div {
+    @include inline-block();
+  }
+}

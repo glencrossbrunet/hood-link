@@ -1,4 +1,21 @@
 #header {
-  height: 100px;
   @include row();
+  border-bottom: 3px solid #ccc;
+}
+
+#title {
+  padding: 10px;
+  font-size: 1.2em;
+}
+
+.session-link {
+  border-radius: 3px;
+  background: #fff;
+  float: right;
+  padding: 10px 20px;
+  margin: 10px;
+  box-shadow: 0 0 5px 1px #e7e7e7 inset;
+  a {
+    text-decoration: none;
+  }
 }
