@@ -7,7 +7,7 @@ gem 'rails', '4.0.0'
 
 # auth
 gem 'devise'
-gem 'rolify', '~> 3.2.0'
+gem 'rolify', '~> 3.3.0.rc4'
 
 # assets
 gem 'sass-rails', '~> 4.0.0'
@@ -17,13 +17,16 @@ gem 'neat'
 
 # gem 'rabl'
 
-group :development, :test do
-  gem 'rspec-rails'
-  gem 'factory_girl_rails', '~> 4.0'
-  gem 'fuubar'
+group :development do
   gem 'annotate'
   gem 'letter_opener'
   gem 'quiet_assets'
+end
+
+group :test do
+  gem 'rspec-rails'
+  gem 'factory_girl_rails', '~> 4.0'
+  gem 'fuubar'
 end
 
 # Use ActiveModel has_secure_password
