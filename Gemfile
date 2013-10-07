@@ -21,6 +21,7 @@ group :development do
   gem 'annotate'
   gem 'letter_opener'
   gem 'quiet_assets'
+  gem 'faker'
 end
 
 group :test do
