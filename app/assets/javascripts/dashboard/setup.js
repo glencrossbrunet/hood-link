@@ -1,5 +1,3 @@
-window.JST = {};
-
 // compile JST templates
 
 $(function() {
@@ -7,4 +5,9 @@ $(function() {
     var $template = $(this);
     JST[$template.attr('name')] = _.template($template.html());
   });
+  
+  new HL.NavigationView({ el: $('#navigation') });
+  
+  new HL.Router();
+  Backbone.history.start();
 });

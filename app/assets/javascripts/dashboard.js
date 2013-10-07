@@ -9,4 +9,7 @@
 //
 //= require underscore
 //= require backbone
+//= require dashboard/namespace
+//= require dashboard/router
+//= require dashboard/views/navigation
 //= require dashboard/setup

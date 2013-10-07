@@ -1,3 +1,9 @@
+<ul id="navigation">
+	<% %w(dashboard filters members).each do |tab| %>
+		<li><a href="<%= tab %>"><%= t(tab) %></a></li>
+	<% end %>
+</ul>
+
 <div id="dashboard"></div>
 
 <%= templates 'app', 'assets', 'templates' %>

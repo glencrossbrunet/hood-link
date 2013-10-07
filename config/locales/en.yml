@@ -2,3 +2,7 @@ en:
   title: Fume Hood Monitoring Service
   login: sign in
   logout: sign out
+  
+  dashboard: Dashboard
+  filters: Filters
+  members: Members
