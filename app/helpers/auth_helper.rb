@@ -33,4 +33,8 @@ module AuthHelper
     organizations_path
   end
   
+  def after_sign_out_path_for(user)
+    url_for(controller: '/static', action: 'welcome', subdomain: 'www')
+  end
+  
 end
