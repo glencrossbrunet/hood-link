@@ -54,4 +54,34 @@ describe Organization do
     end
   end
   
+  let(:user) { create(:user) }
+  let(:organization) { create(:organization) }
+  
+  describe '#members' do
+    let(:members) { organization.members }
+    
+    before { user.add_role(:member, organization) }
+    
+    context 'collection of members' do
+      before { create(:user).add_role(:member, organization) }
+      subject { members.count }
+      it { should eq(2) }
+    end
+    
+    context 'relate to users' do
+      subject { members.first }
+      it { should eq(user) }
+    end
+  end
+  
+  describe '#admins' do
+    before { user.add_role(:admin, organization) }
+    
+    context 'collection of admins' do
+      before { create(:user).add_role(:member, organization) }
+      subject { organization.admins.count }
+      it { should eq(1) }
+    end
+  end
+  
 end

@@ -15,4 +15,14 @@ class Organization < ActiveRecord::Base
   validates :name, presence: true
   validates :subdomain, uniqueness: true, 
       format: { with: /\A[a-z0-9]+(-[a-z0-9]+)*\Z/ }
+  
+  has_many :users, through: :roles
+    
+  def members
+    users.where(roles: { name: 'member' })
+  end
+  
+  def admins
+    users.where(roles: { name: 'admin' })
+  end
 end

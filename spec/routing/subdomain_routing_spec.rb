@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'subdomains' do
+describe 'subdomain routes' do
   let(:url) { "http://#{subdomain}.domain.com/" }
   subject { { get: url } }
   

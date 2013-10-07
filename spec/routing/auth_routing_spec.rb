@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'auth routing' do
+describe 'auth routes' do
   
   specify 'no user registration' do
     expect(get: '/users/sign_up').not_to be_routable
