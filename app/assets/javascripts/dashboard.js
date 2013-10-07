@@ -12,4 +12,5 @@
 //= require dashboard/namespace
 //= require dashboard/router
 //= require dashboard/views/navigation
+//= require dashboard/views/members
 //= require dashboard/setup

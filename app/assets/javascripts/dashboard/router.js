@@ -17,10 +17,19 @@ HL.Router = Backbone.Router.extend({
   
   members: function() {
     console.log('route: members');
+    this.show(new HL.MembersView());
   },
   
   filters: function() {
     console.log('route: filters');
+  },
+  
+  // helper methods
+  
+  show: function(view) {
+    if (this.currentView) this.currentView.close();
+    $('#dashboard').append(view.render().el);
+    this.currentView = view;
   }
   
 });
