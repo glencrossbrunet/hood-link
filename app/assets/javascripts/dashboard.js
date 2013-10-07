@@ -9,9 +9,12 @@
 //
 //= require underscore
 //= require backbone
+//= require backbone.bubble
+//= require dashboard/extensions
 //= require dashboard/namespace
 //= require dashboard/collections/roles
 //= require dashboard/router
 //= require dashboard/views/navigation
 //= require dashboard/views/members
+//= require dashboard/views/role
 //= require dashboard/setup

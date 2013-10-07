@@ -1,5 +1,9 @@
 HL.Router = Backbone.Router.extend({
   
+  initialize: function() {
+    this.roles = new HL.RolesCollection();
+  },
+  
   routes: {
     '': 'redirect',
     'dashboard': 'dashboard',
@@ -17,7 +21,7 @@ HL.Router = Backbone.Router.extend({
   
   members: function() {
     console.log('route: members');
-    this.show(new HL.MembersView());
+    this.show(new HL.MembersView({ collection: this.roles }));
   },
   
   filters: function() {
