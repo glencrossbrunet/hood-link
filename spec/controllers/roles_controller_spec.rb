@@ -44,4 +44,26 @@ describe RolesController do
     end
   end
   
+  describe '#create' do
+    let(:admin) { create(:user) }
+    before { admin.add_role(:member, organization) }
+    before { post :create, format: :json, email: admin.email, type: 'admin' }
+    
+    context 'user is admin' do
+      subject { admin }
+      it { should have_role(:admin, organization) }
+    end
+    
+    context 'already member' do
+      subject { admin }
+      it { should have_role(:admin, organization) }
+      it { should_not have_role(:member, organization) }
+    end
+    
+    context 'should return email and role' do
+      subject { response.body }
+      it { should eq({ email: admin.email, type: 'admin' }.to_json) }
+    end
+  end
+  
 end

@@ -2,7 +2,7 @@ HoodLink::Application.routes.draw do
   constraints SubdomainConstraint do
     get '/' => 'organizations#dashboard'
     
-    resources :roles, only: [:index, :destroy], 
+    resources :roles, only: [:index, :create, :destroy], 
         constraints: { id: /[^\/]+(?=\.json\z)|[^\/]+/ }
   end
   
