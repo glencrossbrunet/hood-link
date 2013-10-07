@@ -10,6 +10,7 @@
 //= require underscore
 //= require backbone
 //= require dashboard/namespace
+//= require dashboard/collections/roles
 //= require dashboard/router
 //= require dashboard/views/navigation
 //= require dashboard/views/members
