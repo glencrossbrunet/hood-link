@@ -28,4 +28,20 @@ describe RolesController do
     end
   end
   
+  describe '#destroy' do
+    let(:member) { create(:user) }
+    before { member.add_role(:member, organization) }
+    before { delete :destroy, format: :json, id: member.email }
+    
+    context 'member no longer a member' do
+      subject { member }
+      it { should_not have_role(:member, organization) }
+    end
+    
+    context 'retuns successful' do
+      subject { response }
+      it { should be_successful } 
+    end
+  end
+  
 end

@@ -3,11 +3,15 @@ require 'spec_helper'
 describe 'api routes' do
   let(:organization) { create(:organization) }
   let(:base_url) { "http://#{organization.subdomain}.domain.test" }
-  subject { { get: base_url + path } }
   
   describe 'GET /roles' do
-    let(:path) { '/roles' }
+    subject { { get: base_url + '/roles' }  }
     it { should route_to(controller: 'roles', action: 'index') }
+  end
+  
+  describe 'DELETE /roles/:email' do
+    subject { { delete: base_url + '/roles/test-email@mail.university.edu' } }
+    it { should route_to(controller: 'roles', action: 'destroy', id: 'test-email@mail.university.edu') }
   end
   
 end

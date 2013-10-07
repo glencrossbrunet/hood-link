@@ -14,5 +14,11 @@ class RolesController < ApplicationController
     
     respond_with(members + admins)
   end
+  
+  def destroy
+    member = User.find_by!(email: params[:id])
+    member.remove_role(:member, organization)
+    respond_with({ email: member.email })
+  end
 
 end
