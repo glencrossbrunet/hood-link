@@ -15,6 +15,8 @@
 //= require dashboard/collections/roles
 //= require dashboard/router
 //= require dashboard/views/navigation
+//= require dashboard/views/dashboard
+//= require dashboard/views/filters
 //= require dashboard/views/members
 //= require dashboard/views/role
 //= require dashboard/setup

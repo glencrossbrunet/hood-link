@@ -7,8 +7,8 @@ HL.Router = Backbone.Router.extend({
   routes: {
     '': 'redirect',
     'dashboard': 'dashboard',
-    'members': 'members',
-    'filters': 'filters'
+    'filters': 'filters',
+    'members': 'members'
   },
   
   redirect: function() {
@@ -17,22 +17,26 @@ HL.Router = Backbone.Router.extend({
   
   dashboard: function() {
     console.log('route: dashboard');
+    this.show(new HL.DashboardView());
+  },
+  
+  
+  filters: function() {
+    console.log('route: filters');
+    this.show(new HL.FiltersView());
   },
   
   members: function() {
     console.log('route: members');
     this.show(new HL.MembersView({ collection: this.roles }));
   },
-  
-  filters: function() {
-    console.log('route: filters');
-  },
+
   
   // helper methods
   
   show: function(view) {
     if (this.currentView) this.currentView.close();
-    $('#dashboard').append(view.render().el);
+    $('#hood-link').append(view.render().el);
     this.currentView = view;
   }
   
