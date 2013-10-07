@@ -17,6 +17,7 @@
 		<%= yield :head %>
   </head>
   <body>
+		<%= render 'layouts/header' %>
 		<%= content_for?(:application) ? yield(:application) : yield %>
     <%= javascript_include_tag 'application' %>
 		<%= yield :scripts %>

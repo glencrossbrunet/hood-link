@@ -1,0 +1,54 @@
+#new-role {
+  margin: 4em;
+  text-align: center;
+  
+  legend {
+    text-align: center;
+    width: 100%;
+    font-size: 1.5em;
+  }
+  
+  input {
+    margin: 1em;
+  }
+}
+
+#roles li {
+  @include row();
+}
+
+.role {
+  @include row();
+  background-position: top center;
+  background-repeat: no-repeat;
+  background-size: 100% 1px;
+  @include linear-gradient(left, #f9f9f9, #ddd 20%, #ddd 80%, #f9f9f9);
+  padding: 10px;
+  
+  .role-member, .role-admin {
+    float: left;
+    padding-left: 2em;
+    @include span-columns(3);
+    text-align: left;
+  }
+  
+  .role-member {
+    color: blue;
+  }
+  
+  .role-admin {
+    color: green;
+  }
+  
+  .role-email {
+    @include span-columns(6);
+    text-align: center;
+  }
+  
+  .role-actions {
+    @include span-columns(3);
+    @include omega();
+    padding-right: 2em;
+    text-align: right;
+  }
+}

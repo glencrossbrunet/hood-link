@@ -1,5 +1,4 @@
 <% content_for :application do %>
-	<%= render 'layouts/header' %>
 	<%= render_flashes %>
 	<%= current_user.roles.inspect if user_signed_in? %>
 	

@@ -1,0 +1,31 @@
+#hood-link {
+  padding-bottom: 50px;
+}
+
+#navigation {
+  @include row();
+  text-align: center;
+  background-color: #fefefe;
+  padding: 1.6em;
+  border-bottom: 3px solid #ccc;
+  
+  li {
+    list-style: none;
+    margin: 0 2em;
+    @include inline-block();
+    color: #666;
+    
+    a {
+      color: inherit;
+      font-size: 1.3em;
+      text-decoration: none;
+      &:hover {
+        color: #888;
+      }
+      
+      &.selected {
+        color: black;
+      }
+    }
+  }
+}
