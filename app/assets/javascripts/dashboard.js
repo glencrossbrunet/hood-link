@@ -9,3 +9,4 @@
 //
 //= require underscore
 //= require backbone
+//= require dashboard/setup
