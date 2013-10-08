@@ -10,6 +10,7 @@
 //= require underscore
 //= require backbone
 //= require backbone.bubble
+//= require jquery.jsonify
 //= require dashboard/extensions
 //= require dashboard/namespace
 //= require dashboard/models/role

@@ -4,27 +4,29 @@ class RolesController < ApplicationController
   respond_to :json
   
   def index
-    members = organization.members.map do |member|
-      { email: member.email, type: 'member' }
-    end
-    
     admins = organization.admins.map do |admin|
       { email: admin.email, type: 'admin' }
     end
     
-    respond_with(members + admins)
+    members = organization.members.map do |member|
+      { email: member.email, type: 'member' }
+    end
+    
+    respond_with((admins + members).shuffle)
   end
   
   def create
     email = params.require(:email)
     type = params.require(:type)
-    user = User.find_by!(email: email)
+    user = User.parse(email)
     if type == 'admin'
       user.remove_role(:member, organization)
     end
     user.add_role(type, organization)
     render json: { email: email, type: type }
   end
+  
+  alias_method :update, :create
   
   def destroy
     member = User.find_by!(email: params[:id])

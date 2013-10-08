@@ -24,7 +24,8 @@ describe RolesController do
         { email: members.last.email, type: 'member' },
         { email: user.email, type: 'admin' }
       ]
-      expect(response.body).to eq(json.to_json)
+      result = MultiJson.load(response.body, symbolize_keys: true)
+      expect(result.sort).to eq(json.sort)
     end
   end
   
