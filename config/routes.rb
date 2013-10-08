@@ -4,6 +4,8 @@ HoodLink::Application.routes.draw do
     
     resources :roles, only: [:index, :create, :update, :destroy], 
         constraints: { id: /[^\/]+(?=\.json\z)|[^\/]+/ }
+    
+    resources :filters, only: [:index, :create, :update, :destroy]
   end
   
   resources :organizations, only: [:index]
