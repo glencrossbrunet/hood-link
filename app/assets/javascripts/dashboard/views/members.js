@@ -12,4 +12,5 @@ HL.MembersView = Backbone.View.extend({
     var view = new HL.RoleView({ model: role, parent: this });
     this.$('#roles').append(view.render().el);
   }
+  
 });

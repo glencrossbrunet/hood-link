@@ -1,5 +1,4 @@
 HL.RolesCollection = Backbone.Collection.extend({
-  
-  url: '/roles'
-  
+  model: HL.RoleModel,
+  url: '/roles'  
 });

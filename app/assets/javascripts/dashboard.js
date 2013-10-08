@@ -12,6 +12,7 @@
 //= require backbone.bubble
 //= require dashboard/extensions
 //= require dashboard/namespace
+//= require dashboard/models/role
 //= require dashboard/collections/roles
 //= require dashboard/router
 //= require dashboard/views/navigation
