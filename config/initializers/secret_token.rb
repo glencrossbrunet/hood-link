@@ -9,4 +9,8 @@
 
 # Make sure your secret_key_base is kept private
 # if you're sharing your code publicly.
-HoodLink::Application.config.secret_key_base =  ENV['RAILS_SECRET_TOKEN']
+HoodLink::Application.config.secret_key_base = if Rails.env.production?
+  ENV['RAILS_SECRET_TOKEN']
+else
+  'cba400dc285e4cf6840ef00ea52c67503445d08aa52e6691f2d11ee89f117380ac08426205193b33a72d884a978ec0c9e4ae3b3351e513967a6154dc88eaf665'
+end

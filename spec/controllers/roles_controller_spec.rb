@@ -25,7 +25,10 @@ describe RolesController do
         { email: user.email, type: 'admin' }
       ]
       result = MultiJson.load(response.body, symbolize_keys: true)
-      expect(result.sort).to eq(json.sort)
+      [json, result].each do |ary|
+        ary.sort_by! { |h| h[:email] }
+      end      
+      expect(result).to eq(json)
     end
   end
   

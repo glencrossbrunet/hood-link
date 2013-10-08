@@ -22,4 +22,9 @@ FactoryGirl.define do
     name 'member'
     association :resource, factory: :organization
   end
+  
+  factory :filter do
+    key 'building'
+    association :organization, factory: :organization
+  end
 end
