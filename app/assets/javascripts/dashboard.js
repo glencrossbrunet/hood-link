@@ -15,10 +15,12 @@
 //= require dashboard/namespace
 //= require dashboard/models/role
 //= require dashboard/collections/roles
+//= require dashboard/collections/filters
 //= require dashboard/router
 //= require dashboard/views/navigation
 //= require dashboard/views/dashboard
 //= require dashboard/views/filters
 //= require dashboard/views/members
 //= require dashboard/views/role
+//= require dashboard/views/filter_field
 //= require dashboard/setup

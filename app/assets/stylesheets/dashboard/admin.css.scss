@@ -1,0 +1,63 @@
+#hood-link {
+  padding-bottom: 50px;
+}
+
+#navigation {
+  @include row();
+  text-align: center;
+  background-color: #fefefe;
+  margin: 0;
+  padding: 1.6em;
+  border-bottom: 3px solid #ccc;
+  
+  li {
+    list-style: none;
+    margin: 0 2em;
+    @include inline-block();
+    color: #666;
+    
+    a {
+      color: inherit;
+      font-size: 1.3em;
+      text-decoration: none;
+      &:hover {
+        color: #888;
+      }
+      
+      &.selected {
+        color: black;
+      }
+    }
+  }
+}
+
+#new-role, #new-filter {
+  margin: 4em;
+  text-align: center;
+  
+  legend {
+    text-align: center;
+    width: 100%;
+    font-size: 1.5em;
+  }
+  
+  input {
+    margin: 1em;
+  }
+}
+
+.admin-row {
+  @include row();
+  background-position: top center;
+  background-repeat: no-repeat;
+  background-size: 100% 1px;
+  @include linear-gradient(left, #f9f9f9, #ddd 20%, #ddd 80%, #f9f9f9);
+  padding: 10px;
+  
+  .admin-actions {
+    @include span-columns(3);
+    @include omega();
+    padding-right: 2em;
+    text-align: right;
+  }
+}

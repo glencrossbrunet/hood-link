@@ -13,6 +13,7 @@ _.extend(Backbone.View.prototype, {
       this.$el.html( JST[this.template](data) );
       this.setElement(this.$el);
     }
+    this._trigger([ 'hl:render' ]);
     return this;
   }
   

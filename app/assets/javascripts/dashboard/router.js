@@ -2,6 +2,7 @@ HL.Router = Backbone.Router.extend({
   
   initialize: function() {
     this.roles = new HL.RolesCollection();
+    this.filters = new HL.FiltersCollection();
   },
   
   routes: {
@@ -25,7 +26,7 @@ HL.Router = Backbone.Router.extend({
   filters: function() {
     console.log('route: filters');
     $('a[href="filters"]').addClass('selected');
-    this.show(new HL.FiltersView());
+    this.show(new HL.FiltersView({ collection: this.filters }));
   },
   
   members: function() {

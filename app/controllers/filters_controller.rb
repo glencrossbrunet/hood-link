@@ -12,13 +12,13 @@ class FiltersController < ApplicationController
   end
   
   def update
-    @filter = organization.find(params[:id])
+    @filter = organization.filters.find(params[:id])
     @filter.assign_attributes(filter_params)
     persist
   end
   
   def destroy
-    @filter = organization.find(params[:id])
+    @filter = organization.filters.find(params[:id])
     @filter.destroy
     render json: @filter.to_json
   end

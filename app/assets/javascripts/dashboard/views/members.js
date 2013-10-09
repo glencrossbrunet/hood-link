@@ -3,13 +3,14 @@ HL.MembersView = Backbone.View.extend({
   template: 'members',
   
   initialize: function() {
-    _.bindAll(this, 'addRole', 'newRole');
+    _.bindAll(this, 'addRole', 'newRole', 'renderRoles');
     this.collection.on('add', this.addRole);
     this.collection.fetch();
   },
   
   events: {
-    'submit #new-role': 'newRole'
+    'submit #new-role': 'newRole',
+    'hl:render': 'renderRoles'
   },
   
   addRole: function(role) {
@@ -21,6 +22,10 @@ HL.MembersView = Backbone.View.extend({
     ev.preventDefault();
     var data = $('#new-role').jsonify();
     this.collection.create(data, { wait: true });
+  },
+  
+  renderRoles: function() {
+    this.collection.each(this.addRole);
   }
   
 });

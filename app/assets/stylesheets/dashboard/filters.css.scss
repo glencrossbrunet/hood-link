@@ -1,0 +1,7 @@
+.filter-field {
+  
+  .filter-key {
+    padding-left: 2em;
+    @include span-columns(9);
+  }
+}
