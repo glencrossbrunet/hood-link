@@ -1,3 +1,5 @@
+require 'securerandom'
+
 FactoryGirl.define do
   sequence(:email) { |n| "test#{n}@mep.org" }
 
@@ -25,6 +27,13 @@ FactoryGirl.define do
   
   factory :filter do
     key 'building'
-    association :organization, factory: :organization
+    association :organization
+  end
+  
+  sequence(:external_id) { |n| SecureRandom.hex }
+  
+  factory :fume_hood do
+    external_id { generate(:external_id) }
+    association :organization
   end
 end

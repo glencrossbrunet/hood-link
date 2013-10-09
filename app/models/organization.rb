@@ -17,6 +17,7 @@ class Organization < ActiveRecord::Base
       format: { with: /\A[a-z0-9]+(-[a-z0-9]+)*\Z/ }
   
   has_many :users, through: :roles
+  has_many :fume_hoods
   has_many :filters
     
   def members

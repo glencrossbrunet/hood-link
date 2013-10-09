@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131008210748) do
+ActiveRecord::Schema.define(version: 20131009224059) do
 
   create_table "filters", force: true do |t|
     t.string   "key",             null: false
@@ -19,6 +19,15 @@ ActiveRecord::Schema.define(version: 20131008210748) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "fume_hoods", force: true do |t|
+    t.integer  "organization_id", null: false
+    t.string   "external_id",     null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "fume_hoods", ["external_id"], name: "index_fume_hoods_on_external_id", unique: true
 
   create_table "organizations", force: true do |t|
     t.string   "name"
