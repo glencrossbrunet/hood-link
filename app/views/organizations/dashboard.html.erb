@@ -1,6 +1,6 @@
 <ul id="navigation">
-	<% %w(dashboard filters members).each do |tab| %>
-		<li><a href="<%= tab %>"><%= t(tab) %></a></li>
+	<% %w(dashboard filters fume_hoods members).each do |tab| %>
+		<li><a href="<%= tab.dasherize %>"><%= t(tab) %></a></li>
 	<% end %>
 </ul>
 

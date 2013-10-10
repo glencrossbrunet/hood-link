@@ -1,0 +1,1 @@
+HL.FumeHoodsView = Backbone.View.extend();

@@ -9,6 +9,7 @@ HL.Router = Backbone.Router.extend({
     '': 'redirect',
     'dashboard': 'dashboard',
     'filters': 'filters',
+    'fume-hoods': 'fumeHoods',
     'members': 'members'
   },
   
@@ -22,11 +23,16 @@ HL.Router = Backbone.Router.extend({
     this.show(new HL.DashboardView());
   },
   
-  
   filters: function() {
     console.log('route: filters');
     $('a[href="filters"]').addClass('selected');
     this.show(new HL.FiltersView({ collection: this.filters }));
+  },
+  
+  fumeHoods: function() {
+    console.log('route: fume-hoods');
+    $('a[href="fume-hoods"]').addClass('selected');
+    this.show(new HL.FumeHoodsView());
   },
   
   members: function() {

@@ -20,6 +20,7 @@
 //= require dashboard/views/navigation
 //= require dashboard/views/dashboard
 //= require dashboard/views/filters
+//= require dashboard/views/fume_hoods
 //= require dashboard/views/members
 //= require dashboard/views/role
 //= require dashboard/views/filter_field
