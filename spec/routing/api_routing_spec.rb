@@ -19,6 +19,11 @@ describe 'api routes' do
     it { should route_to(controller: 'roles', action: 'destroy', id: 'test-email@mail.university.edu') }
   end
   
+  describe 'GET /fume_hoods' do
+    subject { { get: base_url + '/fume_hoods' } }
+    it { should route_to(controller: 'fume_hoods', action: 'index') }
+  end
+  
   describe 'GET /filters' do
     subject { { get: base_url + '/filters' } }
     it { should route_to(controller: 'filters', action: 'index') }
