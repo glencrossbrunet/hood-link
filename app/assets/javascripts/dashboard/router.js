@@ -3,6 +3,7 @@ HL.Router = Backbone.Router.extend({
   initialize: function() {
     this.roles = new HL.RolesCollection();
     this.filters = new HL.FiltersCollection();
+    this.fumeHoods = new HL.FumeHoodsCollection();
   },
   
   routes: {
@@ -32,7 +33,7 @@ HL.Router = Backbone.Router.extend({
   fumeHoods: function() {
     console.log('route: fume-hoods');
     $('a[href="fume-hoods"]').addClass('selected');
-    this.show(new HL.FumeHoodsView());
+    this.show(new HL.FumeHoodsView({ collection: this.fumeHoods }));
   },
   
   members: function() {
