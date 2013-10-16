@@ -5,7 +5,14 @@ class FumeHoodsController < ApplicationController
   
   def index
     fume_hoods = organization.fume_hoods
-    respond_with(fume_hoods)
+		json = fume_hoods.map { |fh| serialize(fh) }
+		render json: json
   end
+	
+	private 
+	
+	def serialize(fume_hood)
+		fume_hood.attributes.merge(metadata: fume_hood.metadata)
+	end
   
 end
