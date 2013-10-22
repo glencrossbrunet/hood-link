@@ -58,6 +58,9 @@ GEM
       rspec-instafail (~> 0.2.0)
       ruby-progressbar (~> 1.0)
     hike (1.2.3)
+    httparty (0.11.0)
+      multi_json (~> 1.0)
+      multi_xml (>= 0.5.2)
     i18n (0.6.5)
     jquery-rails (3.0.4)
       railties (>= 3.0, < 5.0)
@@ -72,6 +75,7 @@ GEM
     mime-types (1.25)
     minitest (4.7.5)
     multi_json (1.8.1)
+    multi_xml (0.5.5)
     neat (1.4.0)
       bourbon (>= 2.1)
       sass (>= 3.2)
@@ -156,6 +160,7 @@ DEPENDENCIES
   factory_girl_rails (~> 4.0)
   faker
   fuubar
+  httparty
   jquery-rails
   letter_opener
   neat

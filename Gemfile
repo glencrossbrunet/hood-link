@@ -4,6 +4,7 @@ ruby '1.9.3'
 gem 'thin'
 gem 'sqlite3'
 gem 'rails', '4.0.0'
+gem 'httparty'
 
 # auth
 gem 'devise'
