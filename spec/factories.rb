@@ -36,4 +36,16 @@ FactoryGirl.define do
     external_id { generate(:external_id) }
     association :organization
   end
+  
+  factory :sample_metric do
+    name 'flow rate'
+  end
+  
+  factory :sample do
+    association :sample_metric
+    association :fume_hood
+    value 250.0
+    unit 'l / s'
+    sampled_at { DateTime.now }
+  end
 end

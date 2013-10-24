@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131022184929) do
+ActiveRecord::Schema.define(version: 20131024010744) do
 
   create_table "displays", force: true do |t|
     t.string   "server_id"
@@ -55,6 +55,24 @@ ActiveRecord::Schema.define(version: 20131022184929) do
 
   add_index "roles", ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id"
   add_index "roles", ["name"], name: "index_roles_on_name"
+
+  create_table "sample_metrics", force: true do |t|
+    t.string "name", null: false
+  end
+
+  create_table "samples", force: true do |t|
+    t.integer  "fume_hood_id",     null: false
+    t.integer  "sample_metric_id", null: false
+    t.string   "unit"
+    t.float    "value",            null: false
+    t.string   "source"
+    t.datetime "sampled_at",       null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "samples", ["fume_hood_id"], name: "index_samples_on_fume_hood_id"
+  add_index "samples", ["sample_metric_id"], name: "index_samples_on_sample_metric_id"
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false

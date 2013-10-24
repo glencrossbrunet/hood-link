@@ -15,6 +15,8 @@ class FumeHood < ActiveRecord::Base
   validates_presence_of :external_id, :organization_id
   validates_uniqueness_of :external_id
 	
+	has_many :samples
+	
 	def data
 		{ display_id: '00000000-00000000-00409DFF-FF457D17 | 00:13:a2:00:40:a8:b8:9b!' }
 	end
