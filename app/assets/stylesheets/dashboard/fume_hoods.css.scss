@@ -14,3 +14,12 @@
 .fume-hood {
   text-align: center;
 }
+
+.fume-hood-form {
+  padding: 50px 100px;
+  .field {
+    @include row();
+    padding: 3px 0;
+  }
+  
+}

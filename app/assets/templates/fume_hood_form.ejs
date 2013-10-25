@@ -1,0 +1,7 @@
+<% _.each(data, function(value, key) { %>
+  <div class="field">
+    <label><%= key %></label>
+    <input type="text" name="<%= key %>" value="<%= value %>">
+  </div>
+<% }); %>
+<button type="submit">Save</button>
