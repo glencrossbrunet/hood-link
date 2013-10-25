@@ -24,6 +24,11 @@ describe 'api routes' do
     it { should route_to(controller: 'fume_hoods', action: 'index') }
   end
   
+  describe 'PUT /fume_hoods/:id' do
+    subject { { get: base_url + '/fume_hoods/5' } }
+    it { should route_to(controller: 'fume_hoods', action: 'update') }
+  end
+  
   describe 'GET /filters' do
     subject { { get: base_url + '/filters' } }
     it { should route_to(controller: 'filters', action: 'index') }
