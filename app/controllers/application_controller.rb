@@ -6,4 +6,8 @@ class ApplicationController < ActionController::Base
   include ApplicationHelper
   helper ApplicationHelper
   helper LayoutHelper
+  
+  before_filter do
+    puts "subdomain: #{request.subdomain}"
+  end
 end
