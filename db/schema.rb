@@ -15,7 +15,6 @@ ActiveRecord::Schema.define(version: 20131025000131) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-  enable_extension "hstore"
 
   create_table "displays", force: true do |t|
     t.string   "server_id"
@@ -32,11 +31,11 @@ ActiveRecord::Schema.define(version: 20131025000131) do
   end
 
   create_table "fume_hoods", force: true do |t|
-    t.integer  "organization_id", null: false
-    t.string   "external_id",     null: false
+    t.integer  "organization_id",              null: false
+    t.string   "external_id",                  null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.hstore   "data"
+    t.json     "data",            default: {}
   end
 
   add_index "fume_hoods", ["external_id"], name: "index_fume_hoods_on_external_id", unique: true, using: :btree

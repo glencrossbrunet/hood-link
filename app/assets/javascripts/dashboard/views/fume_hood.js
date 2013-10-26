@@ -9,7 +9,8 @@ HL.FumeHoodFormView = Backbone.View.extend({
   
   save: function(ev) {
     ev.preventDefault();
-    this.model.get('data').set(this.$el.jsonify());
+    var data = this.$el.jsonify();
+    this.model.get('data').set(data);
     this.model.save();
   }
   
@@ -37,7 +38,7 @@ HL.FumeHoodView = Backbone.View.extend({
       this.form = null;
     } else {
       this.form = new HL.FumeHoodFormView({ model: this.model });
-      this.$el.after(this.form.render().el);      
+      this.$el.after(this.form.render({ filters: router.filters.toJSON() }).el);      
     }
   }
 });

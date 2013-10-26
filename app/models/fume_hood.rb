@@ -17,10 +17,6 @@ class FumeHood < ActiveRecord::Base
 	
 	has_many :samples
 	
-	def data
-		{ display_id: '00000000-00000000-00409DFF-FF457D17 | 00:13:a2:00:40:a8:b8:9b!' }
-	end
-	
 	def metadata
 		keys = organization.filters.map(&:key)
 		data = {}
@@ -29,5 +25,12 @@ class FumeHood < ActiveRecord::Base
 		end
 		data
 	end
+  
+  # sash heights: 39.4" * (pct open)
+  # 
+  # need
+  # - most recent sash height
+  # - moving avg of all of them
+  # - best (lowest) avg
 
 end

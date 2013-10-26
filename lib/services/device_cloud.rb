@@ -60,12 +60,12 @@ module DeviceCloud
 		#    "server_id | device_id"
 		def update_display_for(fume_hood)
 			server_id, device_id = fume_hood.data[:display_id].split(' | ')
-			json = 'L1234;'
+			message = display_message_from(fume_hood)
 						
 			http_options = { 
 				basic_auth: auth, 
 				headers: headers,
-				body: body_xml(server_id, device_id, json)
+				body: body_xml(server_id, device_id, message)
 			}
 			
 			puts http_options
@@ -74,6 +74,12 @@ module DeviceCloud
 			p response.code, response.headers, response.body
 			nil
 		end
+    
+    # TODO: this is a stub
+    def display_message_from(fume_hood)
+      # Example message (pad with spaces):
+      # `U 5";M10";L 3";`
+    end
 		
 		def body_xml(server_id, device_id, message)
 			sci_request(server_id) do

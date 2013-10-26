@@ -1,7 +1,7 @@
-<% _.each(data, function(value, key) { %>
+<% _.each(filters, function(filter) { %>
   <div class="field">
-    <label><%= key %></label>
-    <input type="text" name="<%= key %>" value="<%= value %>">
+    <label><%= filter.key %></label>
+    <input type="text" name="<%= filter.key %>" value="<%= data[filter.key] %>">
   </div>
 <% }); %>
 <button type="submit">Save</button>

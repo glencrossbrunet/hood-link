@@ -19,6 +19,6 @@ $(function() {
   
   new HL.NavigationView({ el: $('#navigation') });
   
-  new HL.Router();
+  window.router = new HL.Router();
   Backbone.history.start();
 });

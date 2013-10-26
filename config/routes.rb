@@ -7,7 +7,7 @@ HoodLink::Application.routes.draw do
     
     resources :filters, only: [:index, :create, :update, :destroy]
     
-    resources :fume_hoods, only: [:index, :update]
+    resources :fume_hoods, only: [:index, :create, :update]
   end
   
   resources :organizations, only: [:index]

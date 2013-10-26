@@ -9,12 +9,18 @@ HL.FumeHoodsView = Backbone.View.extend({
   },
   
   events: {
+    'submit #new-fume-hood': 'create',
     'hl:render': 'renderCollection'
+  },
+  
+  create: function(ev) {
+    ev.preventDefault();
+    var data = $('#new-fume-hood').jsonify();
+    this.collection.create(data, { wait: true });
   },
   
   add: function(model) {
     var view = new HL.FumeHoodView({ model: model, parent: this });
-    console.log(view);
     this.$('#fume-hoods-collection').prepend(view.render().el);
   },
   

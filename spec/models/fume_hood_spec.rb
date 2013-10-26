@@ -33,4 +33,18 @@ describe FumeHood do
     end
   end
   
+  describe 'data json store' do
+    let(:fume_hood) { create(:fume_hood) }
+    
+    describe 'defaults to hash' do
+      subject { fume_hood.data }
+      it { should eq({}) }
+    end
+    
+    specify 'add data' do
+      fume_hood.data = { 'building' => 'McTavish' }
+      expect(fume_hood.data['building']).to eq('McTavish')
+    end
+  end
+  
 end
