@@ -10,10 +10,4 @@
 # Make sure your secret_key_base is kept private
 # if you're sharing your code publicly.
 
-require 'securerandom'
-
-HoodLink::Application.config.secret_key_base = if Rails.env.production?
-  ENV['RAILS_SECRET_TOKEN']
-else
-  SecureRandom.hex
-end
+HoodLink::Application.config.secret_key_base = '723168a7951f394679029a5a4ac2ccc7796bc5582bcd194d42f950fd2e4f5807e7f7eb27b127daa2434dd507ab7269551e890a6dee23b13c78feb37202dc2ede'
