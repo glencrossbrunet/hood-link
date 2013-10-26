@@ -82,7 +82,7 @@ HoodLink::Application.configure do
   # sessions across subdomains with cookie
   config.middleware.use 'CustomDomainCookie', '.hoodlink.ca'
   
-  config.action_mailer.default_url_options = { :host => 'hoodlink.ca' }
+  config.action_mailer.default_url_options = { :host => 'www.hoodlink.ca' }
   
   ActionMailer::Base.smtp_settings = {
     :address        => 'smtp.sendgrid.net',
