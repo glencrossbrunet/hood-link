@@ -18,6 +18,10 @@ gem 'neat'
 
 # gem 'rabl'
 
+group :production do
+  gem 'rails_12factor'
+end
+
 group :development do
   gem 'annotate'
   gem 'letter_opener'
