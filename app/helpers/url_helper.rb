@@ -1,9 +1,7 @@
 module UrlHelper
   def host_with(subdomain)
-    subdomain = request.subdomains.push(subdomain).uniq.join('.')
-    puts subdomain
     subdomain += '.' unless subdomain.blank?
-    [ subdomain, *request.subdomains, request.domain, request.port_string ].join
+    [ subdomain, request.domain, request.port_string ].join
   end
   
   def url_for(options = nil)
