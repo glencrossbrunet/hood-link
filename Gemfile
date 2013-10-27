@@ -16,6 +16,8 @@ gem 'uglifier', '>= 1.3.0'
 gem 'jquery-rails'
 gem 'neat'
 
+gem 'resque', require: 'resque/server'
+
 # gem 'rabl'
 
 group :production do
