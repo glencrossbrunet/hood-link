@@ -49,7 +49,7 @@ describe 'api routes' do
     it { should route_to(controller: 'filters', action: 'update', id: '24') }
   end
   
-  describe 'DELETE /filers/:id' do
+  describe 'DELETE /filters/:id' do
     subject { { delete: base_url + '/filters/24' } }
     it { should route_to(controller: 'filters', action: 'destroy', id: '24') }
   end
