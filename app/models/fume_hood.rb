@@ -7,6 +7,7 @@
 #  external_id     :string(255)      not null
 #  created_at      :datetime
 #  updated_at      :datetime
+#  data            :json             default({})
 #
 
 class FumeHood < ActiveRecord::Base
@@ -16,21 +17,8 @@ class FumeHood < ActiveRecord::Base
   validates_uniqueness_of :external_id
 	
 	has_many :samples
-	
-	def metadata
-		keys = organization.filters.map(&:key)
-		data = {}
-		keys.each do |key|
-			data[key] = ''
-		end
-		data
-	end
-  
-  # sash heights: 39.4" * (pct open)
-  # 
-  # need
-  # - most recent sash height
-  # - moving avg of all of them
-  # - best (lowest) avg
 
+  def display
+    Display.where({ device_id: data['MAC Address'] }).first
+  end
 end

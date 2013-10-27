@@ -7,6 +7,7 @@
 #  external_id     :string(255)      not null
 #  created_at      :datetime
 #  updated_at      :datetime
+#  data            :json             default({})
 #
 
 require 'spec_helper'
