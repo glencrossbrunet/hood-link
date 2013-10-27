@@ -5,6 +5,7 @@ gem 'thin'
 gem 'pg'
 gem 'rails', '4.0.0'
 gem 'httparty'
+gem 'resque', require: 'resque/server'
 
 # auth
 gem 'devise'
@@ -15,8 +16,6 @@ gem 'sass-rails', '~> 4.0.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'jquery-rails'
 gem 'neat'
-
-gem 'resque', require: 'resque/server'
 
 # gem 'rabl'
 

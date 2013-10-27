@@ -15,4 +15,6 @@ HoodLink::Application.routes.draw do
   root 'static#welcome'
   
   devise_for :users, skip: [:registrations, :confirmations]
+  
+  mount Resque::Server, at: '/resque'
 end
