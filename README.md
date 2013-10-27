@@ -68,7 +68,7 @@ $ rspec
 
 ## API
 
-Within and organization subdomain, these are the json endpoints used by the client app (in no particular order). 
+Within an organization subdomain, these are the json endpoints used by the client app (in no particular order). 
 
 ```
 GET /roles

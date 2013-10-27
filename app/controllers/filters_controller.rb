@@ -35,5 +35,5 @@ class FiltersController < ApplicationController
   
   def filter_params
     params.permit(:key)
-  end  
+  end
 end

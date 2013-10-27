@@ -4,7 +4,7 @@ class OrganizationsController < ApplicationController
   before_filter :organization_redirect, only: :index
   
   layout :resolve_layout
-    
+  
   def dashboard
   end
   

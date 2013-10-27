@@ -54,4 +54,9 @@ describe 'api routes' do
     it { should route_to(controller: 'filters', action: 'destroy', id: '24') }
   end
   
+  describe 'POST /samples' do
+    subject { { post: base_url + '/samples' } }
+    it { should route_to(controller: 'samples', action: 'create') }
+  end
+  
 end
