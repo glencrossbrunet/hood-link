@@ -42,7 +42,7 @@ class SamplesController < ApplicationController
   
   def fume_hood
     query = params.require(:fume_hood).permit(:external_id)
-    @fume_hood ||= organization.fume_hoods.where(query).first
+    @fume_hood ||= organization.fume_hoods.where(query).first_or_create
   end
   
   #  fume_hood_id     :integer          not null
