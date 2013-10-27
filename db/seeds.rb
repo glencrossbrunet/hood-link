@@ -11,3 +11,10 @@ displays = YAML.load(IO.read(Rails.root.join 'db', 'displays.yml'))
 displays.each do |data|
 	Display.where(data).first_or_create
 end
+
+# sample metrics
+
+sample_metrics = YAML.load(IO.read(Rails.root.join 'db', 'sample_metrics.yml'))
+sample_metrics.each do |data|
+  SampleMetric.where(name: data).first_or_create
+end
