@@ -1,17 +1,4 @@
 require 'httparty'
-require 'multi_json'
-
-# Protocol (json message)
-#
-# vertical:
-#   sash_height:
-#     today: ##
-#     average: ##
-#     organization_best: ##
-# horizontal:
-#   sash_height:
-#     average: ##.##
-#     organization_best: ##.##
 
 module DeviceCloud
 	module Connect
@@ -47,46 +34,32 @@ module DeviceCloud
 			</sci_request>
 			XML
 		end
+    
+    def send_message(server_id, device_id, message)
+			xml = sci_request(server_id) do
+				rci_request(device_id, message)
+			end
+      
+			http_options = { 
+				basic_auth: auth, 
+				headers: headers,
+				body: xml
+			}
+      
+      response = HTTParty.post(endpoint, http_options)      
+      raise "FAILED: #{code}" unless (200...300).include? response.code
+    end
+    
+    def endpoint
+      'http://login.etherios.com/ws/sci'
+    end
 	end
 	
 	class Client
 		include Connect
 				
-		def initialize(auth = nil)
+		def initialize
 			self.auth = {	username: 'glencrossbrunet', password: 'GlenBrown2!' }
 		end
-
-		# fume hoods have a "display_id" of:
-		#    "server_id | device_id"
-		def update_display_for(fume_hood)
-			server_id, device_id = fume_hood.data[:display_id].split(' | ')
-			message = display_message_from(fume_hood)
-						
-			http_options = { 
-				basic_auth: auth, 
-				headers: headers,
-				body: body_xml(server_id, device_id, message)
-			}
-			
-			puts http_options
-			
-			response = HTTParty.post('http://login.etherios.com/ws/sci', http_options)
-			p response.code, response.headers, response.body
-			nil
-		end
-    
-    # TODO: this is a stub
-    def display_message_from(fume_hood)
-      # Example message (pad with spaces):
-      # `U 5";M10";L 3";`
-    end
-		
-		def body_xml(server_id, device_id, message)
-			sci_request(server_id) do
-				rci_request(device_id, message)
-			end
-		end
 	end
-	
-	
 end
