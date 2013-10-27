@@ -55,28 +55,26 @@ describe Sample do
       Sample.create defaults.merge(sampled_at: start, value: 1.0)
       Sample.create defaults.merge(sampled_at: start + 2.hours, value: 2.0)
     end
+    
+    subject { fume_hood.samples.avg(start .. (start + offset)) }
         
     describe '1 hour in' do
       let(:offset) { 1.hour }
-      subject { fume_hood.samples.avg(sample_metric, start .. (start + offset)) }
       it { should be_within(0.001).of(1.0) }
     end
     
     describe '2 hours in' do
       let(:offset) { 2.hours }
-      subject { fume_hood.samples.avg(sample_metric, start .. (start + offset)) }
       it { should be_within(0.001).of(1.0) }
     end
     
     describe '3 hours in' do
       let(:offset) { 3.hours }
-      subject { fume_hood.samples.avg(sample_metric, start .. (start + offset)) }
       it { should be_within(0.001).of((2 * 1.0 + 1 * 2.0) / 3) }
     end
     
     describe '4 hours in' do
       let(:offset) { 4.hours }
-      subject { fume_hood.samples.avg(sample_metric, start .. (start + offset)) }
       it { should be_within(0.001).of((2 * 1.0 + 2 * 2.0) / 4) }
     end
   end
