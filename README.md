@@ -6,8 +6,8 @@ Open Source Application Stack:
 
 > [d3](https://github.com/mbostock/d3) graphing & [oboe](https://github.com/jimhigson/oboe.js) requests  
 > [backbone](https://github.com/jashkenas/backbone) client framework  
-> [ruby on rails](https://github.com/rails/rails) server framework
-> [redis](https://github.com/antirez/redis) & [resque](https://github.com/resque/resque) background jobs
+> [ruby on rails](https://github.com/rails/rails) server framework  
+> [redis](https://github.com/antirez/redis) & [resque](https://github.com/resque/resque) background jobs  
 > [memcached](https://github.com/memcached/memcached) session store & cache  
 > [postgres](https://github.com/postgres/postgres) rdbms  
 
@@ -24,7 +24,7 @@ $ rake admins
 seeds users with email from `config/admins.yml` and grants them admin roles. 
 
 ```
-$ rake aggregate:percent_open
+$ rake aggregates:percent_open
 ```
 
 queues a job for each fume hood to crunch the `"Percent Open"` sample metric for the last month, and caches it in the aggregates json blob by the ID of the sample metric. queue is `:aggregates`
