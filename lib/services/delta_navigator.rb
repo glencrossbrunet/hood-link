@@ -65,7 +65,7 @@ class DeltaNavigator
     def json_body(bac_number, unix_time, metric_name, value, unit)
       json = {
         sample: {
-          sampled_at: unix_time.to_i,
+          sampled_at: DateTime.new(unix_time.to_i).to_s,
           value: value.to_f,
           unit: unit,
           source: 'Delta Web Navigator'
@@ -84,7 +84,7 @@ class DeltaNavigator
       unix_time, bac_number, flow_rate, percent_open = values
       
       if percent_open != 'NA'
-        json = json_body(bac_number, unix_time, 'Percent Open', *percent_open.split(' '))        
+        json = json_body(bac_number, unix_time, 'Percent Open', *percent_open.split(' ')) 
         response = HTTParty.post url, body: json
         puts "status: #{response.code}"
         puts "body: #{response.body}"
