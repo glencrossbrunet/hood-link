@@ -84,15 +84,8 @@ class DeltaNavigator
       unix_time, bac_number, flow_rate, percent_open = values
       
       if percent_open != 'NA'
-        json = json_body(bac_number, unix_time, 'Percent Open', *percent_open.split(' '))
-        response = HTTParty.post url, json
-        puts "status: #{response.code}"
-        puts "body: #{response.body}"
-      end
-  
-      if flow_rate != 'NA'
-        json = json_body(bac_number, unix_time, 'Flow Rate', *flow_rate.split(' '))
-        response = HTTParty.post url, json
+        json = json_body(bac_number, unix_time, 'Percent Open', *percent_open.split(' '))        
+        response = HTTParty.post url, body: json
         puts "status: #{response.code}"
         puts "body: #{response.body}"
       end

@@ -25,6 +25,7 @@ class SamplesController < ApplicationController
   
   def create
     attrs = sample_params.merge(sample_metric_id: sample_metric.id)
+    attrs[:sampled_at] = DateTime.new(attrs[:sampled_at].to_i)
     previous_sample = fume_hood.samples.where(sample_metric_id: sample_metric.id).most_recent
     
     too_similar = previous_sample.present? && (previous_sample.value - attrs[:value].to_f).abs <= 0.0001    
