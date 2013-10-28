@@ -24,7 +24,7 @@ class DisplayWorker
   end
   
   def self.height(percent_open)
-    height = (percent_open * 39.4).round
-    '%2d' % height
+    height = (percent_open * 0.394).round
+    '%2d"' % height
   end
 end

@@ -19,6 +19,6 @@ class FumeHood < ActiveRecord::Base
 	has_many :samples
 
   def display
-    Display.where({ device_id: data['MAC Address'] }).first
+    Display.where({ device_id: data['mac_address'] }).first
   end
 end

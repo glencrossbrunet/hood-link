@@ -65,7 +65,7 @@ class DeltaNavigator
     def json_body(bac_number, unix_time, metric_name, value, unit)
       json = {
         sample: {
-          sampled_at: DateTime.new(unix_time.to_i).to_s,
+          sampled_at: DateTime.strptime(unix_time,'%s').to_s,
           value: value.to_f,
           unit: unit,
           source: 'Delta Web Navigator'
