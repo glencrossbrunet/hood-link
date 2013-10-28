@@ -5,6 +5,7 @@ namespace :displays do
     Organization.select(:id).pluck(:id).each do |organization_id|
       Resque.enqueue DisplayWorker, organization_id
     end
+    puts 'tasks queued'
   end
   
 end

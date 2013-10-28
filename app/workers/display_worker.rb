@@ -17,14 +17,18 @@ class DisplayWorker
   # - moving avg of all of them
   # - best (lowest) avg
   def self.update_display_for(fume_hood, metric_id, best)
-    value = fume_hood.samples.where(sample_metric_id: metric.id).most_recent.value
-    aggregate = fume_hood.aggregates[metric.id.to_s]
-    message = %Q(U#{height(value)}";M#{height(aggregate)}";L#{height(best)};)
+    value = fume_hood.samples.where(sample_metric_id: metric_id).most_recent.try(:value)
+    aggregate = fume_hood.aggregates[metric_id.to_s]
+    message = %Q(U#{height(value)};M#{height(aggregate)};L#{height(best)};)
     fume_hood.display.update_screen(message)
   end
   
   def self.height(percent_open)
-    height = (percent_open * 0.394).round
-    '%2d"' % height
+    if percent_open.present?
+      height = (percent_open * 0.394).round
+      '%2d"' % height
+    else
+      'NA '
+    end
   end
 end
