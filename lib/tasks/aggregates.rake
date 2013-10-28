@@ -6,6 +6,7 @@ namespace :aggregates do
     FumeHood.select(:id).pluck(:id).each do |id|
       Resque.enqueue AggregateWorker, id, metric.id
     end
+    puts 'aggregate tasks queued'
   end
   
 end

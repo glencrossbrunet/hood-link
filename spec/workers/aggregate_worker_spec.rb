@@ -1,3 +1,5 @@
+require 'spec_helper'
+
 describe AggregateWorker do
   let(:fume_hood) { create(:fume_hood) }
   let(:metric) { create(:sample_metric) }
@@ -6,6 +8,6 @@ describe AggregateWorker do
   
   describe 'aggregate metric' do
     subject { fume_hood.reload.aggregates[metric.id.to_s] }
-    it { should  be_within(0.001).of(3.0) }
+    it { should be_within(0.001).of(3.0) }
   end
 end
