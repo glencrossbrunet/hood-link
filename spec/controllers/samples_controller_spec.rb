@@ -46,5 +46,10 @@ describe SamplesController do
         expect{ post :create, new_json }.not_to change{ Sample.count }
       end
     end
+    
+    specify 'new fume hoods get created' do
+      new_json = json.merge(fume_hood: { external_id: 'testing' })
+      expect{ post :create, new_json }.to change{ FumeHood.count }.by(1)
+    end
   end
 end
