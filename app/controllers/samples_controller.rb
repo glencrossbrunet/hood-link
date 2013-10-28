@@ -1,4 +1,5 @@
 class SamplesController < ApplicationController
+  skip_before_action :verify_authenticity_token
   before_filter :authenticate_organization
   respond_to :json
   
@@ -24,9 +25,6 @@ class SamplesController < ApplicationController
   
   def create
     attrs = sample_params.merge(sample_metric_id: sample_metric.id)
-    
-    puts "samples: attrs = #{attrs}"
-    
     previous_sample = fume_hood.samples.where(sample_metric_id: sample_metric.id).most_recent
     
     too_similar = previous_sample.present? && (previous_sample.value - attrs[:value].to_f).abs <= 0.0001    
@@ -64,7 +62,6 @@ class SamplesController < ApplicationController
     if organization.token != token
       render json: { error: 'token does not match for organization' }, status: 403
     end
-    puts 'samples: organization token OK'
   end
   
 end
