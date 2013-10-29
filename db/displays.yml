@@ -7,5 +7,12 @@
 - server_id: 00000000-00000000-00409DFF-FF457D17
   device_id: 00:13:a2:00:40:a8:2a:b2!
 - server_id: 00000000-00000000-00409DFF-FF457D17
-  device_id: 00:13:a2:00:40:a8:2a:c3!
-
+  device_id: 00:13:a2:00:40:a8:2a:c3!  
+- server_id: 00000000-00000000-00409DFF-FF457D17
+  device_id: 00:13:a2:00:40:a8:2f:13!
+- server_id: 00000000-00000000-00409DFF-FF457D17
+  device_id: 00:13:a2:00:40:a8:2a:eb!
+- server_id: 00000000-00000000-00409DFF-FF457D17
+  device_id: 00:13:a2:00:40:a8:2a:dd!
+- server_id: 00000000-00000000-00409DFF-FF457D17
+  device_id: 00:13:a2:00:40:a8:2f:0c!
