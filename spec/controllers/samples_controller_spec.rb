@@ -23,7 +23,7 @@ describe SamplesController do
         },
         sample: {
           value: 12.5,
-          sampled_at: 2.minutes.ago
+          sampled_at: 2.hours.ago
         }
       }
     end

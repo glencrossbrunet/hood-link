@@ -19,28 +19,14 @@ class Sample < ActiveRecord::Base
   
   validates_presence_of :fume_hood_id, :sample_metric_id, :value, :sampled_at
   
+  extend SparseCollection
+  
   def self.avg(datetime_range)
     samples = where(sampled_at: datetime_range).order('sampled_at ASC')
-    
-    if samples.any?
-      total_seconds = datetime_range.end.to_i - samples.first.sampled_at.to_i    
-      average = 0.0
-    
-      samples.each_cons(2) do |start, stop|
-        seconds = stop.sampled_at.to_i - start.sampled_at.to_i
-        average += (seconds.to_f / total_seconds) * start.value
-      end
-
-      seconds = datetime_range.end.to_i - samples.last.sampled_at.to_i
-      average += (seconds.to_f / total_seconds) * samples.last.value
-    
-      average
-    else
-      nil
-    end
+    samples.sparse(:sampled_at).ending(datetime_range.end).average_left(:value)
   end
   
   def self.most_recent
-    order('sampled_at DESC').first
+    sparse(:sampled_at).find_left
   end
 end

@@ -1,3 +1,9 @@
+GIT
+  remote: git@github.com:glencrossbrunet/sparse_collection.git
+  revision: 621e73d8b0daeab6be741a402eecec8acb95a77d
+  specs:
+    sparse_collection (0.0.3)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -195,5 +201,6 @@ DEPENDENCIES
   rolify (~> 3.3.0.rc4)
   rspec-rails
   sass-rails (~> 4.0.0)
+  sparse_collection!
   thin
   uglifier (>= 1.3.0)

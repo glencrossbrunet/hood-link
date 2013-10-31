@@ -25,16 +25,20 @@ class SamplesController < ApplicationController
   
   def create
     attrs = sample_params.merge(sample_metric_id: sample_metric.id)
-    previous_sample = fume_hood.samples.where(sample_metric_id: sample_metric.id).most_recent
+    previous_sample = sparse_samples.find_left(attrs[:sampled_at])
     
-    too_similar = previous_sample.present? && (previous_sample.value - attrs[:value].to_f).abs <= 0.0001    
-    unless too_similar
-      fume_hood.samples.where(attrs).first_or_create
-    end
+    ok = previous_sample.blank?
+    ok ||= (previous_sample.value - attrs[:value].to_f).abs > 0.001
+    fume_hood.samples.where(attrs).first_or_create if ok
+    
     render json: { status: 200 }
   end
   
   private
+  
+  def sparse_samples
+    fume_hood.samples.where(sample_metric_id: sample_metric.id).sparse(:sampled_at)
+  end
   
   def sample_metric
     query = params.require(:sample_metric).permit(:name)
