@@ -41,24 +41,23 @@ class SamplesController < ApplicationController
   end
   
   def sample_metric
-    query = params.require(:sample_metric).permit(:name)
-    @sample_metric ||= SampleMetric.where(query).first
+    @sample_metric ||= SampleMetric.where(sample_metric_params).first
   end
   
   def fume_hood
-    query = params.require(:fume_hood).permit(:external_id)
-    @fume_hood ||= organization.fume_hoods.where(query).first_or_create
+    @fume_hood ||= organization.fume_hoods.where(fume_hood_params).first_or_create
   end
-  
-  #  fume_hood_id     :integer          not null
-  #  sample_metric_id :integer          not null
-  #  unit             :string(255)
-  #  value            :float            not null
-  #  source           :string(255)
-  #  sampled_at  
   
   def sample_params
     params.require(:sample).permit(:unit, :value, :source, :sampled_at)
+  end
+  
+  def fume_hood_params
+    params.require(:fume_hood).permit(:external_id)
+  end
+  
+  def sample_metric_params
+    params.require(:sample_metric).permit(:name)
   end
   
   def authenticate_organization
