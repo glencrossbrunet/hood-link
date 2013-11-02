@@ -26,7 +26,7 @@ class DisplayWorker
   # - moving monthly avg of sash height
   # - best (lowest) avg
   def self.update_display_for(fume_hood, metric_id, best)
-    fume_hood.display.update_screen message_for(fume_hood, metric_id, best)
+    Resque.enqueue DeviceCloudWorker, fume_hood.display, message_for(fume_hood, metric_id, best)
   end
   
   def self.message_for(fume_hood, metric_id, best)

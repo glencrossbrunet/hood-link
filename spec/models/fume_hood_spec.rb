@@ -48,4 +48,11 @@ describe FumeHood do
     end
   end
   
+  describe '#display from mac_address and gateway_id' do
+    let(:fume_hood) { create(:fume_hood) }
+    before { fume_hood.update_attribute :data, 'mac_address' => 'abcde', 'gateway_id' => '12345' }
+    subject { fume_hood.display }
+    it { should eq('mac_address' => 'abcde', 'gateway_id' => '12345') }
+  end
+  
 end

@@ -19,6 +19,12 @@ class FumeHood < ActiveRecord::Base
 	has_many :samples
 
   def display
-    Display.where({ device_id: data['mac_address'] }).first
+    keys = %w(mac_address gateway_id)
+    if keys.all? { |key| data[key].present? }
+      HashWithIndifferentAccess.new data.slice(*keys)
+    else
+      nil
+    end
   end
+  
 end
