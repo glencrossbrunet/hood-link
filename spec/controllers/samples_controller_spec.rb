@@ -52,4 +52,12 @@ describe SamplesController do
       expect{ post :create, new_json }.to change{ FumeHood.count }.by(1)
     end
   end
+  
+  
+  describe '#index' do
+    include_context 'admin of organization'
+
+    subject { get :index, format: 'csv' }    
+    it { should be_successful }
+  end
 end

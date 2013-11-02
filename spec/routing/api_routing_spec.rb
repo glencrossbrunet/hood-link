@@ -59,4 +59,9 @@ describe 'api routes' do
     it { should route_to(controller: 'samples', action: 'create') }
   end
   
+  describe 'GET /samples' do
+    subject { { get: base_url + '/samples.csv' } }
+    it { should route_to(controller: 'samples', action: 'index', format: 'csv') }
+  end
+  
 end

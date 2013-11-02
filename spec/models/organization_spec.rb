@@ -84,4 +84,8 @@ describe Organization do
     end
   end
   
+  describe '#samples' do
+    it { should respond_to(:samples) }
+  end
+  
 end

@@ -19,6 +19,7 @@ class Organization < ActiveRecord::Base
   has_many :users, through: :roles
   has_many :fume_hoods
   has_many :filters
+  has_many :samples, through: :fume_hoods
     
   def members
     users.where(roles: { name: 'member' })

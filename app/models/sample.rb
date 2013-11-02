@@ -12,6 +12,7 @@
 #  created_at       :datetime
 #  updated_at       :datetime
 #
+require 'csv'
 
 class Sample < ActiveRecord::Base
   belongs_to :fume_hood
@@ -28,5 +29,14 @@ class Sample < ActiveRecord::Base
   
   def self.most_recent
     sparse(:sampled_at).find_left
+  end
+  
+  def self.to_csv(options = {})
+    CSV.generate(options) do |csv|
+      csv << column_names
+      all.each do |product|
+        csv << product.attributes.values_at(*column_names)
+      end
+    end
   end
 end

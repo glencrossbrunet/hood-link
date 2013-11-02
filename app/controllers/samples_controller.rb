@@ -1,7 +1,14 @@
 class SamplesController < ApplicationController
-  skip_before_action :verify_authenticity_token
-  before_filter :authenticate_organization
-  respond_to :json
+  before_filter :authenticate_admin, only: [ :index ]
+  respond_to :csv, only: [ :index ]
+  
+  skip_before_action :verify_authenticity_token, only: [ :create ]
+  before_filter :authenticate_organization, only: [ :create ]
+  respond_to :json, only: [ :create ]
+  
+  def index
+    render text: organization.samples.to_csv, format: :csv
+  end
   
   # requests should POST json in the following format:
   # 
