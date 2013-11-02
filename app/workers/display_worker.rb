@@ -22,15 +22,15 @@ class DisplayWorker
   # sash heights: 39.4" * (pct open)
   # 
   # need
-  # - most recent sash height
-  # - moving avg of all of them
+  # - moving hourly avg sash height
+  # - moving monthly avg of sash height
   # - best (lowest) avg
   def self.update_display_for(fume_hood, metric_id, best)
     fume_hood.display.update_screen message_for(fume_hood, metric_id, best)
   end
   
   def self.message_for(fume_hood, metric_id, best)
-    value = fume_hood.samples.where(sample_metric_id: metric_id).most_recent.try(:value)
+    value = fume_hood.samples.where(sample_metric_id: metric_id).avg(1.hour.ago .. DateTime.now)
     aggregate = fume_hood.aggregates[metric_id.to_s]
     %Q(U#{height(value)};M#{height(aggregate)};L#{height(best)};)
   end
