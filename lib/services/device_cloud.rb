@@ -47,7 +47,7 @@ module DeviceCloud
 			}
       
       response = HTTParty.post(endpoint, http_options)      
-      raise "FAILED: #{code}" unless (200...300).include? response.code
+      raise "FAILED: #{response.code}" unless (200...300).include? response.code
     end
     
     def endpoint

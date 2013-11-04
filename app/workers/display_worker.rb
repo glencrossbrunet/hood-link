@@ -16,7 +16,7 @@ class DisplayWorker
     aggregates = organization.fume_hoods.map do |fume_hood|
       fume_hood.aggregates[metric_id.to_s]
     end
-    aggregates.compact.min
+    aggregates.compact.reject(&:zero?).min
   end
   
   # sash heights: 39.4" * (pct open)

@@ -23,8 +23,9 @@ class Sample < ActiveRecord::Base
   extend SparseCollection
   
   def self.avg(datetime_range)
-    samples = where(sampled_at: datetime_range).order('sampled_at ASC')
-    samples.sparse(:sampled_at).ending(datetime_range.end).average_left(:value)
+		samples = where(sampled_at: datetime_range).order('sampled_at ASC')
+		sparse_avg = samples.sparse(:sampled_at).ending(datetime_range.end).average_left(:value)
+		sparse_avg || most_recent.try(:value)
   end
   
   def self.most_recent
