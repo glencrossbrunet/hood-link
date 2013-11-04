@@ -6,7 +6,7 @@ gem 'pg'
 gem 'rails', '4.0.0'
 gem 'httparty'
 gem 'resque', require: 'resque/server'
-gem 'sparse_collection', git: 'git@github.com:glencrossbrunet/sparse_collection.git'
+gem 'sparse_collection', github: 'glencrossbrunet/sparse_collection'
 
 # auth
 gem 'devise'

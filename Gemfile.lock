@@ -1,5 +1,5 @@
 GIT
-  remote: git@github.com:glencrossbrunet/sparse_collection.git
+  remote: git://github.com/glencrossbrunet/sparse_collection.git
   revision: 621e73d8b0daeab6be741a402eecec8acb95a77d
   specs:
     sparse_collection (0.0.3)
