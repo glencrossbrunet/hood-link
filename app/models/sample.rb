@@ -34,9 +34,9 @@ class Sample < ActiveRecord::Base
   
   def self.to_csv(options = {})
     CSV.generate(options) do |csv|
-      csv << column_names
-      all.each do |product|
-        csv << product.attributes.values_at(*column_names)
+			csv << %w(fume_hood_id sample_name sampled_at value unit source) 
+      includes(:fume_hood, :sample_metric).find_each do |s|
+				csv << [ s.fume_hood.external_id, s.sample_metric.name, s.sampled_at, s.value, s.unit, s.source ]
       end
     end
   end
