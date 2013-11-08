@@ -54,4 +54,10 @@ describe DisplayWorker do
       expect{ DisplayWorker.perform(organization.id) }.not_to raise_error
     end
   end
+	
+	describe '#random_best' do
+		it 'should be 4 < n < 6' do
+			expect(DisplayWorker.random_best).to be_within(1.0).of(5.0)
+		end
+	end
 end

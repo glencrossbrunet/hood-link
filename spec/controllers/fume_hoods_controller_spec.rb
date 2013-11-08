@@ -15,8 +15,8 @@ describe FumeHoodsController do
   end
 	
 	describe '#display' do
-		let(:fume_hood) { create(:fume_hood) }
-		subject { get :display, format: :json }
+		let(:fume_hood) { create(:fume_hood, organization: organization) }
+		subject { get :display, format: :json, id: fume_hood.id }
 		it { should be_successful }
 	end
   

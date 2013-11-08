@@ -5,7 +5,7 @@ class DisplayWorker
     metric_id = SampleMetric.where(name: 'Percent Open').first_or_create.id
     organization = Organization.find(organization_id)
     
-    best = best_for(organization, metric_id)
+    best = random_best # best_for(organization, metric_id)
     
     organization.fume_hoods.each do |fume_hood|
       update_display_for(fume_hood, metric_id, best) if fume_hood.display.present?
@@ -43,4 +43,8 @@ class DisplayWorker
       'NA '
     end
   end
+	
+	def self.random_best
+		(4..6).step(0.1).to_a.sample
+	end
 end
