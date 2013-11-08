@@ -33,6 +33,11 @@ describe 'api routes' do
     subject { { patch: base_url + '/fume_hoods/5' } }
     it { should route_to(controller: 'fume_hoods', action: 'update', id: '5') }
   end
+	
+	describe 'GET /fume_hoods/:id/display' do
+		subject { { get: base_url + '/fume_hoods/5/display' } }
+		it { should route_to(controller: 'fume_hoods', action: 'display', id: '5') }
+	end
   
   describe 'GET /filters' do
     subject { { get: base_url + '/filters' } }

@@ -13,5 +13,11 @@ describe FumeHoodsController do
       expect(json.length).to eq(2)
     end
   end
+	
+	describe '#display' do
+		let(:fume_hood) { create(:fume_hood) }
+		subject { get :display, format: :json }
+		it { should be_successful }
+	end
   
 end

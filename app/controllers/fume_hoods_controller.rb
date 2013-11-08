@@ -27,6 +27,15 @@ class FumeHoodsController < ApplicationController
     end
   end
 	
+	def display
+		@fume_hood = organization.fume_hoods.find(params[:id])
+		metric_id = SampleMetric.where(name: 'Percent Open').first_or_create.id
+		if @fume_hood.display.present?
+			DisplayWorker.update_display_for(@fume_hood, metric_id, nil)
+		end
+		render json: { status: 200 }
+	end
+	
 	private
   
   def data_keys
