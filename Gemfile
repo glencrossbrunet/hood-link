@@ -18,6 +18,9 @@ gem 'uglifier', '>= 1.3.0'
 gem 'jquery-rails'
 gem 'neat'
 
+# monitoring
+gem 'newrelic_rpm'
+
 # gem 'rabl'
 
 group :production do
