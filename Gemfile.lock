@@ -1,8 +1,8 @@
 GIT
   remote: git://github.com/glencrossbrunet/sparse_collection.git
-  revision: 621e73d8b0daeab6be741a402eecec8acb95a77d
+  revision: 99f213412bd16461401a28d53134d012505b7d47
   specs:
-    sparse_collection (0.0.3)
+    sparse_collection (0.0.5)
 
 GEM
   remote: https://rubygems.org/
@@ -49,6 +49,7 @@ GEM
       thread_safe (~> 0.1)
       warden (~> 1.2.3)
     diff-lcs (1.2.4)
+    diff_matcher (2.5.0)
     erubis (2.7.0)
     eventmachine (1.0.3)
     execjs (2.0.2)
@@ -187,6 +188,7 @@ PLATFORMS
 DEPENDENCIES
   annotate
   devise
+  diff_matcher
   factory_girl_rails (~> 4.0)
   faker
   fuubar

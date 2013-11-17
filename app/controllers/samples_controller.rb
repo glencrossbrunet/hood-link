@@ -1,10 +1,9 @@
-class SamplesController < ApplicationController
-  before_filter :authenticate_admin, only: [ :index ]
+class SamplesController < ApplicationController  
+  skip_before_action :verify_authenticity_token
+  before_filter :authenticate_organization
+  respond_to :json, only: [ :create ]
   respond_to :csv, only: [ :index ]
   
-  skip_before_action :verify_authenticity_token, only: [ :create ]
-  before_filter :authenticate_organization, only: [ :create ]
-  respond_to :json, only: [ :create ]
   
   # requests should GET csv with the following parameters:
   # 
@@ -18,7 +17,25 @@ class SamplesController < ApplicationController
   #  /samples.csv?token=vjaw8efj&sample=Percent%20Open&interval=3600&start=2013-11-11T00:00:00-05:00
   
   def index
-    render text: organization.samples.to_csv, format: :csv
+    sample_metric = SampleMetric.where(name: params.fetch(:sample)).first!
+    
+    period_start = DateTime.parse params.fetch(:start)
+    interval = params.fetch(:interval).to_i
+    conditions = { sample_metric_id: sample_metric.id, sampled_at: period_start..DateTime.now }
+    
+    data = organization.fume_hoods.periodic_samples(interval, conditions)
+    
+    csv = if data.any?
+      CSV.generate({}) do |csv|
+        csv << data.first.keys
+        data.each do |datum|
+          csv << datum.values
+        end
+      end
+    else
+      'NA'
+    end
+    render text: csv, format: :csv
   end
   
   # requests should POST json in the following format:
@@ -79,7 +96,7 @@ class SamplesController < ApplicationController
   end
   
   def authenticate_organization
-    token = params.require(:organization).fetch(:token)
+    token = params.require(:organization).fetch(:token) rescue params.fetch(:token)
     if organization.token != token
       render json: { error: 'token does not match for organization' }, status: 403
     end

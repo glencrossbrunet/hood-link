@@ -55,9 +55,57 @@ describe SamplesController do
   
   
   describe '#index' do
-    include_context 'admin of organization'
+    let(:params) do
+      { 
+        format: 'csv', 
+        token: 'secret', 
+        sample: sample_metric.name, 
+        start: 2.days.ago.to_s,
+        interval: 2.hours 
+      }
+    end
+    
+    subject { get :index, params }
+    
+    describe 'no token' do
+      before { params.delete(:token) }
+      it 'should be missing a param' do
+        expect{ subject }.to raise_error(ActionController::ParameterMissing)
+      end
+    end
+    
+    describe 'wrong token' do
+      before { params[:token] = 'incorrect' }
+      it 'should be unauthorized' do
+        expect(subject.code.to_i).to eq(403)
+      end
+    end
+    
+    describe 'no sample metric' do
+      before { params[:sample] = 'fake name' }
+      it 'should be a 404 not found' do
+        expect{ subject }.to raise_error(ActiveRecord::RecordNotFound)
+      end
+    end
+    
+    describe 'no start datetime' do
+      before { params.delete(:start) }
+      it 'should be missing a param' do
+        expect{ subject }.to raise_error(ActionController::ParameterMissing)
+      end
+    end
+    
+    describe 'no interval' do
+      before { params.delete(:interval) }
+      it 'should be a missing param' do
+        expect{ subject }.to raise_error(ActionController::ParameterMissing)
+      end
+    end
+    
+    specify 'works as expected' do
+      expect(subject).to be_successful
+    end
 
-    subject { get :index, format: 'csv' }    
-    it { should be_successful }
+
   end
 end

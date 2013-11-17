@@ -36,6 +36,7 @@ end
 
 group :test do
   gem 'rspec-rails'
+  gem 'diff_matcher'
   gem 'factory_girl_rails', '~> 4.0'
   gem 'fuubar'
 end

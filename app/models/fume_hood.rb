@@ -27,4 +27,39 @@ class FumeHood < ActiveRecord::Base
     end
   end
   
+  # outputs:
+  #
+  #  [ { sampled_at: datetime, value: float } ]
+  #
+  def periodic_samples(interval, conditions = {})
+    period = conditions[:sampled_at]
+    sparse_samples = samples.where(conditions).sparse(:sampled_at)
+    if period.present?
+      sparse_samples.starting(period.begin).ending(period.end)
+    end
+    sparse_samples.regularize_left(interval, :value)
+  end
+  
+  # outputs:
+  #
+  #  { datetime => { 'hood-id-1' => float, 'hood-id-2 => float, ... }  }
+  #
+  # then
+  #
+  #  [ { sampled_at: datetime, 'hood-id-1' => float, 'hood-id-2' => float, etc } ]
+  #
+  def self.periodic_samples(interval, conditions = {})
+    records = Hash.new{ |h, k| h[k] = {} }
+    find_each do |fume_hood|
+      samples = fume_hood.periodic_samples(interval, conditions)
+      samples.each do |sample|
+        datetime = sample[:sampled_at]
+        records[datetime][fume_hood.external_id] = sample[:value]
+      end
+    end    
+    records.map do |datetime, values|
+      { sampled_at: datetime }.merge Hash[ values.sort_by{ |k, v| k } ]
+    end
+  end
+  
 end
