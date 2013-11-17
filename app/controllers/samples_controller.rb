@@ -6,6 +6,17 @@ class SamplesController < ApplicationController
   before_filter :authenticate_organization, only: [ :create ]
   respond_to :json, only: [ :create ]
   
+  # requests should GET csv with the following parameters:
+  # 
+  # token: authentication token for organization
+  # sample: string name of sample
+  # interval: seconds of the period
+  # start: iso-8601 datetime start of period
+  # stop: (optional) iso-8601 datetime stop of period
+  #
+  # Ex:
+  #  /samples.csv?token=vjaw8efj&sample=Percent%20Open&interval=3600&start=2013-11-11T00:00:00-05:00
+  
   def index
     render text: organization.samples.to_csv, format: :csv
   end
