@@ -29,7 +29,7 @@ class SamplesController < ApplicationController
       CSV.generate({}) do |csv|
         csv << data.first.keys
         data.each do |datum|
-          csv << datum.values
+          csv << datum.values.map{ |v| v.present? ? v : 'NA' }
         end
       end
     else
