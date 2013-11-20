@@ -59,7 +59,7 @@ module DeviceCloud
 		include Connect
 				
 		def initialize
-			self.auth = {	username: 'glencrossbrunet2', password: 'GlenBrown2!d' }
+			self.auth = {	username: 'glencrossbrunet', password: 'GlenBrown2!' }
 		end
 	end
 end
