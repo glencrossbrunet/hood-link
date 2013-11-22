@@ -1,10 +1,10 @@
-HL.Router = Backbone.Router.extend({
+HL.AdminRouter = Backbone.Router.extend({
   
   initialize: function() {
-    this.roles = new HL.RolesCollection();
     this.filters = new HL.FiltersCollection();
     this.filters.fetch();
     this.fumeHoods = new HL.FumeHoodsCollection();
+    this.roles = new HL.RolesCollection();
   },
   
   routes: {

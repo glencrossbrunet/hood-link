@@ -1,3 +1,4 @@
 HL.DashboardView = Backbone.View.extend({
-  id: 'dashboard'
+  id: 'dashboard',
+  template: 'dashboard'
 });
