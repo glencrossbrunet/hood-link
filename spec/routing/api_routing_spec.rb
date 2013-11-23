@@ -29,6 +29,11 @@ describe 'api routes' do
     it { should route_to(controller: 'fume_hoods', action: 'create') }
   end
   
+  describe 'POST /fume_hoods/upload' do
+    subject { { post: base_url + '/fume_hoods/upload' } }
+    it { should route_to(controller: 'fume_hoods', action: 'upload') }
+  end
+  
   describe 'PUT /fume_hoods/:id' do
     subject { { patch: base_url + '/fume_hoods/5' } }
     it { should route_to(controller: 'fume_hoods', action: 'update', id: '5') }

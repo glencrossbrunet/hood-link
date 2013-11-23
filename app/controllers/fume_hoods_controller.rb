@@ -35,8 +35,26 @@ class FumeHoodsController < ApplicationController
 		end
 		render json: { status: 200 }
 	end
+  
+  def upload
+    csv = params.fetch(:csv)
+    data = CSV.parse(csv, headers: true)
+    data.each do |row|
+      upload_from row.to_hash
+    end
+    render json: { status: 200 }
+  end
 	
 	private
+  
+  def upload_from(hash)
+    attrs = {}
+    hash.each { |k, v| attrs[k.strip] = v.strip }
+    query = organization.fume_hoods.where(external_id: attrs['external_id'])
+    fume_hood = query.first_or_initialize
+    fume_hood.data = attrs.except('external_id')
+    fume_hood.save
+  end
   
   def data_keys
     @data_keys ||= organization.filters.pluck(:key)

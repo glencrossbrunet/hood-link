@@ -11,6 +11,9 @@ HoodLink::Application.routes.draw do
 			member do
 				get 'display'
 			end
+      collection do
+        post 'upload'
+      end
 		end
     
     resources :samples, only: [:index, :create]

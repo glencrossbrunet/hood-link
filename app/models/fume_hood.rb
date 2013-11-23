@@ -27,6 +27,10 @@ class FumeHood < ActiveRecord::Base
     end
   end
   
+  def data=(hash)
+    write_attribute :data, data.merge(hash)
+  end
+  
   # outputs:
   #
   #  [ { sampled_at: datetime, value: float } ]
