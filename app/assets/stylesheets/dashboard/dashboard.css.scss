@@ -1,0 +1,39 @@
+#dashboard {
+  @include row();
+  padding-top: 20px;
+}
+
+#lines {
+  padding-left: 20px;
+  @include span-columns(3);
+  height: 100px;
+  
+  .line {
+    @include row();
+    padding: 2px;
+  }
+}
+
+#lines-new {
+  cursor: pointer;
+  background: #eee;
+  height: 3em;
+  line-height: 3em;
+  padding-left: 1em !important;
+  @include row();
+  &:hover {
+    background: #ccc;
+  }
+}
+
+#graph {
+  padding-right: 20px;
+  @include span-columns(9);
+  
+  .graph-area {
+    @include row();
+    border: 1px solid #ddd;
+    background: #fefefe;
+    height: 480px;
+  }
+}
