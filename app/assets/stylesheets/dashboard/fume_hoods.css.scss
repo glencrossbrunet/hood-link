@@ -21,5 +21,31 @@
     @include row();
     padding: 3px 0;
   }
+}
+
+.top {
+  margin: 4em;
+  text-align: center;
   
+  form {
+    display: inline-block;
+    legend {
+      text-align: center;
+      width: 100%;
+      font-size: 1.5em;
+    }
+  
+    input {
+      margin: 1em;
+    }
+  }
+}
+
+#new-fume-hood {
+  padding-right: 4em;
+}
+
+#fume-hoods-csv legend {
+  padding-left: 1em;
+  text-align: left;
 }

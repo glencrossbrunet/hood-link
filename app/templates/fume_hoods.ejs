@@ -1,7 +1,14 @@
-<form id="new-fume-hood">
-  <legend>create a new fume hood</legend>
-  <input name="external_id" type="text">
-  <input type="submit" value="Create">
-</form>
+<div class="top">
+  <form id="new-fume-hood">
+    <legend>create a new fume hood</legend>
+    <input name="external_id" type="text">
+    <input type="submit" value="Create">
+  </form>
+  
+  <form id="fume-hoods-csv">
+    <legend>or, upload csv</legend>
+    <input id="csv-upload" type="file" accept="text/csv"></input>
+  </form>
+</div>
 
 <ul id="fume-hoods-collection"></ul>

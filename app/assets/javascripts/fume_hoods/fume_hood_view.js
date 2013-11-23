@@ -2,6 +2,11 @@ HL.FumeHoodView = Backbone.View.extend({
   tagName: 'li',
   className: 'fume-hood',
   template: 'fume_hood',
+  templateData: function() {
+    return {
+      filters: router.filters.pluck('key')
+    };
+  },
   
   initialize: function() {
     _.bindAll(this, 'render');

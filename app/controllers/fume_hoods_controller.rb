@@ -1,3 +1,5 @@
+require 'csv'
+
 class FumeHoodsController < ApplicationController
   before_filter :authenticate_admin
   
@@ -48,12 +50,18 @@ class FumeHoodsController < ApplicationController
 	private
   
   def upload_from(hash)
-    attrs = {}
-    hash.each { |k, v| attrs[k.strip] = v.strip }
-    query = organization.fume_hoods.where(external_id: attrs['external_id'])
+    attrs = attrs_from hash
+    natural_key = attrs['external_id'] || attrs['hood_id']
+    query = organization.fume_hoods.where(external_id: natural_key)
     fume_hood = query.first_or_initialize
     fume_hood.data = attrs.except('external_id')
     fume_hood.save
+  end
+  
+  def attrs_from(hash)
+    attrs = {}
+    hash.each { |k, v| attrs[k.strip] = v.strip }
+    attrs
   end
   
   def data_keys

@@ -1,11 +1,10 @@
 <div class="admin-row">
   <%= external_id %>
-  <% _.each(data, function(value, key) { %>
-    <% if (value) { %>
-      <span class="metadata-bar"><%= value %></span>
+  <% _.each(filters, function(key) { %>
+    <% if (data[key]) { %>
+      <span class="metadata-bar"><%= data[key] %></span>
     <% } else { %>
       <span class="metadata-bar metadata-empty">(<%= key %>)</span>
     <% } %>
   <% }); %>
 </div>
-

@@ -10,6 +10,7 @@ HL.FumeHoodsView = Backbone.View.extend({
   
   events: {
     'submit #new-fume-hood': 'create',
+    'change #csv-upload': 'upload',
     'hl:render': 'renderCollection'
   },
   
@@ -17,6 +18,23 @@ HL.FumeHoodsView = Backbone.View.extend({
     ev.preventDefault();
     var data = $('#new-fume-hood').jsonify();
     this.collection.create(data, { wait: true });
+  },
+  
+  upload: function(ev) {
+    var $field, file, reader, collection = this.collection;
+    
+    $field = $('#csv-upload');
+    file = $field.prop('files')[0];
+    reader = new FileReader();
+    reader.onload = function() {
+      var xhr = $.post('/fume_hoods/upload', { csv: reader.result });
+      xhr.done(function() {
+        collection.fetch().done(function() {
+          $field.parent('form').trigger('reset');
+        });
+      });
+    };
+    reader.readAsText(file);
   },
   
   add: function(model) {
