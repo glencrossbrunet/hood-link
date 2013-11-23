@@ -4,11 +4,9 @@
 
 Open Source Application Stack:
 
-> [d3](https://github.com/mbostock/d3) graphing & [oboe](https://github.com/jimhigson/oboe.js) requests  
 > [backbone](https://github.com/jashkenas/backbone) client framework  
 > [ruby on rails](https://github.com/rails/rails) server framework  
 > [redis](https://github.com/antirez/redis) & [resque](https://github.com/resque/resque) background jobs  
-> [memcached](https://github.com/memcached/memcached) session store & cache  
 > [postgres](https://github.com/postgres/postgres) rdbms  
 
 ## Installation
@@ -98,7 +96,13 @@ Get all fume hoods with external id and data for displaying. Data defaults to fi
 POST /fume_hoods
 ```
 
-Create a new fume hood with a specific external id
+Create a new fume hood with a specific external id.
+
+```
+POST /fume_hoods/upload
+```
+
+Batch create or update fume hoods with :csv parameter raw valid csv.
 
 ```
 PUT /fume_hoods/:id
@@ -106,6 +110,12 @@ PATCH /fume_hoods/:id
 ```
 
 Update a fume hood with new data. Replaces all data. TODO: never remove fields. 
+
+```
+GET /fume_hoods/:id/display
+```
+
+Trigger a physical update by queueing a job for display.
 
 ```
 GET /filters
