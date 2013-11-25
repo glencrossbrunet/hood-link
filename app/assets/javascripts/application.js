@@ -1,4 +1,4 @@
 // application manifest
 //
-//= require jquery
+//= require jquery-latest
 //= require jquery_ujs

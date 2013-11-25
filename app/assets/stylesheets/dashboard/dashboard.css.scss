@@ -10,17 +10,30 @@
   
   .line {
     @include row();
-    padding: 2px;
+    cursor: pointer;
+    padding-left: 1em !important;
+    height: 3em;
+    line-height: 3em;
+    margin-bottom: 1px;
+  }
+  
+  .active {
+    background: $success;
+    &:hover {
+      background: $error;
+    }
+  }
+  
+  .inactive {
+    background: $error;
+    &:hover {
+      background: $success;
+    }
   }
 }
 
 #lines-new {
-  cursor: pointer;
   background: #eee;
-  height: 3em;
-  line-height: 3em;
-  padding-left: 1em !important;
-  @include row();
   &:hover {
     background: #ccc;
   }
@@ -36,4 +49,18 @@
     background: #fefefe;
     height: 480px;
   }
+}
+
+.modal {
+  position: fixed;
+  left: 50%;
+  $width: 600px;
+  width: $width;
+  margin-left: -$width / 2;
+  margin-top: 20px;
+  padding: 2em;
+  border: 3px solid #ccc;
+  
+  box-shadow: 0 0 140px #ccc;
+  background: #fefefe;
 }
