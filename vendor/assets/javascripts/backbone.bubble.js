@@ -76,7 +76,7 @@
         _.invoke(this.children, 'close');
         delete this.children;
       }
-    
+          
       // delete references (cant hurt)
       delete this.parent;
       

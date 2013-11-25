@@ -1,3 +1,7 @@
+<% content_for :head do %>
+	<%= stylesheet_link_tag 'plotly' %>
+<% end %>
+
 <% if user_admin? %>
 	<ul id="navigation">
 		<% %w(dashboard filters fume_hoods members).each do |tab| %>
@@ -11,6 +15,7 @@
 <%= templates 'app', 'templates' %>
 
 <% content_for :scripts do %>
+	<%= javascript_include_tag 'plotly' %>
 	<% if user_admin? %>
 		<%= javascript_include_tag 'admin' %>
 	<% else %>
