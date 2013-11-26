@@ -3,15 +3,15 @@ HL.FumeHoodsView = Backbone.View.extend({
   template: 'fume_hoods',
   
   initialize: function() {
-    _.bindAll(this, 'add', 'renderCollection');
-    this.collection.on('add', this.add);
+    _.bindAll(this, 'prepend', 'renderCollection');
+    this.listenTo(this.collection, 'add', this.prepend);
     this.collection.fetch();
   },
   
   events: {
     'submit #new-fume-hood': 'create',
     'change #csv-upload': 'upload',
-    'hl:render': 'renderCollection'
+    'render:after': 'renderCollection'
   },
   
   create: function(ev) {
@@ -37,13 +37,13 @@ HL.FumeHoodsView = Backbone.View.extend({
     reader.readAsText(file);
   },
   
-  add: function(model) {
-    var view = new HL.FumeHoodView({ model: model, parent: this });
-    this.$('#fume-hoods-collection').prepend(view.render().el);
+  prepend: function(model) {
+    var view = new HL.FumeHoodView({ model: model });
+    return this.add(view, 'prepend', '#fume-hoods-collection');
   },
   
   renderCollection: function() {
-    this.collection.each(this.add);
+    this.collection.each(this.prepend);
   }
   
 });

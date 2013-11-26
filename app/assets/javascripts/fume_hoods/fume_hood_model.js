@@ -1,6 +1,9 @@
 HL.FumeHoodModel = Backbone.Model.extend({
   defaults: function() {
-    return { data: new Backbone.Model }
+    return { 
+      external_id: '',
+      data: new Backbone.Model 
+    }
   },
   
   toJSON: function() {

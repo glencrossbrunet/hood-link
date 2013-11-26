@@ -4,7 +4,7 @@ HL.FilterFieldView = Backbone.View.extend({
   
   initialize: function() {
     _.bindAll(this, 'destroy', 'close');
-    this.model.on('remove', this.close);
+    this.listenTo(this.model, 'remove', this.close);
   },
   
   events: {

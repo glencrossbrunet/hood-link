@@ -2,8 +2,7 @@
 //
 //= require underscore
 //= require backbone
-//= require backbone.bubble
+//= require backbone.panorama
 //= require jquery.jsonify
-//= require ./extensions
 //= require ./namespace
 //= require ./setup

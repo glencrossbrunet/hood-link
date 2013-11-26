@@ -3,8 +3,8 @@ HL.RoleView = Backbone.View.extend({
   tagName: 'li',
   
   initialize: function() {
-    _.bindAll(this, 'destroy', 'close');
-    this.model.on('remove', this.close);
+    _.bindAll(this, 'destroy');
+    this.listenTo(this.model, 'remove', this.close);
   },
     
   events: {

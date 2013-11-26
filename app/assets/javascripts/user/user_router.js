@@ -3,8 +3,8 @@ HL.UserRouter = Backbone.Router.extend({
   initialize: function() {
     this.filters = new HL.FiltersCollection();
     this.filters.fetch();
-    // this.fumeHoods = new HL.FumeHoodsCollection();
-    // this.roles = new HL.RolesCollection();
+    this.fumeHoods = new HL.FumeHoodsCollection();
+    this.fumeHoods.fetch();
   },
   
   routes: {

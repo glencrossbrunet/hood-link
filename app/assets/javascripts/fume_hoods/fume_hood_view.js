@@ -3,14 +3,14 @@ HL.FumeHoodView = Backbone.View.extend({
   className: 'fume-hood',
   template: 'fume_hood',
   templateData: function() {
-    return {
-      filters: router.filters.pluck('key')
-    };
+    var data = this.model.toJSON();
+    data.filters = router.filters.pluck('key');
+    return data;
   },
   
   initialize: function() {
-    _.bindAll(this, 'render');
-    this.model.on('change', this.render);
+    _.bindAll(this, 'render', 'close');
+    this.listenTo(this.model, 'change', this.render);
   },
   
   events: {
