@@ -53,14 +53,25 @@
 
 .modal {
   position: fixed;
-  left: 50%;
-  $width: 600px;
-  width: $width;
-  margin-left: -$width / 2;
-  margin-top: 20px;
-  padding: 2em;
-  border: 3px solid #ccc;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.05);
+  z-index: 100;
+  text-align: center;
   
-  box-shadow: 0 0 140px #ccc;
-  background: #fefefe;
+  .modal-content {
+    display: inline-block;
+    position: relative;
+    border: 3px solid #ccc;
+    box-shadow: 0 0 140px #ccc;
+    background: #fefefe;
+    margin-top: 50px;
+    padding: 2em;
+    $width: 600px;
+    width: $width;
+  }
+  
+  
 }

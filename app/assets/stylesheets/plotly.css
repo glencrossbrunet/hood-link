@@ -1,8 +1,6 @@
 /*
  * Plotly stylesheet manifest
  *
- *= require plotly/tipsy
- *= require plotly/prettify
- *= require plotly/font-awesome
- *= require plotly/plotly.min
+ *= require tipsy
+ *= require plotly.min
 */

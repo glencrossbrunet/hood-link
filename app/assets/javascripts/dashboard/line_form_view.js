@@ -13,7 +13,8 @@ HL.LineFormView = Backbone.View.extend({
   
   events: {
     'submit': 'create',
-    'click .close': 'close'
+    'click .close': 'close',
+    'click': 'check'
   },
   
   create: function(ev) {
@@ -21,6 +22,10 @@ HL.LineFormView = Backbone.View.extend({
     var json = this.$el.jsonify();
     this.collection.add({ filters: json });
     this.close();
+  },
+  
+  check: function(ev) {
+    if (ev.target == this.el) this.close(ev);
   }
   
   

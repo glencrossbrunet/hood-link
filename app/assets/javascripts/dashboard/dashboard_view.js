@@ -3,24 +3,24 @@ HL.DashboardView = Backbone.View.extend({
   template: 'dashboard',
   
   initialize: function() {
-    _.bindAll(this, 'new', 'add', 'graph');
+    _.bindAll(this, 'new', 'graph');
     this.collection = new HL.LinesCollection;
-    this.collection.on('add', this.add);
-    setTimeout(this.graph, 2000);
+    this.listenTo(this.collection, 'add', this.prepend);
   },
   
   events: {
     'click #lines-new': 'new'
   },
   
-  new: function() {
+  new: function(ev) {
+    ev.preventDefault();
     var view = new HL.LineFormView({ collection: this.collection });
     $('#dashboard').prepend(view.render().el);
   },
   
-  add: function(model) {
-    this.$('#lines').append('<div class="line active">New Line</div>');
-    
+  prepend: function(model) {
+    var view = new HL.LineView({ model: model });
+    this.add(view, '#lines');
   },
   
   graph: function() {
@@ -34,10 +34,8 @@ HL.DashboardView = Backbone.View.extend({
     };
     
     Plotly.plot('#graph', data, layout);
-    */
-    console.log($('#graph'));
-    
-    Plotly.plot('#graph', [ { x: [0, 1, 2, 3, 4, 5], y: [1, 4, 3, 6, 4, 7] } ]);
+    */    
+    // Plotly.plot($('#graph .graph-area')[0], [ { x: [0, 1, 2, 3, 4, 5], y: [1, 4, 3, 6, 4, 7] } ]);
     
     
   }
