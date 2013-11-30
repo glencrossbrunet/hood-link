@@ -1,9 +1,16 @@
-<button type="button" class="update-display">Update Display</button>
-
 <% _.each(filters, function(filter) { %>
   <div class="field">
-    <label><%= filter.key %></label>
-    <input type="text" name="<%= filter.key %>" value="<%= data[filter.key] %>">
+    <div class="form-row">
+      <div class="form-label">
+        <label><%= filter.key %></label>
+      </div>
+      <div class="form-field">
+        <input type="text" name="<%= filter.key %>" value="<%= data[filter.key] %>">
+      </div>
+    </div>    
   </div>
 <% }); %>
-<button type="submit">Save</button>
+<div class="form-buttons">
+  <button type="button" class="update-display">Update Display</button>
+  <button type="submit">Save</button>
+</div>

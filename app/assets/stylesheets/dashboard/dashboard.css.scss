@@ -72,6 +72,26 @@
     $width: 600px;
     width: $width;
   }
-  
-  
+}
+
+.form-row {
+  @include row();
+  margin-bottom: 2px;
+  .form-label {
+    @include span-columns(5);
+    text-align: right;
+  }
+  .form-field {
+    @include span-columns(7);
+    text-align: left;
+    input {
+      @include span-columns(5);
+    }
+  }
+}
+
+.form-buttons {
+  margin-top: 10px;
+  @include row();
+  text-align: center;
 }
