@@ -2,7 +2,6 @@ HL.AdminRouter = Backbone.Router.extend({
   
   initialize: function() {
     this.filters = new HL.FiltersCollection();
-    this.filters.fetch();
     this.fumeHoods = new HL.FumeHoodsCollection();
     this.roles = new HL.RolesCollection();
   },
@@ -50,6 +49,15 @@ HL.AdminRouter = Backbone.Router.extend({
     if (this.currentView) this.currentView.close();
     $('#hood-link').append(view.render().el);
     this.currentView = view;
+  },
+  
+  filterKeys: function() {
+    if (this.filters.length) {
+      return this.filters.pluck('key');
+    } else {
+      var json = $('meta[name="filters"]').prop('content');
+      return JSON.parse(json);
+    }
   }
   
 });

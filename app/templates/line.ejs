@@ -1,1 +1,4 @@
-New Line
+<div class="<%= visible ? 'active' : 'inactive' %>">
+  <span style="float: left;"><%= name || "(name)" %> (<%= visible %>)</span>
+  <a style="float: right;" href="#" data-action="destroy" class="destroy">x</a>
+</div>

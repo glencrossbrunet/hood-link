@@ -16,5 +16,14 @@ HL.FumeHoodModel = Backbone.Model.extend({
     var attributes = json;
     attributes.data = new Backbone.Model(json.data);
     return attributes;
+  },
+  
+  test: function(params) {
+    var data = this.get('data');
+    return _.isEmpty(params) || _.all(params, function(value, key) {
+      if (!value) return true;
+      if (value === '*' && data.get(key)) return true;
+      return data.get(key) == value;
+    });
   }
 });

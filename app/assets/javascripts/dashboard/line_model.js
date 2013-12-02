@@ -1,16 +1,31 @@
 HL.LineModel = Backbone.Model.extend({
   
-  fumeHoods: function() {
+  initialize: function() {
+    this.on('change:filters', this.setFumeHoods, this);
+    this.trigger('change:filters');
+  },
+  
+  defaults: function() {
+    return { 
+      name: '',
+      filters: {},
+      fumeHoods: new Backbone.Collection,
+      visible: false
+    };
+  },
+  
+  setFumeHoods: function() {
     var filters = this.get('filters');
     
-    var fumeHoods = router.fumeHoods.filter(function(hood) {
-      var data = hood.get('data');
-      return _.every(filters, function(value, key) {
-        return data.get(key) === value;
-      });
+    var fumeHoods = router.fumeHoods.select(function(fumeHood) {
+      return fumeHood.test(filters);
     });
-    
-    return fumeHoods;
+    return this.set('fumeHoods', fumeHoods);
+  },
+  
+  toggle: function() {
+    this.set('visible', !this.get('visible'));
   }
+  
   
 });

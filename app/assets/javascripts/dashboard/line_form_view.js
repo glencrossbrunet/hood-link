@@ -4,12 +4,11 @@ HL.LineFormView = Backbone.View.extend({
   tagName: 'form',
   template: 'line_form',
   templateData: function() {
-    return { filters: router.filterKeys };
+    return { filters: router.filterKeys() };
   },
   
   intialize: function() {
     _.bindAll(this, 'close');
-    console.log(this.tepmateData());
   },
   
   events: {
@@ -21,7 +20,7 @@ HL.LineFormView = Backbone.View.extend({
   create: function(ev) {
     ev.preventDefault();
     var json = this.$el.jsonify();
-    this.collection.add({ filters: json });
+    this.collection.add(json);
     this.close();
   },
   

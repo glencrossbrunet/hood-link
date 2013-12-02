@@ -1,11 +1,11 @@
-<% _.each(filters, function(filter) { %>
+<% _.each(filters, function(key) { %>
   <div class="field">
     <div class="form-row">
       <div class="form-label">
-        <label><%= filter.key %></label>
+        <label><%= key %></label>
       </div>
       <div class="form-field">
-        <input type="text" name="<%= filter.key %>" value="<%= data[filter.key] %>">
+        <input type="text" name="<%= key %>" value="<%= data[key] %>">
       </div>
     </div>    
   </div>

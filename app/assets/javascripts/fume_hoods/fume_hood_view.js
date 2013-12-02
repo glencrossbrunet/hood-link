@@ -2,9 +2,10 @@ HL.FumeHoodView = Backbone.View.extend({
   tagName: 'li',
   className: 'fume-hood',
   template: 'fume_hood',
+  
   templateData: function() {
     var data = this.model.toJSON();
-    data.filters = router.filters.pluck('key');
+    data.filters = router.filterKeys();
     return data;
   },
   
@@ -25,7 +26,7 @@ HL.FumeHoodView = Backbone.View.extend({
       this.form = null;
     } else {
       this.form = new HL.FumeHoodFormView({ model: this.model });
-      this.$el.after(this.form.render({ filters: router.filters.toJSON() }).el);      
+      this.$el.after(this.form.render({ filters: router.filterKeys() }).el);      
     }
   }
 });

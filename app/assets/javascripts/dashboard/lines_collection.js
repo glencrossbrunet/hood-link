@@ -1,4 +1,6 @@
 HL.LinesCollection = Backbone.Collection.extend({
+  model: HL.LineModel,
+  
   
   xAxis: function() {
     return _.range(0, 10, 1);

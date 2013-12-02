@@ -3,6 +3,9 @@
   padding-top: 20px;
 }
 
+$lineHeight: 3em;
+$active: rgba(200, 200, 255, 0.5);
+
 #lines {
   padding-left: 20px;
   @include span-columns(3);
@@ -11,29 +14,34 @@
   .line {
     @include row();
     cursor: pointer;
-    padding-left: 1em !important;
-    height: 3em;
-    line-height: 3em;
     margin-bottom: 1px;
+    height: $lineHeight;
+  }
+  
+  .active, .inactive {
+    padding-left: 1em;
+    padding-right: 1em;
+    height: $lineHeight;
+    line-height: $lineHeight;
   }
   
   .active {
-    background: $success;
-    &:hover {
-      background: $error;
-    }
+    background: $active;
   }
   
   .inactive {
-    background: $error;
-    &:hover {
-      background: $success;
-    }
+    background: #eee;
+  }
+  
+  .destroy:hover {
+    color: red;
   }
 }
 
 #lines-new {
-  background: #eee;
+  padding-left: 1em !important;
+  line-height: $lineHeight;
+  background: #ddd;
   &:hover {
     background: #ccc;
   }

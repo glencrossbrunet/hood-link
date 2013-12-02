@@ -4,8 +4,7 @@ HL.UserRouter = Backbone.Router.extend({
     this.fumeHoods = new HL.FumeHoodsCollection();
     this.fumeHoods.fetch();
     
-    var json = $('meta[name="filters"]').prop('content');
-    this.filterKeys = JSON.parse(json);
+    
   },
   
   routes: {
@@ -16,6 +15,11 @@ HL.UserRouter = Backbone.Router.extend({
     console.log('route: dashboard');
     var view = new HL.DashboardView();
     $('#hood-link').append(view.render().el);
+  },
+  
+  filterKeys: function() {
+    var json = $('meta[name="filters"]').prop('content');
+    return JSON.parse(json);
   }
   
 });
