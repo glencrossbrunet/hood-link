@@ -1,8 +1,14 @@
 <div class="modal-content">
-  <% _.each(filters, function(filter) { %>
+  <% _.each(filters, function(key) { %>
     <div class="field">
-      <label><%= filter.key %></label>
-      <input type="text" name="<%= filter.key %>">
+      <div class="form-row">
+        <div class="form-label">
+          <label><%= key %></label>
+        </div>
+        <div class="form-field">
+          <input type="text" name="<%= key %>">
+        </div>
+      </div> 
     </div>
   <% }); %>
   <button type="submit">Create</button>

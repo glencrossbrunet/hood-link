@@ -1,7 +1,7 @@
 require 'csv'
 
 class FumeHoodsController < ApplicationController
-  before_filter :authenticate_admin, except: [ :samples ]
+  before_filter :authenticate_admin, except: [ :index, :samples ]
   
   respond_to :json
   

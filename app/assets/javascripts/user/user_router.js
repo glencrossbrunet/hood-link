@@ -1,10 +1,11 @@
 HL.UserRouter = Backbone.Router.extend({
   
   initialize: function() {
-    this.filters = new HL.FiltersCollection();
-    this.filters.fetch();
     this.fumeHoods = new HL.FumeHoodsCollection();
     this.fumeHoods.fetch();
+    
+    var json = $('meta[name="filters"]').prop('content');
+    this.filterKeys = JSON.parse(json);
   },
   
   routes: {

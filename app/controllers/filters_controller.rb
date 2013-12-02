@@ -1,5 +1,5 @@
 class FiltersController < ApplicationController
-  before_filter :authenticate_admin
+  before_filter :authenticate_admin, except: [ :index ]
   respond_to :json
   
   def index

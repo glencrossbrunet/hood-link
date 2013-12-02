@@ -4,11 +4,12 @@ HL.LineFormView = Backbone.View.extend({
   tagName: 'form',
   template: 'line_form',
   templateData: function() {
-    return { filters: router.filters.toJSON() };
+    return { filters: router.filterKeys };
   },
   
   intialize: function() {
     _.bindAll(this, 'close');
+    console.log(this.tepmateData());
   },
   
   events: {
