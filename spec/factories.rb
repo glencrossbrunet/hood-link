@@ -38,7 +38,7 @@ FactoryGirl.define do
   end
   
   factory :sample_metric do
-    name 'flow rate'
+    name 'Percent Open'
   end
   
   factory :sample do

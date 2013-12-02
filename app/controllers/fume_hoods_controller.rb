@@ -1,7 +1,7 @@
 require 'csv'
 
 class FumeHoodsController < ApplicationController
-  before_filter :authenticate_admin
+  before_filter :authenticate_admin, except: [ :samples ]
   
   respond_to :json
   
@@ -45,6 +45,17 @@ class FumeHoodsController < ApplicationController
       upload_from row.to_hash
     end
     render json: { status: 200 }
+  end
+  
+  def samples
+    @fume_hood = organization.fume_hoods.find(params.fetch :id)
+    metric_name = params.fetch(:metric, 'Percent Open')
+    range = 2.weeks.ago .. DateTime.now
+    period = 1.hour.to_i
+    metric = SampleMetric.find_by(name: metric_name)
+    query = { sample_metric_id: metric.id, sampled_at: range }
+    samples = @fume_hood.periodic_samples(period, query)
+    render json: samples.to_json
   end
 	
 	private

@@ -37,4 +37,15 @@ describe FumeHoodsController do
     end
   end
   
+  describe '#samples' do
+    let(:fume_hood) { create(:fume_hood, organization: organization) }
+    before { create(:sample, fume_hood: fume_hood) }
+    before { get :samples, format: :json, id: fume_hood.id }
+    
+    it 'should be exactly 2 weeks of data' do
+      json = MultiJson.load(response.body)
+      expect(json.length).to eq(7*2 * 24 + 1)
+    end
+  end
+  
 end

@@ -10,6 +10,7 @@ HoodLink::Application.routes.draw do
     resources :fume_hoods, only: [:index, :create, :update] do
 			member do
 				get 'display'
+        get 'samples'
 			end
       collection do
         post 'upload'
