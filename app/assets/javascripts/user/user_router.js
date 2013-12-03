@@ -2,9 +2,7 @@ HL.UserRouter = Backbone.Router.extend({
   
   initialize: function() {
     this.fumeHoods = new HL.FumeHoodsCollection();
-    this.fumeHoods.fetch();
-    
-    
+    this.fumeHoods.fetch();    
   },
   
   routes: {

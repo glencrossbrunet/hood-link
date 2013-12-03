@@ -5,7 +5,20 @@ HL.DashboardView = Backbone.View.extend({
   initialize: function() {
     _.bindAll(this, 'new', 'graph');
     this.collection = new HL.LinesCollection;
-    this.listenTo(this.collection, 'add', this.prepend);
+    this.once('ready', this.listen, this);
+    
+    var self = this;
+    function getSamples() {
+      var samples = router.fumeHoods.invoke('get', 'samples');
+      if (samples.length == 0) {
+        setTimeout(getSamples, 100);
+        return;
+      }
+      var promises = _.invoke(samples, 'fetch');
+      $.when.apply($, promises).done(function() { self.trigger('ready'); });
+    }
+    
+    setTimeout(getSamples, 100);
   },
   
   events: {
@@ -23,20 +36,29 @@ HL.DashboardView = Backbone.View.extend({
     this.add(view, '#lines');
   },
   
+  listen: function() {
+    $('#graph .loading').html('ready!');
+    this.listenTo(this.collection, 'add', this.prepend);
+    this.listenTo(this.collection, 'change remove', this.graph);
+  },
+  
   graph: function() {
-    /*
-    var data = this.collection.toGraphData();
-    
+    var $graph = $('#graph');
+    var active = this.collection.where({ visible: true });
+    var data = _.map(active, function(line) {
+      var records = line.get('data');
+      records.name = line.get('name');
+      return records;
+    });
     var layout = {
-      showlegend: false,
-      xaxis: { zeroline: false },
-      yaxis: { zeroline: false }
+      xaxis: { tickangle: 45, nticks: 12 },
+      yaxis: { zeroline: false}
     };
-    
-    Plotly.plot('#graph', data, layout);
-    */    
-    // Plotly.plot($('#graph .graph-area')[0], [ { x: [0, 1, 2, 3, 4, 5], y: [1, 4, 3, 6, 4, 7] } ]);
-    
-    
+    $('.graph-area', $graph).fadeOut('fast', function() {
+      $graph.find('.graph-area').remove();
+      $graph.append('<div class="graph-area"></div>');
+      Plotly.plot($graph.find('.graph-area')[0], data, layout);
+    });
+        
   }
 });

@@ -1,8 +1,15 @@
 HL.FumeHoodModel = Backbone.Model.extend({
+  
+  initialize: function() {
+    var samples = this.get('samples');
+    samples.url = '/fume_hoods/' + this.id + '/samples';
+  },
+  
   defaults: function() {
     return { 
       external_id: '',
-      data: new Backbone.Model
+      data: new Backbone.Model,
+      samples: new Backbone.Collection
     }
   },
   
