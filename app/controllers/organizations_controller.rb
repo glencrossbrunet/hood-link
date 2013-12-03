@@ -6,6 +6,8 @@ class OrganizationsController < ApplicationController
   layout :resolve_layout
   
   def dashboard
+    @fume_hood_json = organization.fume_hoods.to_json
+    @filter_key_json = organization.filters.pluck(:key).to_json
   end
   
   def index

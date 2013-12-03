@@ -27,6 +27,10 @@ class FumeHood < ActiveRecord::Base
     end
   end
   
+  def as_json(options = {})
+    attributes.slice(* %w(id external_id data updated_at))
+  end
+  
   def data=(hash)
     write_attribute :data, data.merge(hash)
   end

@@ -10,7 +10,8 @@
 	</ul>
 <% end %>
 
-<meta name="filters" content="<%= organization.filters.pluck(:key).to_json %>">
+<meta name="filters" content="<%= @filter_key_json %>">
+<meta name="fumehoods" content="<%= @fume_hood_json %>">
 <div id="hood-link"></div>
 
 <%= templates 'app', 'templates' %>

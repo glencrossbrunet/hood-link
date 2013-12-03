@@ -1,8 +1,8 @@
 HL.UserRouter = Backbone.Router.extend({
   
   initialize: function() {
-    this.fumeHoods = new HL.FumeHoodsCollection();
-    this.fumeHoods.fetch();    
+    var json = $('meta[name="fumehoods"]').prop('content');
+    this.fumeHoods = new HL.FumeHoodsCollection(JSON.parse(json));
   },
   
   routes: {

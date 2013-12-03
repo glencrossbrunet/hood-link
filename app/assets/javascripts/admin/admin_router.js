@@ -1,8 +1,10 @@
 HL.AdminRouter = Backbone.Router.extend({
   
   initialize: function() {
+    var json = $('meta[name="fumehoods"]').prop('content');
+    
     this.filters = new HL.FiltersCollection();
-    this.fumeHoods = new HL.FumeHoodsCollection();
+    this.fumeHoods = new HL.FumeHoodsCollection(JSON.parse(json));
     this.roles = new HL.RolesCollection();
   },
   
