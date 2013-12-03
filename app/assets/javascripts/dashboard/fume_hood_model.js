@@ -26,12 +26,15 @@ HL.FumeHoodModel = Backbone.Model.extend({
   },
   
   test: function(params) {
+    return _.isEmpty(params) || _.all(params, this.testParam, this);
+  },
+  
+  testParam: function(value, key) {
     var data = this.get('data');
-    if (!data.get) console.log(data);
-    return _.isEmpty(params) || _.all(params, function(value, key) {
-      if (!value) return true;
-      if (value === '*' && data.get(key)) return true;
-      return data.get(key) == value;
-    });
+    
+    if (!value) return true;
+    if (value === 'x' || value === 'X') return !data.get(key);
+    if (value === '*') return !!data.get(key);
+    return data.get(key) == value;
   }
 });
