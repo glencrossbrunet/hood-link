@@ -27,6 +27,7 @@ HL.FumeHoodModel = Backbone.Model.extend({
   
   test: function(params) {
     var data = this.get('data');
+    if (!data.get) console.log(data);
     return _.isEmpty(params) || _.all(params, function(value, key) {
       if (!value) return true;
       if (value === '*' && data.get(key)) return true;
