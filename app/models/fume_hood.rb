@@ -40,12 +40,10 @@ class FumeHood < ActiveRecord::Base
   #  [ { sampled_at: datetime, value: float } ]
   #
   def periodic_samples(interval, conditions = {})
-    period = conditions[:sampled_at]
     sparse_samples = samples.where(conditions).sparse(:sampled_at)
-    if period.present?
-      sparse_samples.starting(period.begin).ending(period.end)
-    end
-    sparse_samples.regularize_left(interval, :value)
+    period = conditions[:sampled_at]
+    sparse_samples.for(period) if period.present?
+    sparse_samples.intervals_left(interval.seconds)
   end
   
   # outputs:

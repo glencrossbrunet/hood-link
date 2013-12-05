@@ -23,7 +23,7 @@ class SamplesController < ApplicationController
     interval = params.fetch(:interval).to_i
     conditions = { sample_metric_id: sample_metric.id, sampled_at: period_start..DateTime.now }
     
-    data = organization.fume_hoods.periodic_samples(interval, conditions)
+    data = organization.fume_hoods.periodic_samples(interval.seconds, conditions)
     
     csv = if data.any?
       CSV.generate({}) do |csv|

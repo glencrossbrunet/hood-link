@@ -54,7 +54,7 @@ class FumeHoodsController < ApplicationController
     period = 1.hour.to_i
     metric = SampleMetric.find_by(name: metric_name)
     query = { sample_metric_id: metric.id, sampled_at: range }
-    samples = @fume_hood.periodic_samples(period, query)
+    samples = @fume_hood.periodic_samples(period.seconds, query)
     render json: samples.to_json
   end
 	
