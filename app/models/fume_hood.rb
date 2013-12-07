@@ -35,16 +35,34 @@ class FumeHood < ActiveRecord::Base
     write_attribute :data, data.merge(hash)
   end
   
-  # outputs:
-  #
-  #  [ { sampled_at: datetime, value: float } ]
-  #
-  def periodic_samples(interval, conditions = {})
-    sparse_samples = samples.where(conditions).sparse(:sampled_at)
-    period = conditions[:sampled_at]
-    sparse_samples.for(period) if period.present?
-    sparse_samples.intervals_left(interval.seconds)
+  ##################################################################
+  # INTERVALS
+  
+  # { eternal_id => [intervals], ... }
+  def self.intervals(days, interval)
+    data = {}
+    find_each do |fume_hood|
+      data[fume_hood.external_id] = fume_hood.intervals(days, interval)
+    end
+    data
   end
+  
+  # [ { sampled_at: datetime, value: float, unit: string } ]
+  def intervals(days, interval)
+    days.map { |day| daily_intervals(day, interval) }.flatten(1)
+  end
+  
+  def daily_intervals(day, interval)
+    # TODO: need caching
+    samples.percent_open.daily_intervals(day, interval)
+  end
+  
+  def cache_key(day, interval)
+    "fh#{id}_#{day.strftime('%Y%m%d')}_#{interval.seconds.to_i}"
+  end
+  
+  #################################################################
+  # CSV Periods
   
   # outputs:
   #
@@ -62,10 +80,9 @@ class FumeHood < ActiveRecord::Base
         datetime = sample[:sampled_at]
         records[datetime][fume_hood.external_id] = sample[:value]
       end
-    end    
+    end
     records.map do |datetime, values|
       { sampled_at: datetime }.merge Hash[ values.sort_by{ |k, v| k } ]
     end
-  end
-  
+  end 
 end

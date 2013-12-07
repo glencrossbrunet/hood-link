@@ -1,6 +1,7 @@
 HL.AdminRouter = Backbone.Router.extend({
   
   initialize: function() {
+    this.lines = new HL.LinesCollection();
     this.filters = new HL.FiltersCollection();
     this.fumeHoods = new HL.FumeHoodsCollection();
     this.roles = new HL.RolesCollection();
@@ -23,7 +24,7 @@ HL.AdminRouter = Backbone.Router.extend({
   dashboard: function() {
     console.log('route: dashboard');
     $('a[href="dashboard"]').addClass('selected');
-    this.show(new HL.DashboardView());
+    this.show(new HL.DashboardView({ collection: this.lines }));
   },
   
   filters: function() {

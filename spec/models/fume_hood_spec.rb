@@ -10,8 +10,6 @@
 #  data            :json             default({})
 #
 
-require 'spec_helper'
-
 describe FumeHood do
   
   describe '#validate' do
@@ -34,95 +32,85 @@ describe FumeHood do
     end
   end
   
-  describe 'data json store' do
-    let(:fume_hood) { create(:fume_hood) }
-    
+  let(:fume_hood) { create(:fume_hood) }
+  
+  describe '#data' do
     describe 'defaults to hash' do
       subject { fume_hood.data }
       it { should eq({}) }
     end
     
-    specify 'add data' do
+    specify 'merges data' do
       fume_hood.data = { 'building' => 'McTavish' }
       expect(fume_hood.data['building']).to eq('McTavish')
     end
   end
   
-  describe '#display from mac_address and gateway_id' do
-    let(:fume_hood) { create(:fume_hood) }
-    before { fume_hood.update_attribute :data, 'mac_address' => 'abcde', 'gateway_id' => '12345' }
+  describe '#display' do
     subject { fume_hood.display }
-    it { should eq('mac_address' => 'abcde', 'gateway_id' => '12345') }
+    
+    describe 'no mac_address' do
+      before { fume_hood.update_attribute :data, 'gateway_id' => '12345' }
+      it { should be_nil }
+    end
+    
+    describe 'no gateway_id' do
+      before { fume_hood.update_attribute :data, 'mac_address' => '12345' }
+      it { should be_nil }
+    end
+    
+    describe 'mac_address and gateway_id' do
+      let(:display) { { 'mac_address' => 'abcde', 'gateway_id' => '12345' } }
+      before { fume_hood.update_attribute :data, display }
+      it { should eq(display) }
+    end
   end
   
-  describe '#periodic_samples' do
-    let(:fume_hood) { create(:fume_hood) }
-    before do
-      fume_hood.samples.create([
-        { sample_metric_id: 1, sampled_at: DateTime.parse('Jan 3, 2013 02:00'), value: 20 },
-        { sample_metric_id: 1, sampled_at: DateTime.parse('Jan 3, 2013 02:15'), value: 30 }
-      ])
+  describe '::intervals' do
+    let(:fume_hoods) do
+      hoods = 2.times.map { create(:fume_hood) }
+      FumeHood.where(id: hoods.map(&:id))
     end
     
-    let(:period) do
-      DateTime.parse('Jan 3, 2013 01:00')..DateTime.parse('Jan 3, 2013 03:00')
+    let(:range) { Date.parse('Aug 10, 2011')..Date.parse('Aug 14, 2011') }
+    let(:intervals) { fume_hoods.intervals(range, 1.hour) }
+    
+    it 'should have each hood' do
+      expect(intervals.keys).to eq(fume_hoods.map(&:external_id))
     end
     
-    let(:samples) { fume_hood.periodic_samples(30.minutes, sampled_at: period) }
-    
-    subject { samples.map { |h| h.slice(:sampled_at, :value).symbolize_keys } }
-    
-    it do
-      should be_matching([
-        { sampled_at: DateTime.parse('Jan 3, 2013 01:00') },
-        { sampled_at: DateTime.parse('Jan 3, 2013 01:30') },
-        { sampled_at: DateTime.parse('Jan 3, 2013 02:00'), value: 20.0 },
-        { sampled_at: DateTime.parse('Jan 3, 2013 02:30'), value: 30.0 },
-        { sampled_at: DateTime.parse('Jan 3, 2013 03:00'), value: 30.0 }
-      ])
+    it 'should be intervals' do
+      hood = fume_hoods.first
+      expect(intervals[hood.external_id]).to eq(hood.intervals(range, 1.hour))
     end
   end
-
-  describe '::periodic_samples' do
-    let(:first) { create(:fume_hood) }
-    let(:second) { create(:fume_hood) }
-    let(:fume_hoods) { FumeHood.where(id: [ first, second ].map(&:id)) }
+  
+  describe '#intervals' do
+    let(:range) { Date.parse('Aug 10, 2011')..Date.parse('Aug 14, 2011') }
+    let(:intervals) { fume_hood.intervals(range, 1.hour) }
     
-    before do
-      first.samples.create([
-        { sample_metric_id: 1, sampled_at: DateTime.parse('Jan 3, 2013 03:00'), value: 20 },
-        { sample_metric_id: 1, sampled_at: DateTime.parse('Jan 3, 2013 04:00'), value: 30 }
-      ])
-      second.samples.create({ sample_metric_id: 1, sampled_at: DateTime.parse('Jan 3, 2013 03:15'), value: 15 })
+    it 'should be over a 5 day period' do
+      expect(intervals.length).to eq(24 * 5)
+    end
+  end
+  
+  describe '#daily_intervals' do
+    let(:day) { Date.parse('Jan 5, 2005') }
+    before { create(:pct_sample, fume_hood: fume_hood, sampled_at: day.advance(hours: -1)) }
+    let(:intervals) { fume_hood.daily_intervals(day, 1.hour) }
+    
+    it 'should be over a 24 hour period' do
+      expect(intervals.length).to eq(24)
     end
     
-    let(:start) { DateTime.parse('Jan 3, 2013 02:30') }
-    let(:stop) { DateTime.parse('Jan 3, 2013 04:00') }
-    let(:period) { start..stop }
-    
-    subject { fume_hoods.periodic_samples(30.minutes, sample_metric_id: 1, sampled_at: period) }
-    
-    describe 'samples ready for csv' do
-      it do
-        should be_matching([
-          [ DateTime.parse('Jan 3, 2013 02:30'), nil, nil ],
-          [ DateTime.parse('Jan 3, 2013 03:00'), 20.0, nil ],
-          [ DateTime.parse('Jan 3, 2013 03:30'), 20.0, 15.0 ],
-          [ DateTime.parse('Jan 3, 2013 04:00'), 30.0, 15.0 ]
-        ].map { |values| 
-          Hash[ [:sampled_at, first.external_id, second.external_id].zip(values) ]
-        })
-      end
+    it 'should have 3 fields' do
+      expect(intervals.first.keys).to eq(%w(sampled_at value unit))
     end
-    let(:expected) do
-      
-    end
-    
-    specify 'samples ready to be csv' do
-      conditions = {  }
-      output = 
-      expect(output).to be_matching(expected)
-    end
-    
+  end
+  
+  describe '#cache_key' do
+    let(:fume_hood) { create(:fume_hood) }
+    subject { fume_hood.cache_key(Date.parse('Feb 16, 2001'), 1.hour) }
+    it { should eq("fh#{fume_hood.id}_20010216_3600") }
   end
 end

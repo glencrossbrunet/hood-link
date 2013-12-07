@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe FumeHoodsController do
   include_context 'admin of organization'
   
@@ -9,7 +7,6 @@ describe FumeHoodsController do
       get :index, format: :json
     end
     specify 'fume hoods returned' do
-      json = MultiJson.load(response.body)
       expect(json.length).to eq(2)
     end
   end
@@ -38,14 +35,19 @@ describe FumeHoodsController do
   end
   
   describe '#samples' do
-    let(:fume_hood) { create(:fume_hood, organization: organization) }
-    before { create(:sample, fume_hood: fume_hood) }
-    before { get :samples, format: :json, id: fume_hood.id }
+    before do
+      2.times do
+         create(:fume_hood, organization: organization)
+      end
+    end
     
-    it 'should be exactly 2 weeks of data' do
-      json = MultiJson.load(response.body)
-      expect(json.length).to eq(7*2 * 24 + 1)
+    let(:fume_hoods) { organization.fume_hoods }
+
+    before { get :samples, format: :json }
+    
+    describe 'default 2 weeks by hour' do
+      subject { json[fume_hoods.first.external_id] }
+      its(:length) { should eq(14 * 24) } 
     end
   end
-  
 end

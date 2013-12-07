@@ -48,14 +48,15 @@ class FumeHoodsController < ApplicationController
   end
   
   def samples
-    @fume_hood = organization.fume_hoods.find(params.fetch :id)
-    metric_name = params.fetch(:metric, 'Percent Open')
-    range = 2.weeks.ago .. DateTime.now
-    period = 1.hour.to_i
-    metric = SampleMetric.find_by(name: metric_name)
-    query = { sample_metric_id: metric.id, sampled_at: range }
-    samples = @fume_hood.periodic_samples(period.seconds, query)
-    render json: samples.to_json
+    fume_hoods = organization.fume_hoods
+    
+    start = fetch_date(:begin, Date.today.advance(weeks: -2))
+    stop = fetch_date(:end, Date.yesterday)
+    interval = 1.hour
+    period = start .. stop
+    
+    data = fume_hoods.intervals(period, interval)
+    render json: data.to_json
   end
 	
 	private
@@ -82,6 +83,17 @@ class FumeHoodsController < ApplicationController
   def metadata
     keys = data_keys
     Hash[ keys.zip([''] * keys.length) ]
+  end
+  
+  def fetch_date(key, default)
+    date = Date.parse(params[key])
+    raise ArgumentError unless date < Date.today
+  rescue
+    default
+  end
+  
+  def samples_params
+    params.permit(:begin, :end)
   end
   
   def fume_hood_params

@@ -38,7 +38,7 @@ FactoryGirl.define do
   end
   
   factory :sample_metric do
-    name 'Percent Open'
+    name 'Sample Name'
   end
   
   factory :sample do
@@ -47,5 +47,13 @@ FactoryGirl.define do
     value 250.0
     unit 'l / s'
     sampled_at { DateTime.now }
+    
+    factory :pct_sample do
+      sample_metric { SampleMetric.where(name: 'Percent Open').first_or_create }
+    end
+    
+    factory :flow_sample do
+      sample_metric { SampleMetric.where(name: 'Flow Rate').first_or_create }
+    end
   end
 end

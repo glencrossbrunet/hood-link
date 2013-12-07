@@ -9,8 +9,6 @@
 #  updated_at      :datetime
 #
 
-require 'spec_helper'
-
 describe Filter do
     
   describe '#validate' do

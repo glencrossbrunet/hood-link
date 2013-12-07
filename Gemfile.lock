@@ -1,8 +1,8 @@
 GIT
   remote: git://github.com/glencrossbrunet/sparse_collection.git
-  revision: 49d90ff6086a21c6174868104474d4ade058adcd
+  revision: d673d8b64ea314281bbb04f34d5b35a91a41d7db
   specs:
-    sparse_collection (0.0.7)
+    sparse_collection (0.0.8)
 
 GEM
   remote: https://rubygems.org/
@@ -89,7 +89,7 @@ GEM
     neat (1.5.0)
       bourbon (>= 2.1)
       sass (>= 3.2)
-    newrelic_rpm (3.6.9.171)
+    newrelic_rpm (3.7.0.177)
     orm_adapter (0.5.0)
     pg (0.17.0)
     polyglot (0.3.3)

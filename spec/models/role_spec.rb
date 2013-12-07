@@ -10,8 +10,6 @@
 #  updated_at    :datetime
 #
 
-require 'spec_helper'
-
 describe Role do
   
   describe '#validate' do

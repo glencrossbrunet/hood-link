@@ -3,22 +3,9 @@ HL.DashboardView = Backbone.View.extend({
   template: 'dashboard',
   
   initialize: function() {
-    _.bindAll(this, 'new', 'graph');
-    this.collection = new HL.LinesCollection;
-    this.once('ready', this.listen, this);
-    
-    var self = this;
-    function getSamples() {
-      var samples = router.fumeHoods.invoke('get', 'samples');
-      if (samples.length == 0) {
-        setTimeout(getSamples, 100);
-        return;
-      }
-      var promises = _.invoke(samples, 'fetch');
-      $.when.apply($, promises).done(function() { self.trigger('ready'); });
-    }
-    
-    setTimeout(getSamples, 100);
+    _.bindAll(this, 'update', 'fetch', 'graph');
+    this.listen();
+    setTimeout(this.fetch, 100);
   },
   
   events: {
@@ -37,9 +24,22 @@ HL.DashboardView = Backbone.View.extend({
   },
   
   listen: function() {
-    $('#graph .loading').html('ready!');
     this.listenTo(this.collection, 'add', this.prepend);
     this.listenTo(this.collection, 'change remove', this.graph);
+  },
+  
+  update: function(data) {
+    router.fumeHoods.each(function(fumeHood) {
+      var externalId = fumeHood.get('external_id');
+      var samples = data[externalId] || [];
+      fumeHood.set('samples', samples);
+    });
+    this.graph();
+  },
+  
+  fetch: function() {
+    var self = this;
+    $.get('/fume_hoods/samples').done(this.update);
   },
   
   graph: function() {

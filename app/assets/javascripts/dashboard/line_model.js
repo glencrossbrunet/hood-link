@@ -1,8 +1,6 @@
 HL.LineModel = Backbone.Model.extend({
-  
   initialize: function() {
     this.on('change:fumeHoods', this.setData, this);
-    
     this.on('change:filters', this.setFumeHoods, this);
     this.trigger('change:filters');
   },
@@ -34,21 +32,26 @@ HL.LineModel = Backbone.Model.extend({
   */
   
   setData: function() {
-    var samples = _.invoke(this.get('fumeHoods'), 'get', 'samples');
+    var fumeHoods = this.get('fumeHoods');
+    var allSamples = _.invoke(fumeHoods, 'get', 'samples');
     
-    var times = _.first(samples).pluck('sampled_at');
+    var times = _.pluck(allSamples[0], 'sampled_at');
     
-    // YYYY-MM-DDTHH:MM:SS.SSSSZ -> MM-DD HH:MM:SS
-    var xs = _.map(times, function(time) {
-      return time.substring(6, 10) + ' ' + time.substring(12, 8);
+    var xs = _.map(times, this.formatTime);
+    
+    var values = _.map(allSamples, function(samples) {
+      return _.pluck(samples, 'value');
     });
-    
-    var values = _.invoke(samples, 'pluck', 'value');
     var avgs = _.map(_.zip.apply(_, values), _.avg);
     var ys = _.compact(avgs);
     var data = { x: xs.slice(xs.length - ys.length), y: ys };
-        
+    
     this.set('data', data);
+  },
+  
+  // YYYY-MM-DDTHH:MM:SS.SSSSZ -> MM-DD HH:MM:SS
+  formatTime: function(time) {
+    return time.substring(6, 10) + ' ' + time.substring(12, 8);
   },
   
   toggle: function() {

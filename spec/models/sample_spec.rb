@@ -79,4 +79,42 @@ describe Sample do
     end
   end
   
+  describe 'scopes' do
+    before { Sample.delete_all }
+    
+    describe '#percent open' do
+      before { 2.times { create(:pct_sample) } }
+      subject { Sample.percent_open }
+      its(:count) { should eq(2) }
+    end
+    
+    describe '#flow rate' do
+      before { 2.times { create(:flow_sample) } }
+      subject { Sample.flow_rate }
+      its(:count) { should eq(2) }
+    end    
+  end
+  
+  describe '::daily_intervals' do
+    let(:datetime) { DateTime.parse('Aug 10, 2011 00:00') }
+    
+    let(:samples) do
+      models = 4.times.map do |i|
+        create(:pct_sample, value: i, sampled_at: datetime.advance(hours: i * 6))
+      end
+      Sample.where(id: models.map(&:id))
+    end
+    
+    subject { samples.daily_intervals(datetime, 2.hours) }
+    
+    its(:length) { should eq(12) }
+    
+    it 'should have correct keys' do
+      expect(subject.first.keys.sort).to eq(%w(sampled_at unit value))
+    end
+    
+    it 'should have correct values' do
+      expect(subject.map{ |h| h[:value].to_i }).to eq((0..3).to_a.cycle(3).sort)
+    end
+  end
 end
