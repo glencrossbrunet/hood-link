@@ -47,15 +47,13 @@ class FumeHoodsController < ApplicationController
     render json: { status: 200 }
   end
   
-  def samples
-    fume_hoods = organization.fume_hoods
-    
+  def samples    
     start = fetch_date(:begin, Date.today.advance(weeks: -2))
     stop = fetch_date(:end, Date.yesterday)
     interval = 1.hour
     period = start .. stop
     
-    data = fume_hoods.intervals(period, interval)
+    data = organization.intervals(period, interval)
     render json: data.to_json
   end
 	

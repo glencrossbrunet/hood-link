@@ -8,6 +8,7 @@
 #  created_at      :datetime
 #  updated_at      :datetime
 #  data            :json             default({})
+#  aggregates      :json             default({})
 #
 
 class FumeHood < ActiveRecord::Base
@@ -39,22 +40,17 @@ class FumeHood < ActiveRecord::Base
   # INTERVALS
   
   # { eternal_id => [intervals], ... }
-  def self.intervals(days, interval)
+  def self.daily_intervals(day, interval)
     data = {}
     find_each do |fume_hood|
-      data[fume_hood.external_id] = fume_hood.intervals(days, interval)
+      data[fume_hood.external_id] = fume_hood.daily_intervals(day, interval)
     end
     data
   end
-  
+
   # [ { sampled_at: datetime, value: float, unit: string } ]
-  def intervals(days, interval)
-    days.map { |day| daily_intervals(day, interval) }.flatten(1)
-  end
-  
   def daily_intervals(day, interval)
-    key = cache_key(day, interval)
-    Rails.cache.fetch(key) do
+    Rails.cache.fetch(cache_key day, interval) do
       samples.percent_open.daily_intervals(day, interval)
     end
   end

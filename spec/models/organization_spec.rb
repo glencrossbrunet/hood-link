@@ -7,6 +7,7 @@
 #  subdomain  :string(255)
 #  created_at :datetime
 #  updated_at :datetime
+#  token      :string(255)
 #
 
 require 'spec_helper'
@@ -88,4 +89,44 @@ describe Organization do
     it { should respond_to(:samples) }
   end
   
+  describe 'intervals' do
+    before { create(:fume_hood, organization: organization) }
+    let(:external_ids) { organization.fume_hoods.map(&:external_id) }
+    
+    describe '#intervals' do
+      let(:range) { Date.parse('Aug 10, 2011')..Date.parse('Aug 12, 2011') }
+      let(:intervals) { organization.intervals(range, 1.hour) }
+    
+      it 'should have each hood' do
+        expect(intervals.keys).to eq(external_ids)
+      end
+    
+      it 'should be intervals' do
+        expect(intervals[external_ids.first].length).to eq(3 * 24)
+      end
+    end
+    
+    describe '#daily_intervals' do
+      let(:day) { Date.parse('Aug 10, 2011') }
+      let(:intervals) { organization.daily_intervals(day, 1.hour) }
+    
+      it 'should have each hood' do
+        expect(intervals.keys).to eq(external_ids)
+      end
+    
+      it 'should have hourly data' do
+        expect(intervals[external_ids.first].length).to eq(24)
+      end
+      
+    end 
+  end
+  
+  
+  
+  
+  describe '#cache_key' do
+    let(:id) { organization.id }
+    subject { organization.cache_key(Date.parse('Jan 1, 2001'), 60.seconds) }
+    it { should eq("org#{id}_20010101_60") }
+  end
 end

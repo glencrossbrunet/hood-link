@@ -7,6 +7,7 @@
 #  subdomain  :string(255)
 #  created_at :datetime
 #  updated_at :datetime
+#  token      :string(255)
 #
 
 class Organization < ActiveRecord::Base
@@ -27,5 +28,25 @@ class Organization < ActiveRecord::Base
   
   def admins
     users.where(roles: { name: 'admin' })
+  end
+  
+  def intervals(days, interval)
+    data = Hash.new { |h, k| h[k] = [] }
+    days.each do |day|
+      daily_intervals(day, interval).each do |external_id, samples|
+        data[external_id].concat(samples)
+      end
+    end
+    data
+  end
+  
+  def daily_intervals(day, interval)
+    Rails.cache.fetch(cache_key day, interval) do
+      fume_hoods.daily_intervals(day, interval)
+    end
+  end
+  
+  def cache_key(day, interval)
+    [ "org#{id}", day.strftime('%Y%m%d'), interval.seconds.to_i ].join('_')
   end
 end

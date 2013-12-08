@@ -8,6 +8,7 @@
 #  created_at      :datetime
 #  updated_at      :datetime
 #  data            :json             default({})
+#  aggregates      :json             default({})
 #
 
 describe FumeHood do
@@ -66,31 +67,24 @@ describe FumeHood do
     end
   end
   
-  describe '::intervals' do
-    let(:fume_hoods) do
-      hoods = 2.times.map { create(:fume_hood) }
-      FumeHood.where(id: hoods.map(&:id))
-    end
-    
-    let(:range) { Date.parse('Aug 10, 2011')..Date.parse('Aug 14, 2011') }
-    let(:intervals) { fume_hoods.intervals(range, 1.hour) }
-    
-    it 'should have each hood' do
-      expect(intervals.keys).to eq(fume_hoods.map(&:external_id))
-    end
-    
-    it 'should be intervals' do
-      hood = fume_hoods.first
-      expect(intervals[hood.external_id]).to eq(hood.intervals(range, 1.hour))
-    end
+  let(:fume_hoods) do
+    hoods = 2.times.map { create(:fume_hood) }
+    FumeHood.where(id: hoods.map(&:id))
   end
   
-  describe '#intervals' do
-    let(:range) { Date.parse('Aug 10, 2011')..Date.parse('Aug 14, 2011') }
-    let(:intervals) { fume_hood.intervals(range, 1.hour) }
+  describe '::daily_intervals' do
+    let(:day) { Date.parse('Aug 10, 2011') }
+    let(:intervals) { fume_hoods.daily_intervals(day, 1.hour) }
     
-    it 'should be over a 5 day period' do
-      expect(intervals.length).to eq(24 * 5)
+    describe 'all fume hoods' do
+      subject { intervals }
+      its(:keys) { should eq(fume_hoods.map(&:external_id)) }
+    end
+    
+    describe '24 entries' do
+      let(:external_id) { fume_hoods.first.external_id }
+      subject { intervals[external_id] }
+      its(:length) { should eq(24) }
     end
   end
   
