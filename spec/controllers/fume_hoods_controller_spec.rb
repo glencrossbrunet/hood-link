@@ -3,11 +3,20 @@ describe FumeHoodsController do
   
   describe '#index' do
     before do
-      2.times { organization.fume_hoods.create(attributes_for(:fume_hood)) }
+      create(:fume_hood, organization: organization, external_id: 'b-1')
+      create(:fume_hood, organization: organization, external_id: 'a-11')
+      create(:fume_hood, organization: organization, external_id: 'a-9')
       get :index, format: :json
     end
-    specify 'fume hoods returned' do
-      expect(json.length).to eq(2)
+    
+    describe 'all hoods' do
+      subject { json }
+      its(:length) { should eq(3) }
+    end
+    
+    describe 'ordered by id' do
+      subject { json[0]['external_id'] }
+      it { should eq('a-9') }
     end
   end
 	
