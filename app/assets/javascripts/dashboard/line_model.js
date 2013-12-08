@@ -52,9 +52,9 @@ HL.LineModel = Backbone.Model.extend({
     this.set('data', data);
   },
   
-  // YYYY-MM-DDTHH:MM:SS.SSSSZ -> MM-DD HH:MM:SS
+  // YYYY-MM-DDTHH:MM:SS.SSSSZ -> YYYY-MM-DD HH:MM:SS
   formatTime: function(time) {
-    return time.substring(6, 10) + ' ' + time.substring(12, 8);
+    return time.substring(0, 10) + ' ' + time.substring(11, 19);
   },
   
   toggle: function() {

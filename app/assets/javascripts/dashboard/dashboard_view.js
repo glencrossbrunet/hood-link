@@ -10,7 +10,8 @@ HL.DashboardView = Backbone.View.extend({
   },
   
   events: {
-    'click #lines-new': 'new'
+    'click #lines-new': 'new',
+    'render:after': 'renderCollection'
   },
   
   listen: function() {
@@ -19,6 +20,8 @@ HL.DashboardView = Backbone.View.extend({
     this.listenTo(this.collection, 'change:visible', this.graph);
     this.listenTo(this.collection, 'change:data remove', this.maybeGraph);
   },
+  
+  // managing lines
   
   new: function(ev) {
     ev.preventDefault();
@@ -30,6 +33,12 @@ HL.DashboardView = Backbone.View.extend({
     var view = new HL.LineView({ model: model });
     this.add(view, '#lines');
   },
+  
+  renderCollection: function() {
+    this.collection.each(this.prepend, this);
+  },
+  
+  // graphing
   
   update: function(data) {
     router.fumeHoods.each(function(fumeHood) {
@@ -69,6 +78,8 @@ HL.DashboardView = Backbone.View.extend({
   maybeGraph: function(model) {
     if (model.get('visible')) { this.graph(); }
   },
+  
+  // choose time period
   
   setPeriod: function(array) {
 		var vals = $('#period').DatePickerGetDate(true);
