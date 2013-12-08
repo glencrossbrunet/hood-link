@@ -61,8 +61,7 @@ HoodLink::Application.configure do
   config.assets.precompile += %w(admin.js user.js plotly.js plotly.css)
   
   # fonts
-  config.assets.precompile += %w(.svg .eot .woff .ttf)
-  
+  config.assets.precompile << /\.(svg|eot|woff|ttf)$/
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
