@@ -45,10 +45,15 @@ describe FumeHoodsController do
     end
     
     let(:fume_hoods) { organization.fume_hoods }
-
-    before { get :samples, format: :json }
     
-    describe 'default 2 weeks by hour' do
+    describe 'defaults' do
+      before { get :samples, format: :json }
+      subject { json[fume_hoods.first.external_id] }
+      its(:length) { should eq(14 * 24) } 
+    end
+    
+    describe 'period set' do
+      before { get :samples, format: :json, begin: '2013-11-14', end: '2013-12-07' }
       subject { json[fume_hoods.first.external_id] }
       its(:length) { should eq(14 * 24) } 
     end

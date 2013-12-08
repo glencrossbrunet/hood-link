@@ -50,14 +50,23 @@ class FumeHoodsController < ApplicationController
     start = fetch_date(:begin, Date.today.advance(weeks: -2))
     stop = fetch_date(:end, Date.yesterday)
     interval = 1.hour
+    
     period = start .. stop
     
-    data = organization.intervals(period, interval)
-    render json: data.to_json
+    json = Rails.cache.fetch(samples_cache_key period, interval) do
+      organization.intervals(period, interval).to_json
+    end
+    
+    render json: json
   end
 	
 	private
   
+  def samples_cache_key(period, interval)
+    dates = %w(begin end).map { |m| period.send(m).strftime('%Y%m%d') }
+    [ 'fume_hoods#samples', organization.id, *dates, interval.seconds.to_i ].join('_')
+  end
+    
   def upload_from(hash)
     attrs = attrs_from hash
     natural_key = attrs['external_id'] || attrs['hood_id']
@@ -83,10 +92,13 @@ class FumeHoodsController < ApplicationController
   end
   
   def fetch_date(key, default)
-    date = Date.parse(params[key])
-    raise ArgumentError unless date < Date.today
-  rescue
-    default
+    date = begin
+      Date.parse(params[key])
+      raise ArgumentError unless date < Date.today
+    rescue
+      default
+    end
+    date
   end
   
   def samples_params

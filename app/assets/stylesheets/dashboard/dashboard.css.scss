@@ -70,7 +70,8 @@ $active: rgba(200, 200, 255, 0.5);
 
 #period {
   @include row();
-  padding-top: 10px;
+  padding-bottom: 10px;
+  cursor: pointer;
   
   .date {
     padding: 10px;

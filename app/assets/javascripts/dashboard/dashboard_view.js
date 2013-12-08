@@ -3,15 +3,21 @@ HL.DashboardView = Backbone.View.extend({
   template: 'dashboard',
   
   initialize: function() {
-    _.bindAll(this, 'update', 'fetch', 'graph', 'datepicker');
-    this.listenTo(this.collection, 'add', this.prepend);
-    this.listenTo(this.collection, 'change:visible', this.graph);
-    this.listenTo(this.collection, 'change:data remove', this.maybeGraph);
+    _.bindAll(this, 'update', 'fetch', 'graph', 'datepicker', 'setPeriod');
+    this.period = new Backbone.Model;
+    this.listen();
     this.collection.fetch().done(this.datepicker);
   },
   
   events: {
     'click #lines-new': 'new'
+  },
+  
+  listen: function() {
+    this.listenTo(this.period, 'change', this.fetch);
+    this.listenTo(this.collection, 'add', this.prepend);
+    this.listenTo(this.collection, 'change:visible', this.graph);
+    this.listenTo(this.collection, 'change:data remove', this.maybeGraph);
   },
   
   new: function(ev) {
@@ -36,9 +42,9 @@ HL.DashboardView = Backbone.View.extend({
     });
   },
   
-  fetch: function() {
-    $.get('/fume_hoods/samples').done(this.update);
-  },
+  fetch: _.debounce(function() {
+    $.get('/fume_hoods/samples', this.period.attributes).done(this.update);
+  }, 1000, false),
   
   graph: _.debounce(function() {    
     var $graph = $('#graph');
@@ -53,7 +59,7 @@ HL.DashboardView = Backbone.View.extend({
       xaxis: { tickangle: 45, nticks: 12 },
       yaxis: { zeroline: false}
     };
-    $('.graph-area', $graph).fadeOut('fast', function() {
+    $('.graph-area', $graph).fadeOut('slow', function() {
       $graph.find('.graph-area').remove();
       $graph.append('<div class="graph-area"></div>');
       Plotly.plot($graph.find('.graph-area')[0], data, layout);
@@ -61,9 +67,13 @@ HL.DashboardView = Backbone.View.extend({
   }, 250, false),
   
   maybeGraph: function(model) {
-    if (model.get('visible')) {
-      this.graph();
-    }
+    if (model.get('visible')) { this.graph(); }
+  },
+  
+  setPeriod: function(array) {
+		var vals = $('#period').DatePickerGetDate(true);
+    var start = vals[0], stop = vals[1];
+    this.period.set({ begin: start, end: stop });
   },
   
   datepicker: function() {
@@ -71,16 +81,18 @@ HL.DashboardView = Backbone.View.extend({
   	var day = 1000 * 60 * 60 * 24;
   	var start = new Date(+now - day * 24);
   	var stop = new Date(+now - day);
-	
-  	function setPeriod() {
+    
+    function showPeriod(array) {
   		var vals = $('#period').DatePickerGetDate(true);
-  		$('#period-begin').text(vals[0]);
-  		$('#period-end').text(vals[1]);
-  	}
+      var start = vals[0], stop = vals[1];
+  		$('#period-begin').text(start);
+  		$('#period-end').text(stop);
+    }
 	
   	$('#period').DatePicker({ 
   		date: [ start, stop ], 
-  		onChange: setPeriod,
+  		onChange: showPeriod,
+      onHide: this.setPeriod,
   		onRender: function(date) {
   			return {
   				disabled: (+date - now) / day > -1
@@ -90,7 +102,7 @@ HL.DashboardView = Backbone.View.extend({
   		mode: 'range',
   		starts: 0
   	});
-	
-  	setPeriod();
+    showPeriod();
+  	this.setPeriod();
   }
 });
