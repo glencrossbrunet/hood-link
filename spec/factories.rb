@@ -56,4 +56,10 @@ FactoryGirl.define do
       sample_metric { SampleMetric.where(name: 'Flow Rate').first_or_create }
     end
   end
+  
+  factory :line do
+    organization
+    user
+    filters ({ json: 'here' })
+  end
 end

@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe FiltersController do
   include_context 'admin of organization'
   
@@ -26,5 +24,4 @@ describe FiltersController do
       expect(organization.filters.first.key).to eq('metadata')
     end
   end
-  
 end

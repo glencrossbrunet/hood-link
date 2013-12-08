@@ -10,8 +10,6 @@
 #  token      :string(255)
 #
 
-require 'spec_helper'
-
 describe Organization do
   
   describe '#validate' do
@@ -120,10 +118,7 @@ describe Organization do
       
     end 
   end
-  
-  
-  
-  
+
   describe '#cache_key' do
     let(:id) { organization.id }
     subject { organization.cache_key(Date.parse('Jan 1, 2001'), 60.seconds) }

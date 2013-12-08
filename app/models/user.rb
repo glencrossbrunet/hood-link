@@ -22,18 +22,19 @@ require 'securerandom'
 class User < ActiveRecord::Base
   rolify
   
+  has_many :lines
   has_many :organizations, through: :roles, source: :resource, source_type: 'Organization'
   
   devise :database_authenticatable, :registerable, :recoverable, 
       :rememberable, :trackable, :validatable
-         
+  
   def self.parse(raw)
-   where(email: raw.strip.downcase).first_or_initialize.tap do |user|
-     unless user.persisted?
-       user.password = user.password_confirmation = SecureRandom.hex
-       user.save
-     end
-   end
+    where(email: raw.strip.downcase).first_or_initialize.tap do |user|
+      unless user.persisted?
+        user.password = user.password_confirmation = SecureRandom.hex
+        user.save
+      end
+    end
   end
   
 end

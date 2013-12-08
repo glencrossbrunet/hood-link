@@ -1,36 +1,35 @@
 class FiltersController < ApplicationController
-  before_filter :authenticate_admin, except: [ :index ]
+  before_filter :authenticate_admin
+  before_filter :find_filter, only: [ :update, :destroy ]
   respond_to :json
   
   def index
-    render json: organization.filters.to_json
+    render json: filters.to_json
   end
   
   def create
-    @filter = organization.filters.build(filter_params)
-    persist
+    @filter = filters.build(filter_params)
+    persist @filter
   end
   
   def update
-    @filter = organization.filters.find(params[:id])
     @filter.assign_attributes(filter_params)
-    persist
+    persist @filter
   end
   
   def destroy
-    @filter = organization.filters.find(params[:id])
     @filter.destroy
     render json: @filter.to_json
   end
   
   private
   
-  def persist
-    if @filter.save
-      render json: @filter.to_json
-    else
-      render json: @filter.errors.full_messages, status: 422
-    end
+  def find_filter
+    @filter = filters.find(params[:id])
+  end
+  
+  def filters
+    organization.filters
   end
   
   def filter_params

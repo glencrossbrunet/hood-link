@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131102173059) do
+ActiveRecord::Schema.define(version: 20131208052419) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,6 +33,18 @@ ActiveRecord::Schema.define(version: 20131102173059) do
   end
 
   add_index "fume_hoods", ["external_id"], name: "index_fume_hoods_on_external_id", unique: true, using: :btree
+
+  create_table "lines", force: true do |t|
+    t.json     "filters"
+    t.boolean  "visible"
+    t.integer  "user_id"
+    t.integer  "organization_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "lines", ["organization_id"], name: "index_lines_on_organization_id", using: :btree
+  add_index "lines", ["user_id"], name: "index_lines_on_user_id", using: :btree
 
   create_table "organizations", force: true do |t|
     t.string   "name"

@@ -6,6 +6,7 @@ HoodLink::Application.routes.draw do
         constraints: { id: /[^\/]+(?=\.json\z)|[^\/]+/ }
     
     resources :filters, only: [:index, :create, :update, :destroy]
+    resources :lines, only: [ :index, :create, :update, :destroy ]
     
     resources :fume_hoods, only: [:index, :create, :update] do
 			member do
