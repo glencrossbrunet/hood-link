@@ -6,7 +6,6 @@ HL.DashboardView = Backbone.View.extend({
     _.bindAll(this, 'update', 'fetch', 'graph', 'datepicker', 'setPeriod');
     this.period = new Backbone.Model;
     this.listen();
-    this.collection.fetch().done(this.datepicker);
   },
   
   events: {
@@ -35,7 +34,12 @@ HL.DashboardView = Backbone.View.extend({
   },
   
   renderCollection: function() {
-    this.collection.each(this.prepend, this);
+    if (this.collection.length) {
+      this.collection.each(this.prepend, this);
+      setTimeout(this.datepicker, 50);
+    } else {
+      this.collection.fetch().done(this.datepicker);
+    }
   },
   
   // graphing
@@ -81,10 +85,11 @@ HL.DashboardView = Backbone.View.extend({
   
   // choose time period
   
-  setPeriod: function(array) {
+  setPeriod: function() {
 		var vals = $('#period').DatePickerGetDate(true);
-    var start = vals[0], stop = vals[1];
-    this.period.set({ begin: start, end: stop });
+    if (vals && vals.length) {
+       this.period.set({ begin: vals[0], end: vals[1] });
+    }
   },
   
   datepicker: function() {
@@ -94,8 +99,9 @@ HL.DashboardView = Backbone.View.extend({
   	var stop = new Date(+now - day);
     
     function showPeriod(array) {
-  		var vals = $('#period').DatePickerGetDate(true);
-      var start = vals[0], stop = vals[1];
+  		var vals = $('#period').DatePickerGetDate(true) || [ '', '' ];
+      start = vals[0];
+      stop = vals[1];
   		$('#period-begin').text(start);
   		$('#period-end').text(stop);
     }
@@ -105,14 +111,13 @@ HL.DashboardView = Backbone.View.extend({
   		onChange: showPeriod,
       onHide: this.setPeriod,
   		onRender: function(date) {
-  			return {
-  				disabled: (+date - now) / day > -1
-  			};
+  			return { disabled: (+date - now) / day > -1 };
   		},
   		calendars: 2,
   		mode: 'range',
   		starts: 0
   	});
+    
     showPeriod();
   	this.setPeriod();
   }
