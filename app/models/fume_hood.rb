@@ -36,12 +36,6 @@ class FumeHood < ActiveRecord::Base
     write_attribute :data, data.merge(hash)
   end
   
-  def sort_id
-    external_id.split('-').map do |part|
-      part =~ /\d+/ ? part.to_i : part
-    end
-  end
-  
   ##################################################################
   # INTERVALS
   

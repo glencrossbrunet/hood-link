@@ -5,18 +5,12 @@ describe FumeHoodsController do
     before do
       create(:fume_hood, organization: organization, external_id: 'b-1')
       create(:fume_hood, organization: organization, external_id: 'a-11')
-      create(:fume_hood, organization: organization, external_id: 'a-9')
       get :index, format: :json
     end
     
     describe 'all hoods' do
       subject { json }
-      its(:length) { should eq(3) }
-    end
-    
-    describe 'ordered by id' do
-      subject { json[0]['external_id'] }
-      it { should eq('a-9') }
+      its(:length) { should eq(2) }
     end
   end
 	

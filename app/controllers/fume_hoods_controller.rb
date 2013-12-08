@@ -7,8 +7,7 @@ class FumeHoodsController < ApplicationController
   
   def index
     fume_hoods = organization.fume_hoods.order('external_id ASC')
-    json = fume_hoods.sort_by(&:sort_id).to_json
-		render json: json
+		render json: fume_hoods.to_json
   end
   
   def create
