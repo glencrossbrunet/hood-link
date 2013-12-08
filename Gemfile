@@ -26,6 +26,7 @@ gem 'newrelic_rpm'
 group :production do
   gem 'rails_12factor'
   gem 'dalli'
+  gem 'kgio'
 end
 
 group :development do
@@ -41,15 +42,3 @@ group :test do
   gem 'factory_girl_rails', '~> 4.0'
   gem 'fuubar'
 end
-
-# Use ActiveModel has_secure_password
-# gem 'bcrypt-ruby', '~> 3.0.0'
-
-# Use unicorn as the app server
-# gem 'unicorn'
-
-# Use Capistrano for deployment
-# gem 'capistrano', group: :development
-
-# Use debugger
-# gem 'debugger', group: [:development, :test]
