@@ -68,6 +68,25 @@ $active: rgba(200, 200, 255, 0.5);
   }
 }
 
+#period {
+  @include row();
+  padding-top: 10px;
+  
+  .date {
+    padding: 10px;
+    border-radius: 3px;
+    background: #eee;
+    text-align: center;
+    @include span-columns(2);
+  }
+  
+  .space {
+    padding: 10px;
+    text-align: center;
+    @include span-columns(2);
+  }
+}
+
 .modal {
   position: fixed;
   left: 0;

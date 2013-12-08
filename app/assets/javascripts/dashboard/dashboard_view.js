@@ -3,11 +3,11 @@ HL.DashboardView = Backbone.View.extend({
   template: 'dashboard',
   
   initialize: function() {
-    _.bindAll(this, 'update', 'fetch', 'graph');
+    _.bindAll(this, 'update', 'fetch', 'graph', 'datepicker');
     this.listenTo(this.collection, 'add', this.prepend);
     this.listenTo(this.collection, 'change:visible', this.graph);
     this.listenTo(this.collection, 'change:data remove', this.maybeGraph);
-    this.collection.fetch().done(this.fetch);
+    this.collection.fetch().done(this.datepicker);
   },
   
   events: {
@@ -64,5 +64,33 @@ HL.DashboardView = Backbone.View.extend({
     if (model.get('visible')) {
       this.graph();
     }
+  },
+  
+  datepicker: function() {
+  	var now = new Date;
+  	var day = 1000 * 60 * 60 * 24;
+  	var start = new Date(+now - day * 24);
+  	var stop = new Date(+now - day);
+	
+  	function setPeriod() {
+  		var vals = $('#period').DatePickerGetDate(true);
+  		$('#period-begin').text(vals[0]);
+  		$('#period-end').text(vals[1]);
+  	}
+	
+  	$('#period').DatePicker({ 
+  		date: [ start, stop ], 
+  		onChange: setPeriod,
+  		onRender: function(date) {
+  			return {
+  				disabled: (+date - now) / day > -1
+  			};
+  		},
+  		calendars: 2,
+  		mode: 'range',
+  		starts: 0
+  	});
+	
+  	setPeriod();
   }
 });
