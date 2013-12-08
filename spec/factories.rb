@@ -60,6 +60,7 @@ FactoryGirl.define do
   factory :line do
     organization
     user
-    filters ({ json: 'here' })
+    filters ({})
+    visible false
   end
 end

@@ -20,13 +20,13 @@ HL.LineFormView = Backbone.View.extend({
   create: function(ev) {
     ev.preventDefault();
     var json = this.$el.jsonify();
-    this.collection.add(json);
+    var model = this.collection.create(json);
+    setTimeout(model.setData, 50);
     this.close();
   },
   
   check: function(ev) {
     if (ev.target == this.el) this.close(ev);
   }
-  
   
 });

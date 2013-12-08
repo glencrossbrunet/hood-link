@@ -1,18 +1,21 @@
 HL.LineModel = Backbone.Model.extend({
   initialize: function() {
-    this.on('change:fumeHoods', this.setData, this);
-    this.on('change:filters', this.setFumeHoods, this);
-    this.trigger('change:filters');
+    _.bindAll(this, 'setData');
+    this.on('add', this.setFumeHoods, this);
   },
   
   defaults: function() {
     return { 
       name: '',
       filters: {},
-      fumeHoods: new Backbone.Collection,
+      fumeHoods: [],
       visible: false,
       data: []
     };
+  },
+  
+  toJSON: function() {
+    return _.pick(this.attributes, 'name', 'filters', 'visible');
   },
   
   setFumeHoods: function() {
@@ -56,6 +59,7 @@ HL.LineModel = Backbone.Model.extend({
   
   toggle: function() {
     this.set('visible', !this.get('visible'));
+    return this;
   }
   
   

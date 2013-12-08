@@ -14,8 +14,8 @@
 class Line < ActiveRecord::Base
   belongs_to :user
   belongs_to :organization
-  
+
   def as_json(options = {})
-    attributes.slice(*%w(id filters visible updated_at))
+    attributes.slice(*%w(id filters name visible updated_at))
   end
 end

@@ -4,11 +4,11 @@ class LinesController < ApplicationController
   respond_to :json
   
   def index
-    render json: lines.where(organization: organization).to_json
+    render json: lines.to_json
   end
   
   def create
-    @line = lines.build(line_params organization: organization)
+    @line = lines.build(line_params)
     persist @line
   end
   
@@ -25,14 +25,20 @@ class LinesController < ApplicationController
   private
   
   def lines
-    current_user.lines
+    current_user.lines.where(organization: organization)
   end
   
   def find_line
     @line = lines.find(params[:id])
   end
   
+  def filter_keys
+    @filter_keys ||= organization.filters.pluck(:key)
+  end
+  
   def line_params(defaults = {})
-    params.permit(:filters, :visible).merge(defaults)
+    filters = params.fetch(:filters, {}).permit(*filter_keys)
+    attrs = params.permit(:name, :visible)
+    attrs.merge(filters: filters)
   end
 end

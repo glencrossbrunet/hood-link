@@ -4,8 +4,10 @@ HL.DashboardView = Backbone.View.extend({
   
   initialize: function() {
     _.bindAll(this, 'update', 'fetch', 'graph');
-    this.listen();
-    setTimeout(this.fetch, 100);
+    this.listenTo(this.collection, 'add', this.prepend);
+    this.listenTo(this.collection, 'change:visible', this.graph);
+    this.listenTo(this.collection, 'change:data remove', this.maybeGraph);
+    this.collection.fetch().done(this.fetch);
   },
   
   events: {
@@ -23,28 +25,25 @@ HL.DashboardView = Backbone.View.extend({
     this.add(view, '#lines');
   },
   
-  listen: function() {
-    this.listenTo(this.collection, 'add', this.prepend);
-    this.listenTo(this.collection, 'change remove', this.graph);
-  },
-  
   update: function(data) {
     router.fumeHoods.each(function(fumeHood) {
       var externalId = fumeHood.get('external_id');
       var samples = data[externalId] || [];
       fumeHood.set('samples', samples);
     });
-    this.graph();
+    this.collection.each(function(model) {
+      setTimeout(model.setData, Math.round(Math.random() * 20));
+    });
   },
   
   fetch: function() {
-    var self = this;
     $.get('/fume_hoods/samples').done(this.update);
   },
   
-  graph: function() {
+  graph: _.debounce(function() {    
     var $graph = $('#graph');
     var active = this.collection.where({ visible: true });
+        
     var data = _.map(active, function(line) {
       var records = line.get('data');
       records.name = line.get('name');
@@ -59,6 +58,11 @@ HL.DashboardView = Backbone.View.extend({
       $graph.append('<div class="graph-area"></div>');
       Plotly.plot($graph.find('.graph-area')[0], data, layout);
     });
-        
+  }, 250, false),
+  
+  maybeGraph: function(model) {
+    if (model.get('visible')) {
+      this.graph();
+    }
   }
 });

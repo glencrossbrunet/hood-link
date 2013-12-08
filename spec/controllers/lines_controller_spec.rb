@@ -12,13 +12,15 @@ describe LinesController do
     
     describe 'correct keys' do
       subject { json[0] }
-      its(:keys) { should eq(%w(id filters visible updated_at)) } 
+      its(:keys) { should eq(%w(id filters name visible updated_at)) } 
     end
   end
   
   describe '#create' do
+    let(:filter) { organization.filters.create(key: 'json') }
     let(:attrs) { attributes_for(:line, user: user, organization: organization) }
-    before { post :create, format: :json, line: attrs }
+    before { attrs[:filters].merge!(filter.key => true) }
+    before { post :create, attrs.merge(format: :json) }
     
     context 'response' do
       subject { response }
@@ -28,6 +30,11 @@ describe LinesController do
     describe 'line created' do
       subject { user.lines.first }
       it { should_not be_nil }
+    end
+    
+    describe 'filters' do
+      subject { json['filters'] }
+      it { should eq(attrs[:filters]) }
     end
   end
   
