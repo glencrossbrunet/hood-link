@@ -96,4 +96,7 @@ HoodLink::Application.configure do
     :domain         => 'heroku.com',
     :enable_starttls_auto => true
   }
+  
+  config.cache_store = :dalli_store, ENV['MEMCACHEDCLOUD_SERVERS'],
+    { namespace: 'hoodlink', username: ENV['MEMCACHEDCLOUD_USERNAME'], password: ENV['MEMCACHEDCLOUD_PASSWORD'] }
 end

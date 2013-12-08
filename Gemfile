@@ -25,6 +25,7 @@ gem 'newrelic_rpm'
 
 group :production do
   gem 'rails_12factor'
+  gem 'dalli'
 end
 
 group :development do

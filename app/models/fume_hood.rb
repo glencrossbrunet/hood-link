@@ -53,8 +53,10 @@ class FumeHood < ActiveRecord::Base
   end
   
   def daily_intervals(day, interval)
-    # TODO: need caching
-    samples.percent_open.daily_intervals(day, interval)
+    key = cache_key(day, interval)
+    Rails.cache.fetch(key) do
+      samples.percent_open.daily_intervals(day, interval)
+    end
   end
   
   def cache_key(day, interval)
@@ -85,4 +87,5 @@ class FumeHood < ActiveRecord::Base
       { sampled_at: datetime }.merge Hash[ values.sort_by{ |k, v| k } ]
     end
   end 
+    
 end

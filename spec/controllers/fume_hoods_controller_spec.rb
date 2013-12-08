@@ -47,7 +47,7 @@ describe FumeHoodsController do
     
     describe 'default 2 weeks by hour' do
       subject { json[fume_hoods.first.external_id] }
-      its(:length) { should eq(15 * 24) } 
+      its(:length) { should eq(14 * 24) } 
     end
   end
 end
