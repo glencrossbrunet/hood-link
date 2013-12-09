@@ -52,7 +52,10 @@ class FumeHoodsController < ApplicationController
     interval = 1.hour
     
     period = start .. stop
-    render json: organization.intervals(period, interval).to_json
+    json = Rails.cache.fetch(samples_cache_key period, interval) do
+      organization.intervals(period, interval).to_json
+    end
+    render json: json
   end
 	
 	private
