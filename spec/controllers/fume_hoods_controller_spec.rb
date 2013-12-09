@@ -49,13 +49,13 @@ describe FumeHoodsController do
     describe 'defaults' do
       before { get :samples, format: :json }
       subject { json[fume_hoods.first.external_id] }
-      its(:length) { should eq(14 * 24) } 
+      its(:length) { should eq(15 * 24) } 
     end
     
     describe 'period set' do
-      before { get :samples, format: :json, begin: '2013-11-14', end: '2013-12-07' }
+      before { get :samples, format: :json, begin: '2013-11-14', end: '2013-11-16' }
       subject { json[fume_hoods.first.external_id] }
-      its(:length) { should eq(14 * 24) } 
+      its(:length) { should eq(3 * 24) }
     end
   end
 end

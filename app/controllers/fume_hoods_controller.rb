@@ -52,12 +52,7 @@ class FumeHoodsController < ApplicationController
     interval = 1.hour
     
     period = start .. stop
-    
-    json = Rails.cache.fetch(samples_cache_key period, interval) do
-      organization.intervals(period, interval).to_json
-    end
-    
-    render json: json
+    render json: organization.intervals(period, interval).to_json
   end
 	
 	private
@@ -92,13 +87,13 @@ class FumeHoodsController < ApplicationController
   end
   
   def fetch_date(key, default)
-    date = begin
-      Date.parse(params[key])
-      raise ArgumentError unless date < Date.today
+    begin
+      Date.parse(params[key]).tap do |day|
+        raise ArgumentError unless day < Date.today
+      end
     rescue
       default
     end
-    date
   end
   
   def samples_params
