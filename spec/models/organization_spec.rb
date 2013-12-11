@@ -87,41 +87,27 @@ describe Organization do
     it { should respond_to(:samples) }
   end
   
-  describe 'intervals' do
+  describe '#daily_intervals' do
     before { create(:fume_hood, organization: organization) }
-    let(:external_ids) { organization.fume_hoods.map(&:external_id) }
+    let(:day) { Date.parse('Aug 10, 2011') }
+    let(:intervals) { organization.daily_intervals(day, 1.hour) }
+    let(:external_ids) { organization.fume_hoods.pluck(:external_id) }
     
-    describe '#intervals' do
-      let(:range) { Date.parse('Aug 10, 2011')..Date.parse('Aug 12, 2011') }
-      let(:intervals) { organization.intervals(range, 1.hour) }
-    
-      it 'should have each hood' do
-        expect(intervals.keys).to eq(external_ids)
-      end
-    
-      it 'should be intervals' do
-        expect(intervals[external_ids.first].length).to eq(3 * 24)
-      end
+    describe 'all hoods' do
+      subject { intervals }
+      its(:keys) { should eq(external_ids) }
     end
     
-    describe '#daily_intervals' do
-      let(:day) { Date.parse('Aug 10, 2011') }
-      let(:intervals) { organization.daily_intervals(day, 1.hour) }
-    
-      it 'should have each hood' do
-        expect(intervals.keys).to eq(external_ids)
-      end
-    
-      it 'should have hourly data' do
-        expect(intervals[external_ids.first].length).to eq(24)
-      end
-      
-    end 
+    describe 'hourly data' do
+      subject { intervals[external_ids.first] }
+      its(:length) { should eq(24) } 
+    end
   end
 
   describe '#daily_intervals_cache_key' do
     let(:id) { organization.id }
-    subject { organization.daily_intervals_cache_key(Date.parse('Jan 1, 2001'), 60.seconds) }
-    it { should eq("organizations:#{id}:20010101:60") }
+    let(:day) { Date.parse('Aug 10, 2011') }
+    subject { organization.daily_intervals_cache_key(day, 60.seconds) }
+    it { should eq("organizations:#{id}:20110810:60") }
   end
 end

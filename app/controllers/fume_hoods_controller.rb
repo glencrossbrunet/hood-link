@@ -9,8 +9,7 @@ class FumeHoodsController < ApplicationController
   end
   
   def create
-    @fume_hood = fume_hoods.build(params.permit(:external_id))
-    persist @fume_hood
+    persist fume_hoods.build(params.permit(:external_id))
   end
   
   def update
@@ -30,17 +29,10 @@ class FumeHoodsController < ApplicationController
   
   def upload
     csv = params.fetch(:csv)
-    data = CSV.parse(csv, headers: true)
-    data.each do |row|
+    CSV.parse(csv, headers: true).each do |row|
       upload_from row.to_hash
     end
     render json: { status: 200 }
-  end
-  
-  def samples
-    date = fetch_date(:date, Date.yesterday)
-    interval = 1.hour
-    render json: organization.daily_intervals(date, interval)
   end
 	
 	private
@@ -48,10 +40,8 @@ class FumeHoodsController < ApplicationController
   def upload_from(hash)
     key_value_strip! hash
     natural_key = hash['external_id'] || hash['hood_id']
-    query = fume_hoods.where(external_id: natural_key)
-    fume_hood = query.first_or_initialize
-    fume_hood.data = hash.except('external_id')
-    fume_hood.save
+    fume_hood = fume_hoods.where(external_id: natural_key).first_or_initialize
+    fume_hood.update(data: hash.except('external_id', 'hood_id'))
   end
   
   def key_value_strip!(hash)
@@ -64,16 +54,6 @@ class FumeHoodsController < ApplicationController
   
   def metadata
     Hash[ data_keys.zip([''] * data_keys.length) ]
-  end
-  
-  def fetch_date(key, default)
-    begin
-      Date.parse(params[key]).tap do |day|
-        raise ArgumentError unless day < Date.today
-      end
-    rescue
-      default
-    end
   end
   
   def fume_hood_params

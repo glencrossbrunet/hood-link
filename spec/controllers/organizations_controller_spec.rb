@@ -1,9 +1,8 @@
-require 'spec_helper'
-
 describe OrganizationsController do
+  let(:user) { create(:user) }
+  let(:organization) { create(:organization) }
   
   describe '#dashboard' do
-    let(:organization) { create(:organization) }
     before(:each) do
       request.host = "#{organization.subdomain}.example.com"
     end
@@ -14,7 +13,6 @@ describe OrganizationsController do
     end
     
     context 'user' do
-      let(:user) { create(:user) }
       before :each do
         sign_in :user, user
       end
@@ -47,7 +45,6 @@ describe OrganizationsController do
   
   
   describe '#index' do
-    let(:user) { create(:user) }
     subject { get :index; response }
     
     context 'visitor' do
@@ -59,7 +56,6 @@ describe OrganizationsController do
       it { should redirect_to(root_path) }
       
       context 'member' do
-        let(:organization) { create(:organization) }
         before do
           request.host = 'www.example.com'
           user.add_role(:member, organization)
@@ -67,12 +63,11 @@ describe OrganizationsController do
         it { should redirect_to("http://#{organization.subdomain}.example.com/")  }
       end
       
-      context 'super admin' do
+      context 'admin' do
         before { user.add_role(:admin) }
         before { create(:organization); create(:organization) }
         it { should be_successful }
       end
     end
   end
-  
 end

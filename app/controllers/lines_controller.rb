@@ -4,12 +4,11 @@ class LinesController < ApplicationController
   respond_to :json
   
   def index
-    render json: lines.to_json
+    render json: lines
   end
   
   def create
-    @line = lines.build(line_params)
-    persist @line
+    persist lines.build(line_params)
   end
   
   def update
@@ -19,21 +18,13 @@ class LinesController < ApplicationController
   
   def destroy
     @line.destroy
-    render json: @line.to_json
+    render json: @line
   end
   
   private
   
-  def lines
-    current_user.lines.where(organization: organization)
-  end
-  
   def find_line
     @line = lines.find(params[:id])
-  end
-  
-  def filter_keys
-    @filter_keys ||= organization.filters.pluck(:key)
   end
   
   def line_params(defaults = {})

@@ -30,17 +30,6 @@ class Organization < ActiveRecord::Base
     users.where(roles: { name: 'admin' })
   end
   
-  # intervals is unused
-  def intervals(days, interval)
-    data = Hash.new { |h, k| h[k] = [] }
-    days.each do |day|
-      daily_intervals(day, interval).each do |external_id, samples|
-        data[external_id].concat(samples)
-      end
-    end
-    data
-  end
-  
   def daily_intervals(day, interval)
     fume_hoods.daily_intervals(day, interval)
   end

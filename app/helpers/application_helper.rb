@@ -9,7 +9,7 @@ module ApplicationHelper
       render json: model.errors.full_messages, status: 422
     end
   end
-  
+    
   def organization
     @organization ||= Organization.find_by!(subdomain: request.subdomains.first)
   end
@@ -24,5 +24,9 @@ module ApplicationHelper
   
   def filter_keys
     @filter_keys ||= filters.pluck(:key)
+  end
+  
+  def lines
+    current_user.lines.where(organization: organization)
   end
 end

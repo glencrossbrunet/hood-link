@@ -36,26 +36,4 @@ describe FumeHoodsController do
       expect(fh.data['building_name']).to eq('Pulp & Paper')
     end
   end
-  
-  describe '#samples' do
-    before do
-      2.times do
-         create(:fume_hood, organization: organization)
-      end
-    end
-    
-    let(:fume_hoods) { organization.fume_hoods }
-    
-    describe 'defaults' do
-      before { get :samples, format: :json }
-      subject { json[fume_hoods.first.external_id] }
-      its(:length) { should eq(24) } 
-    end
-    
-    describe 'period set' do
-      before { get :samples, format: :json, date: '2013-11-14' }
-      subject { json[fume_hoods.first.external_id].first['sampled_at'] }
-      it { should eq(DateTime.parse('2013-11-14').as_json) }
-    end
-  end
 end
