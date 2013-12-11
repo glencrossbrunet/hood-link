@@ -34,8 +34,8 @@ class Sample < ActiveRecord::Base
   end
   
   # [ { sampled_at: datetime, value: float, unit: string }, ... ]
-  def self.daily_intervals(day, interval)
-    samples = sparse(:sampled_at).for(period_from day).intervals_left(interval)
+  def self.daily_intervals(date, interval)
+    samples = sparse(:sampled_at).for(period_from date).intervals_left(interval)
     samples.map { |s| s.slice(:sampled_at, :value, :unit) }
   end
   
@@ -50,8 +50,8 @@ class Sample < ActiveRecord::Base
   
   private
   
-  def self.period_from(day)
-    datetime = day.to_datetime
+  def self.period_from(date)
+    datetime = date.to_datetime
     datetime.beginning_of_day..datetime.end_of_day
   end
 end

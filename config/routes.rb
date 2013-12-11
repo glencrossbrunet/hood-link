@@ -9,13 +9,9 @@ HoodLink::Application.routes.draw do
     resources :lines, only: [ :index, :create, :update, :destroy ]
     
     resources :fume_hoods, only: [:index, :create, :update] do
-			member do
-				get 'display'
-			end
-      collection do
-        post 'upload'
-        get 'samples'
-      end
+      get 'display', on: :member
+      get 'samples', on: :collection
+      post 'upload', on: :collection
 		end
     
     resources :samples, only: [:index, :create]

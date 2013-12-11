@@ -11,7 +11,7 @@
 #  aggregates      :json             default({})
 #
 
-class FumeHood < ActiveRecord::Base
+class FumeHood < ActiveRecord::Base  
   belongs_to :organization
   
   validates_presence_of :external_id, :organization_id
@@ -49,15 +49,11 @@ class FumeHood < ActiveRecord::Base
   end
 
   # [ { sampled_at: datetime, value: float, unit: string } ]
-  def daily_intervals(day, interval)
-    Rails.cache.fetch(cache_key day, interval) do
-      samples.percent_open.daily_intervals(day, interval)
-    end
+  def daily_intervals(date, interval)
+    samples.percent_open.daily_intervals(date, interval)
   end
   
-  def cache_key(day, interval)
-    "fh#{id}_#{day.strftime('%Y%m%d')}_#{interval.seconds.to_i}"
-  end
+  include Cacheable
   
   #################################################################
   # CSV Periods

@@ -119,9 +119,9 @@ describe Organization do
     end 
   end
 
-  describe '#cache_key' do
+  describe '#daily_intervals_cache_key' do
     let(:id) { organization.id }
-    subject { organization.cache_key(Date.parse('Jan 1, 2001'), 60.seconds) }
-    it { should eq("org#{id}_20010101_60") }
+    subject { organization.daily_intervals_cache_key(Date.parse('Jan 1, 2001'), 60.seconds) }
+    it { should eq("organizations:#{id}:20010101:60") }
   end
 end

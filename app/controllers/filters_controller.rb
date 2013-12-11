@@ -4,7 +4,7 @@ class FiltersController < ApplicationController
   respond_to :json
   
   def index
-    render json: filters.to_json
+    render json: filters
   end
   
   def create
@@ -19,17 +19,13 @@ class FiltersController < ApplicationController
   
   def destroy
     @filter.destroy
-    render json: @filter.to_json
+    render json: @filter
   end
   
   private
   
   def find_filter
     @filter = filters.find(params[:id])
-  end
-  
-  def filters
-    organization.filters
   end
   
   def filter_params

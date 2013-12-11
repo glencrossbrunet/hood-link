@@ -10,7 +10,7 @@
 #  token      :string(255)
 #
 
-class Organization < ActiveRecord::Base
+class Organization < ActiveRecord::Base  
   resourcify
   
   validates :name, presence: true
@@ -30,6 +30,7 @@ class Organization < ActiveRecord::Base
     users.where(roles: { name: 'admin' })
   end
   
+  # intervals is unused
   def intervals(days, interval)
     data = Hash.new { |h, k| h[k] = [] }
     days.each do |day|
@@ -41,12 +42,8 @@ class Organization < ActiveRecord::Base
   end
   
   def daily_intervals(day, interval)
-    Rails.cache.fetch(cache_key day, interval) do
-      fume_hoods.daily_intervals(day, interval)
-    end
+    fume_hoods.daily_intervals(day, interval)
   end
   
-  def cache_key(day, interval)
-    [ "org#{id}", day.strftime('%Y%m%d'), interval.seconds.to_i ].join('_')
-  end
+  include Cacheable
 end

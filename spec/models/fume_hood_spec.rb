@@ -102,9 +102,9 @@ describe FumeHood do
     end
   end
   
-  describe '#cache_key' do
+  describe '#daily_intervals_cache_key' do
     let(:fume_hood) { create(:fume_hood) }
-    subject { fume_hood.cache_key(Date.parse('Feb 16, 2001'), 1.hour) }
-    it { should eq("fh#{fume_hood.id}_20010216_3600") }
+    subject { fume_hood.daily_intervals_cache_key(Date.parse('Feb 16, 2001'), 1.hour) }
+    it { should eq("fume_hoods:#{fume_hood.id}:20010216:3600") }
   end
 end
