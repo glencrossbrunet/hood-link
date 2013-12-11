@@ -77,5 +77,11 @@ describe SamplesController do
       subject { json[fume_hoods.first.external_id].first['sampled_at'] }
       it { should eq(DateTime.parse('2013-11-14').as_json) }
     end
+    
+    describe 'cache control' do
+      let(:date) { Date.yesterday }
+      subject { response.headers['Cache-Control'] }
+      it { should eq('max-age=31557600, public') }  
+    end
   end
 end

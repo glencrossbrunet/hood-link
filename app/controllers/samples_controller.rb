@@ -7,6 +7,7 @@ class SamplesController < ApplicationController
     date = Date.parse params.require(:date)
     interval = 1.hour
     if date < Date.today
+      expires_in(1.year, public: true)
       render json: organization.daily_intervals(date, interval)
     else
       render json: { error: 'date must be in the past' }, status: 400

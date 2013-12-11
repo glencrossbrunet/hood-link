@@ -56,7 +56,7 @@ HL.DashboardView = Backbone.View.extend({
   },
   
   fetch: _.debounce(function() {
-    $.get('/fume_hoods/samples', this.period.attributes).done(this.update);
+    // $.get('/fume_hoods/samples', this.period.attributes).done(this.update);
   }, 1000, false),
   
   graph: _.debounce(function() {    
