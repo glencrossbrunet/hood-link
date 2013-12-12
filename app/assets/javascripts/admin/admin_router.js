@@ -1,10 +1,15 @@
 HL.AdminRouter = Backbone.Router.extend({
   
   initialize: function() {
-    this.lines = new HL.LinesCollection();
-    this.filters = new HL.FiltersCollection();
+    this.intervals = new HL.IntervalsCollection();
     this.fumeHoods = new HL.FumeHoodsCollection();
+    this.fumeHoods.listen(this.intervals);
+    this.lines = new HL.LinesCollection();
+    this.lines.listen(this.fumeHoods);
+    
+    this.filters = new HL.FiltersCollection();
     this.roles = new HL.RolesCollection();
+    
     var json = $('meta[name="fumehoods"]').prop('content');
     this.fumeHoods.reset(JSON.parse(json), { parse: true });
   },

@@ -19,6 +19,7 @@ HL.LineView = Backbone.View.extend({
   
   destroy: function(ev) {
     ev.preventDefault();
+    console.log(this.model);
     this.model.destroy().done(this.close);
   }
 });

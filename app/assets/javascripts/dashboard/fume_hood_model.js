@@ -1,5 +1,4 @@
 HL.FumeHoodModel = Backbone.Model.extend({
-  
   defaults: function() {
     return { 
       external_id: '',
@@ -31,5 +30,13 @@ HL.FumeHoodModel = Backbone.Model.extend({
     if (value === 'x' || value === 'X') return !data.get(key);
     if (value === '*') return !!data.get(key);
     return data.get(key) == value;
+  },
+  
+  process: function(samples) {
+    samples = samples.pluck('data');
+    samples = _.compact(samples);    
+    samples = _.pluck(samples, this.get('external_id'));
+    samples = _.flatten(samples);
+    this.set('samples', samples);
   }
 });

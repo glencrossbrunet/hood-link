@@ -69,7 +69,7 @@ $active: rgba(200, 200, 255, 0.5);
 }
 
 #period {
-  @include row();
+  @include span-columns(6);
   padding-bottom: 10px;
   cursor: pointer;
   
@@ -78,13 +78,38 @@ $active: rgba(200, 200, 255, 0.5);
     border-radius: 3px;
     background: #eee;
     text-align: center;
-    @include span-columns(2);
+    @include span-columns(4);
   }
   
   .space {
     padding: 10px;
     text-align: center;
-    @include span-columns(2);
+    @include span-columns(4);
+  }
+}
+
+progress {
+  -webkit-appearance: none;
+  appearance: none;
+  @include span-columns(5);
+  @include shift(1);
+  border: 1px solid #ccc;
+  background: transparent;
+  height: 36px;
+  border-radius: 2px;
+  
+  &[value] {
+    &::-webkit-progress-bar {
+      background-color: #fefefe;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2) inset;
+      border-radius: 2px;
+    }
+    
+    &::-webkit-progress-value {
+      border-radius: 2px;
+      background: #eee;
+      box-shadow: 1px 0 0 1px rgba(100, 100, 100, 0.2);
+    }
   }
 }
 

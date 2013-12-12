@@ -1,6 +1,5 @@
 HL.LineModel = Backbone.Model.extend({
   initialize: function() {
-    _.bindAll(this, 'setData');
     this.on('add', this.setFumeHoods, this);
   },
   
@@ -34,10 +33,9 @@ HL.LineModel = Backbone.Model.extend({
   ]
   */
   
-  setData: function() {
-    var fumeHoods = this.get('fumeHoods');
-    var allSamples = _.invoke(fumeHoods, 'get', 'samples');
-    
+  crunch: function() {
+    var hoods = this.get('fumeHoods');
+    var allSamples = _.invoke(hoods, 'get', 'samples');
     var times = _.pluck(allSamples[0], 'sampled_at');
     
     var xs = _.map(times, this.formatTime);
