@@ -60,7 +60,7 @@ HL.DashboardView = Backbone.View.extend({
     });
     var layout = {
       xaxis: { tickangle: 45, nticks: 12 },
-      yaxis: { zeroline: false}
+      yaxis: { zeroline: false, title: 'Average Percent Open (%)' }
     };
     $('.graph-area', $graph).fadeOut('slow', function() {
       $graph.find('.graph-area').remove();
