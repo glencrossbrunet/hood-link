@@ -88,15 +88,37 @@ $active: rgba(200, 200, 255, 0.5);
   }
 }
 
+#progress-container {
+  @include span-columns(5);
+  @include shift(1);
+  position: relative;
+  
+  
+  #progress-text {
+    position: absolute;
+    text-align: center;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    line-height: 2.3em;
+  }
+}
+
 progress {
   -webkit-appearance: none;
   appearance: none;
-  @include span-columns(5);
-  @include shift(1);
+  width: 100%;
   border: 1px solid #ccc;
   background: transparent;
   height: 36px;
   border-radius: 2px;
+  
+  &::-moz-progress-bar {
+    border-radius: 2px;
+    background-color: #eee;
+    box-shadow: 1px 0 0 1px rgba(100, 100, 100, 0.2);
+  }
   
   &[value] {
     &::-webkit-progress-bar {
@@ -107,11 +129,12 @@ progress {
     
     &::-webkit-progress-value {
       border-radius: 2px;
-      background: #eee;
+      background-color: #eee;
       box-shadow: 1px 0 0 1px rgba(100, 100, 100, 0.2);
     }
   }
 }
+
 
 .modal {
   position: fixed;

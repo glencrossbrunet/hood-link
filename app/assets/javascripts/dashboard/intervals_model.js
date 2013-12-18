@@ -12,7 +12,10 @@ HL.IntervalsModel = Backbone.Model.extend({
         
     var self = this;
     var promise = $.get('/samples', { date: this.get('date') });
-    promise.done(function(data) { self.set('data', data); });
+    promise.done(function(data) { 
+      self.set('data', data);
+      self.trigger('fetch');
+    });
     return promise;
   }
 });

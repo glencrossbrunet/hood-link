@@ -25,7 +25,7 @@ HL.IntervalsCollection = Backbone.Collection.extend({
     var promise = $.when.apply($, this.invoke('fetch'));
     var self = this;
     promise.done(function() { 
-      self.trigger('period:fetch'); 
+      self.trigger('period:fetch');
     });
     return promise;
   }

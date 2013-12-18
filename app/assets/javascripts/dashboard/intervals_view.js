@@ -14,7 +14,20 @@ HL.IntervalsView = Backbone.View.extend({
   
   fetch: function(begin, end) {
     this.collection.range(begin, end);
-    this.collection.fetch();
+    
+    var count = 0, total = this.collection.length,
+      $progress = this.$('#progress'), 
+      $text = this.$('#progress-text').show().text('');
+    $progress.prop({ value: count, max: total });
+    function progress() { 
+      $progress.prop('value', ++count );
+      $text.text([ count, '/', total ].join(' '));
+    }
+    this.listenTo(this.collection, 'fetch', progress);    
+    
+    this.collection.fetch().done(function() {
+      $text.delay(1000).fadeOut('fast');
+    });
   },
   
   process: function(dates) {
