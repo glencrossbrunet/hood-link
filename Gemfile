@@ -10,7 +10,7 @@ gem 'sparse_collection', github: 'glencrossbrunet/sparse_collection'
 
 # auth
 gem 'devise'
-gem 'rolify', '~> 3.3.0.rc4'
+gem 'rolify'
 
 # assets
 gem 'sass-rails', '~> 4.0.0'
